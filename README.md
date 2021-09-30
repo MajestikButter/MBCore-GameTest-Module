@@ -10,10 +10,10 @@ A set of scripts aimed to make some things easier with the GameTest Framework.
 
 ## Usage
 
-- [Download your desired release]()
+- [Download your desired release](https://github.com/MajestikButter/MBCore-GameTest-Module/releases)
 - Open the zip
 - Drag the contents into your project
 - Import the main script called "mbcore.ts" ("mbcore.js" when used in import) whenever you need to use the scripts
 - Run "transpile.bat" to convert the typescript files to javascript files
 
-- [Example script]()
+- [Example script](https://github.com/MajestikButter/MBCore-GameTest-Module/blob/main/src/index.ts)
