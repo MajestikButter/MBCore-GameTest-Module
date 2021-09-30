@@ -16,6 +16,6 @@ If you're just starting out with the GameTest Framework, there's a neat [Starter
 - Open the zip
 - Drag the contents into your project
 - Import the main script called "mbcore.ts" ("mbcore.js" when used in import) whenever you need to use the scripts
-- Run "transpile.bat" to convert the typescript files to javascript files
+- Run "transpile.bat" to convert the typescript files to javascript files, the result will be found in the "out" folder
 
 - [Example script](https://github.com/MajestikButter/MBCore-GameTest-Module/blob/main/src/index.ts)
