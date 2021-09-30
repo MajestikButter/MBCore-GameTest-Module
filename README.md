@@ -2,6 +2,8 @@
 
 A set of scripts aimed to make some things easier with the GameTest Framework.
 
+If you're just starting out with the GameTest Framework, there's a neat [Starter Pack](https://github.com/Bedrock-OSS/gametest-starter-project) available.
+
 ## Pre-requisites
 
 - Minecraft Bedrock Edition
