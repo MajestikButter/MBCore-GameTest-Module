@@ -9,7 +9,7 @@ import Selector from "./selector.js";
 import Vector2 from "./vector2.js";
 import Scoreboard from "./scoreboard.js";
 
-let playerIdObj = Scoreboard.get('mbcPlayerId');
+let playerIdObj = Scoreboard.initialize("mbcPlayerId");
 
 export default class Player {
   /**
@@ -18,7 +18,7 @@ export default class Player {
    * @returns A Player class representing the specified player
    */
   static get(playerId: number | string) {
-    if (typeof playerId === 'string') {
+    if (typeof playerId === "string") {
       playerId = playerIdObj.get(playerId);
     }
     return new Player(playerId);
@@ -52,14 +52,15 @@ export default class Player {
       );
 
     CommandHandler.run(
-      `effect ${this.selector.toString()} fatalPoison 1 124 true`
+      `effect ${this.selector.toString()} fatal_poison 1 124 true`
     );
-    let player = World.getPlayers().find(
-      (v) => v.getEffect(MinecraftEffectTypes.fatalPoison).amplifier === 124
-    );
+    let player = World.getPlayers().find((v) => {
+      let eff = v.getEffect(MinecraftEffectTypes.fatalPoison);
+      return eff && eff.amplifier === 124;
+    });
     if (player)
       CommandHandler.run(
-        `effect ${this.selector.toString()} fatalPoison 0 0 true`
+        `effect ${this.selector.toString()} fatal_poison 0 0 true`
       );
     return player;
   }
@@ -69,11 +70,7 @@ export default class Player {
    * @readonly
    */
   get dimension() {
-    const dimensions: DimensionIds[] = [
-      "overworld",
-      "the end",
-      "nether",
-    ];
+    const dimensions: DimensionIds[] = ["overworld", "the end", "nether"];
     for (let i = 0; i < 3; i++) {
       let dimension = World.getDimension(dimensions[i]);
 

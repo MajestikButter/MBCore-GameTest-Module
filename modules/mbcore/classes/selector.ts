@@ -21,9 +21,9 @@ export default class Selector {
   rotY: Vector2;
   rotX: Vector2;
 
-  volumeX: Vector2;
-  volumeY: Vector2;
-  volumeZ: Vector2;
+  volumeX: number;
+  volumeY: number;
+  volumeZ: number;
 
   families: string[];
   tags: string[];
@@ -47,21 +47,43 @@ export default class Selector {
     str += this.name ? `name=${this.name},` : "";
     str += this.count ? `c=${this.count},` : "";
 
-    str += this.level ? `lm=${this.level.x},l=${this.level.y},` : "";
+    if (this.level) {
+      str += this.level.x ? `lm=${this.level.x},` : "";
+      str += this.level.y ? `l=${this.level.y},` : "";
+    }
     str += this.gamemode ? `m=${this.gamemode},` : "";
 
-    str += this.range ? `rm=${this.range.x},r=${this.range.y},` : "";
-    str += this.pos ? `x=${this.pos.x},y=${this.pos.y},z=${this.pos.z},` : "";
-
-    str += this.rotY ? `rym=${this.rotY.x},ry=${this.rotY.y},` : "";
-    str += this.rotX ? `rxm=${this.rotX.x},rx=${this.rotX.y},` : "";
-
-    if (this.tags) {
-      this.tags.forEach((v) => (str += `${v},`));
+    if (this.range) {
+      str += this.range.x ? `rm=${this.range.x},` : "";
+      str += this.range.y ? `r=${this.range.y},` : "";
     }
+
+    if (this.pos) {
+      str += this.pos.x ? `x=${this.pos.x},` : "";
+      str += this.pos.y ? `y=${this.pos.y},` : "";
+      str += this.pos.z ? `z=${this.pos.z},` : "";
+    }
+
+    if (this.rotX) {
+      str += this.rotX.x ? `rxm=${this.rotX.x},` : "";
+      str += this.rotX.y ? `rx=${this.rotX.y},` : "";
+    }
+
+    if (this.rotY) {
+      str += this.rotY.x ? `rym=${this.rotY.x},` : "";
+      str += this.rotY.y ? `ry=${this.rotY.y},` : "";
+    }
+
+    str += this.volumeX ? `dx=${this.volumeX},` : "";
+    str += this.volumeY ? `dy=${this.volumeY},` : "";
+    str += this.volumeZ ? `dz=${this.volumeZ},` : "";
 
     if (this.families) {
       this.families.forEach((v) => (str += `${v},`));
+    }
+
+    if (this.tags) {
+      this.tags.forEach((v) => (str += `${v},`));
     }
 
     if (this.scores) {

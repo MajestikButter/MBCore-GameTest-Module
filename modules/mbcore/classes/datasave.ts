@@ -138,7 +138,9 @@ export default class DataSave {
    * @param key The name of the entry to look for
    */
   has(key: string) {
-    return this.data[key] ? true : false;
+    return this.data[key] !== undefined && this.data[key] !== null
+      ? true
+      : false;
   }
 
   /**
@@ -146,6 +148,7 @@ export default class DataSave {
    * @param key The name of the entry to look for
    */
   get(key: string) {
+    if (!this.has(key)) throw new Error(`No entry with the name ${key} exists`);
     return this.data[key];
   }
 

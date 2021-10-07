@@ -1,3 +1,10 @@
+////////////////////////////
+// MBCore GameTest Module
+// V 1.0.0
+//
+// By: MajestikButter
+////////////////////////////
+
 import CommandHandler from "./classes/commandhandler.js";
 import DataSave from "./classes/datasave.js";
 import DimensionIds from "./types/dimensionids.js";
