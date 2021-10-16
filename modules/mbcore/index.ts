@@ -18,6 +18,7 @@ import Scoreboard from "./classes/scoreboard.js";
 import Selector from "./classes/selector.js";
 import Vector2 from "./classes/vector2.js";
 import Vector3 from "./classes/vector3.js";
+import Console from './classes/console.js';
 
 import {
   clearTickInterval,
@@ -45,6 +46,7 @@ export {
   setTickInterval,
   clearTickTimeout,
   setTickTimeout,
+  Console,
 };
 
-console.warn("§l§aLoading §bMBCore Module v0.0.1");
+console.log("§l§aLoading §bMBCore Module v0.0.2");

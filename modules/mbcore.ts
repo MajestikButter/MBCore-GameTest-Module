@@ -16,6 +16,7 @@ import {
   setTickInterval,
   clearTickTimeout,
   setTickTimeout,
+  Console,
 } from "./mbcore/index.js";
 
 export {
@@ -36,4 +37,5 @@ export {
   setTickInterval,
   clearTickTimeout,
   setTickTimeout,
+  Console,
 };
