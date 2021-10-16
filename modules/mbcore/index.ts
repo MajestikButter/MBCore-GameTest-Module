@@ -49,4 +49,4 @@ export {
   Console,
 };
 
-console.log("§l§aLoading §bMBCore Module v0.0.2");
+console.log("§l§aLoading §bMBCore Module v1.1.0");
