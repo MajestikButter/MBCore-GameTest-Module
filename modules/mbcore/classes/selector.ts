@@ -6,29 +6,75 @@ import Vector3 from "./vector3.js";
 
 type SelectorType = "a" | "e" | "r" | "p" | "s" | "c" | "initiator";
 export default class Selector {
+  /**
+   * The type of selector; a for all players, e for entity, 
+   * r for random player (or entity if type is supplied), p for nearest player,
+   * s for self or executor, c for player's agent, initiator for player interacting with npc
+   */
   selectorType: SelectorType;
 
+  /**
+   * Ignore or target specific entity identifiers
+   */
   type: string;
+  /**
+   * Ignore or target specific entity names
+   */
   name: string;
+  /**
+   * Include up to x amount of entities
+   */
   count: number;
 
+  /**
+   * Look for a player with a level within the provided range
+   */
   level: Vector2;
+  /**
+   * Look for a player that is not the provided gamemode
+   */
   gamemode: Gamemode;
 
+  /**
+   * Look for an entity within a specified range of a point
+   */
   range: Vector2;
+  /**
+   * Specify where to start picking entities from
+   */
   pos: Vector3;
 
+  /**
+   * Look for an entity with specific y rotation values
+   */
   rotY: Vector2;
+  /**
+   * Look for an entity with specific x rotation values
+   */
   rotX: Vector2;
 
-  volumeX: number;
-  volumeY: number;
-  volumeZ: number;
+  /**
+   * Look for an entity within a set volume of space
+   */
+  volume: Vector3;
 
-  families: string[];
-  tags: string[];
+  /**
+   * Look for an entity with or without specific families
+   */
+  families: string[] | `!${string}`[];
+  /**
+   * Look for an entity with or without specific tags
+   */
+  tags: string[] | `!${string}`[];
+  /**
+   * Look for an entity that has the provided scores within the provided values
+   */
   scores: {
-    [objective: string]: Vector2 | number;
+    [objective: string]:
+      | Vector2
+      | number
+      | `!${number}`
+      | `!${number}..${number}`;
   };
 
   /**
@@ -44,7 +90,7 @@ export default class Selector {
     let str = "";
 
     str += this.type ? `type=${this.type},` : "";
-    str += this.name ? `name=${this.name},` : "";
+    str += this.name ? `name="${this.name}",` : "";
     str += this.count ? `c=${this.count},` : "";
 
     if (this.level) {
@@ -74,9 +120,11 @@ export default class Selector {
       str += this.rotY.y ? `ry=${this.rotY.y},` : "";
     }
 
-    str += this.volumeX ? `dx=${this.volumeX},` : "";
-    str += this.volumeY ? `dy=${this.volumeY},` : "";
-    str += this.volumeZ ? `dz=${this.volumeZ},` : "";
+    if (this.volume) {
+      str += this.volume.x ? `dx=${this.volume.x},` : "";
+      str += this.volume.y ? `dy=${this.volume.y},` : "";
+      str += this.volume.z ? `dz=${this.volume.z},` : "";
+    }
 
     if (this.families) {
       this.families.forEach((v) => (str += `${v},`));

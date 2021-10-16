@@ -148,7 +148,10 @@ export default class DataSave {
    * @param key The name of the entry to look for
    */
   get(key: string) {
-    if (!this.has(key)) throw new Error(`No entry with the name ${key} exists`);
+    if (!this.has(key))
+      throw new Error(
+        `No entry with the name ${key} exists on DataSave ${this.id}`
+      );
     return this.data[key];
   }
 

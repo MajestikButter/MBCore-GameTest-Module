@@ -7,7 +7,9 @@ import { TickEvent, World } from "mojang-minecraft";
  * @returns A new TickInterval
  */
 export function setTickInterval(callback: () => any, ticks: number) {
-  return new TickInterval(ticks, callback);
+  let result = new TickInterval(ticks, callback);
+  TickInterval.queued.push(result);
+  return result;
 }
 
 /**
@@ -18,28 +20,45 @@ export function clearTickInterval(tickInterval: TickInterval) {
 }
 
 class TickInterval {
+  static queued: TickInterval[] = [];
+
+  /**
+   * The function to call
+   */
+  callback: () => any;
+
   /**
    * The initial tick stamp from when this tick interval was created
    */
   firstTick: number;
+
   /**
-   * The subcribed tick event attached
+   * The delay for this tick interval
    */
-  tickEvent: (arg: TickEvent) => any;
+  time: number;
 
   /**
    * Stops firing the tick interval
    */
   clear() {
-    World.events.tick.unsubscribe(this.tickEvent);
+    TickInterval.queued.splice(TickInterval.queued.indexOf(this), 1);
   }
 
   constructor(time: number, callback: () => any) {
-    this.tickEvent = World.events.tick.subscribe((evd) => {
-      if (!this.firstTick) this.firstTick = evd.currentTick;
-
-      if ((evd.currentTick - this.firstTick) % time !== 0) return;
-      callback();
-    });
+    this.time = time;
+    this.callback = callback;
   }
 }
+
+World.events.tick.subscribe((evd) => {
+  for (let v of TickInterval.queued) {
+    if (!v.firstTick) v.firstTick = evd.currentTick;
+
+    if ((evd.currentTick - v.firstTick) % v.time !== 0) continue;
+    try {
+      v.callback();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+});

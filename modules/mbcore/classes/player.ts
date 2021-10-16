@@ -46,7 +46,7 @@ export default class Player {
    * The player's minecraft instance
    */
   get player() {
-    if (!this.isOnline())
+    if (!this.hasLoadedEntity())
       throw new Error(
         "Unable to grab this player's minecraft instance, the player is not online"
       );
@@ -101,6 +101,17 @@ export default class Player {
    */
   isOnline() {
     return !CommandHandler.run(`testfor ${this.selector.toString()}`).error;
+  }
+
+  /**
+   * Checks whether the player has a loaded player entity or not
+   * @returns A boolean representing whether the player entity exists
+   */
+  hasLoadedEntity() {
+    let sel = this.selector;
+    sel.selectorType = "e";
+    sel.type = "player";
+    return !CommandHandler.run(`testfor ${sel.toString()}`).error;
   }
 
   /**

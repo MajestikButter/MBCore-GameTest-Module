@@ -7,7 +7,9 @@ import { TickEvent, World } from "mojang-minecraft";
  * @returns A new TickTimeout
  */
 export function setTickTimeout(callback: () => any, ticks: number) {
-  return new TickTimeout(ticks, callback);
+  let result = new TickTimeout(ticks, callback);
+  TickTimeout.queued.push(result);
+  return result;
 }
 
 /**
@@ -18,26 +20,53 @@ export function clearTickTimeout(tickTimeout: TickTimeout) {
 }
 
 class TickTimeout {
+  static queued: TickTimeout[] = [];
+
   /**
-   * The subcribed tick event attached
+   * The function to call
    */
-  tickEvent: (arg: TickEvent) => any;
+  callback: () => any;
+
+  /**
+   * The delay for this tick timeout
+   */
+  time: number;
+
+  /**
+   * Represents whether the timeout is being cleared
+   */
+  expire: boolean;
 
   /**
    * Stops the tick timeout from firing
    */
   clear() {
-    World.events.tick.unsubscribe(this.tickEvent);
+    TickTimeout.queued.splice(TickTimeout.queued.indexOf(this), 1);
   }
-  
+
   constructor(time: number, callback: () => any) {
-    this.tickEvent = World.events.tick.subscribe((evd) => {
-      if (time <= 0) {
-        callback();
-        this.clear();
-        return;
-      }
-      time--;
-    });
+    this.time = time;
+    this.callback = callback;
   }
 }
+
+World.events.tick.subscribe((evd) => {
+  for (let v of TickTimeout.queued) {
+    if (v.time <= 0 && !v.expire) {
+      try {
+        v.callback();
+      } catch (err) {
+        console.log(err);
+      }
+      v.expire = true;
+    }
+  }
+
+  for (let i = TickTimeout.queued.length - 1; i >= 0; i--) {
+    let v = TickTimeout.queued[i];
+    if (v.expire) {
+      v.clear();
+    }
+    v.time--;
+  }
+});
