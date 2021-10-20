@@ -26,7 +26,7 @@ console.log = function (...data: any[]) {
       case "[object Null]":
         return "null";
       case "[object String]":
-        return item;
+        return `"${item}"`;
       case "[object Array]":
         const array = item.map(toString);
         return `[${array.join(", ")}]`;
