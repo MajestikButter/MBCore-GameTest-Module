@@ -1,20 +1,25 @@
 import CommandHandler from "./commandhandler.js";
 
+/**
+ * Change the outputs of specific console functions;
+ * To enable chat log ingame, run `/tag @s add devLog`
+ */
 const Console = {
   /**
-   * Hijack console.log() output to print to chat
+   * Make console.log() output to chat
+   * @default true
    */
   outputConsoleLogToChat: true,
+  /**
+   * Make console.error() output to chat
+   * @default true
+   */
+  outputConsoleErrorToChat: true,
 };
 
 export default Console;
 
-const logFunc = console.log;
-console.log = function (...data: any[]) {
-  logFunc.apply(console, arguments);
-
-  if (!Console.outputConsoleLogToChat) return;
-
+function logToChat(data: any[], prefix = "") {
   // Source: https://wiki.bedrock.dev/scripting/scripting-intro.html#log
   function toString(item: any): string {
     if (item instanceof Error) {
@@ -36,13 +41,35 @@ console.log = function (...data: any[]) {
         );
         return `{${object.join(", ")}}`;
       case "[object Function]":
-        return item.toString();
+        return `Function ${item.toString()}`;
       default:
         return item;
     }
   }
+
   let msg = data.map(toString).join(" ");
+
   CommandHandler.run(
-    `tellraw @a[tag=devLog] {"rawtext":[{"text":${JSON.stringify(msg)}}]}`
+    `tellraw @a[tag=devLog] {"rawtext":[{"text":"${prefix}${JSON.stringify(
+      msg
+    ).slice(1)}}]}`
   );
+}
+
+const logFunc = console.log;
+console.log = function (...data: any[]) {
+  logFunc.apply(console, arguments);
+
+  if (!Console.outputConsoleLogToChat) return;
+
+  logToChat(data, "§b[Info] §r");
+};
+
+const errorFunc = console.error;
+console.error = function (...data: any[]) {
+  errorFunc.apply(console, data);
+
+  if (!Console.outputConsoleErrorToChat) return;
+
+  logToChat(data, "§4[Error] §c");
 };

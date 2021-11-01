@@ -7,7 +7,7 @@ import Vector3 from "./vector3.js";
 type SelectorType = "a" | "e" | "r" | "p" | "s" | "c" | "initiator";
 export default class Selector {
   /**
-   * The type of selector; a for all players, e for entity, 
+   * The type of selector; a for all players, e for entity,
    * r for random player (or entity if type is supplied), p for nearest player,
    * s for self or executor, c for player's agent, initiator for player interacting with npc
    */
@@ -78,12 +78,21 @@ export default class Selector {
   };
 
   /**
+   * 
+   * @param dimension 
+   * @returns 
+   */
+  results(dimension = World.getDimension("overworld")): string[] {
+    return CommandHandler.run(`testfor ${this.toString()}`).result.victim ?? [];
+  }
+
+  /**
    *
    * @param dimension
    * @returns
    */
   eval(dimension = World.getDimension("overworld")) {
-    return !CommandHandler.run(`testfor ${this.toString()}`).error;
+    return this.results(dimension).length > 0;
   }
 
   toString() {
@@ -127,11 +136,11 @@ export default class Selector {
     }
 
     if (this.families) {
-      this.families.forEach((v) => (str += `${v},`));
+      this.families.forEach((v) => (str += `family=${v},`));
     }
 
     if (this.tags) {
-      this.tags.forEach((v) => (str += `${v},`));
+      this.tags.forEach((v) => (str += `tag=${v},`));
     }
 
     if (this.scores) {

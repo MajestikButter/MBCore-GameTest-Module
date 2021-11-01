@@ -85,7 +85,12 @@ export default class EventEmitter {
 
     for (let i = 0; i < event.listeners.length; i++) {
       let listener = event.listeners[i];
-      listener.callback(...args);
+      try {
+        listener.callback(...args);
+      } catch (err) {
+        console.error(err);
+        throw err;
+      }
     }
 
     for (let i = event.listeners.length - 1; i >= 0; i--) {

@@ -58,7 +58,8 @@ World.events.tick.subscribe((evd) => {
     try {
       v.callback();
     } catch (err) {
-      console.log(err);
+      console.error(err);
+      throw err;
     }
   }
 });

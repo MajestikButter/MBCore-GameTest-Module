@@ -3,11 +3,12 @@ import {
   MinecraftEffectTypes,
   World,
 } from "mojang-minecraft";
-import { DimensionIds } from "../index.js";
+import DimensionIds from "../types/dimensionids.js";
 import CommandHandler from "./commandhandler.js";
 import Selector from "./selector.js";
 import Vector2 from "./vector2.js";
 import Scoreboard from "./scoreboard.js";
+import Vector3 from "./vector3.js";
 
 let playerIdObj = Scoreboard.initialize("mbcPlayerId");
 
@@ -35,7 +36,7 @@ export default class Player {
    * @readonly
    */
   get selector() {
-    let selector = new Selector(`p`);
+    let selector = new Selector(`a`);
     selector.scores = {
       mbcPlayerId: this.id,
     };
@@ -46,9 +47,9 @@ export default class Player {
    * The player's minecraft instance
    */
   get player() {
-    if (!this.hasLoadedEntity())
+    if (!this.isAlive())
       throw new Error(
-        "Unable to grab this player's minecraft instance, the player is not online"
+        "Unable to grab this player's minecraft instance, the player is not alive or loaded"
       );
 
     CommandHandler.run(
@@ -70,12 +71,17 @@ export default class Player {
    * @readonly
    */
   get dimension() {
+    if (!this.isOnline())
+      throw new Error(
+        "Unable to grab this player's dimension, the player is not online"
+      );
+
     const dimensions: DimensionIds[] = ["overworld", "the end", "nether"];
     for (let i = 0; i < 3; i++) {
       let dimension = World.getDimension(dimensions[i]);
 
       let selector = this.selector;
-      selector.range = new Vector2(0, 1000000);
+      selector.range = new Vector2(0.01, 0);
 
       let cmd = CommandHandler.run(`testfor ${selector.toString()}`, dimension);
 
@@ -83,6 +89,8 @@ export default class Player {
         return { name: dimensions[i], dimension };
       }
     }
+
+    throw new Error("This player is not currently in a dimension");
   }
 
   /**
@@ -90,9 +98,32 @@ export default class Player {
    * @readonly
    */
   get inventory() {
-    throw new Error("Disabled, waiting for inventory access");
     let inv: EntityInventoryComponent = this.player.getComponent("inventory");
     return inv;
+  }
+
+  /**
+   * Gets the player's tags
+   * @returns An array of the player's tags
+   */
+  getTags(): string[] {
+    if (!this.isOnline())
+      throw new Error("This player is not currently online");
+    return CommandHandler.run(`tag ${this.selector} list`)
+      .result.statusMessage.match(/ §a.*?§r/g)
+      .map((v: string) => v.slice(3, -2));
+  }
+  /**
+   * Sets the player's tags
+   * @param tags An array of the player's tags
+   */
+  setTags(tags: string[]) {
+    this.getTags().forEach((v) => {
+      CommandHandler.run(`tag ${this.selector} remove "${v}"`);
+    });
+    tags.forEach((v) => {
+      CommandHandler.run(`tag ${this.selector} add "${v}"`);
+    });
   }
 
   /**
@@ -101,17 +132,6 @@ export default class Player {
    */
   isOnline() {
     return !CommandHandler.run(`testfor ${this.selector.toString()}`).error;
-  }
-
-  /**
-   * Checks whether the player has a loaded player entity or not
-   * @returns A boolean representing whether the player entity exists
-   */
-  hasLoadedEntity() {
-    let sel = this.selector;
-    sel.selectorType = "e";
-    sel.type = "player";
-    return !CommandHandler.run(`testfor ${sel.toString()}`).error;
   }
 
   /**
@@ -145,6 +165,23 @@ export default class Player {
    */
   executeCommand(cmd: string) {
     return CommandHandler.run(`execute ${this.selector} ~~~ ${cmd}`);
+  }
+
+  /**
+   * Teleport player to a position
+   * @param pos Position to teleport to
+   */
+  teleport(pos: Vector3, rot?: Vector2 | Vector3) {
+    if (!rot) return this.executeCommand(`tp @s ${pos.x} ${pos.y} ${pos.z}`);
+
+    if (rot instanceof Vector2)
+      return this.executeCommand(
+        `tp @s ${pos.x} ${pos.y} ${pos.z} ${rot.x} ${rot.y}`
+      );
+    else
+      return this.executeCommand(
+        `tp @s ${pos.x} ${pos.y} ${pos.z} facing ${rot.x} ${rot.y} ${rot.z}`
+      );
   }
 
   private constructor(id: number) {

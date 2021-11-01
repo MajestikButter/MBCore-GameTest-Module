@@ -1,5 +1,5 @@
 import { Commands, Dimension, World } from "mojang-minecraft";
-import { DimensionIds } from "..";
+import DimensionIds from "../types/dimensionids.js";
 
 function runCmd(cmd: string, dimension: Dimension) {
   let result: any = {};

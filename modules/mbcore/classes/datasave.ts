@@ -4,7 +4,6 @@ import ProxyTemplate from "./proxytemplate.js";
 
 function createRegex(id: string) {
   return new RegExp(
-    ///₧\{DataSave\}\[\/id:\(example\)\/\]\[\/data:\([^º]+º\)\/]/g
     `₧{DataSave}\\[\\/id:\\(${id}\\)\\/\\]\\[\\/data:\\([^º]+º\\)\\/]`,
     "g"
   );

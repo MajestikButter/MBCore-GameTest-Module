@@ -5,6 +5,7 @@
 // By: MajestikButter
 ////////////////////////////
 
+import Console from './classes/console.js';
 import CommandHandler from "./classes/commandhandler.js";
 import DataSave from "./classes/datasave.js";
 import DimensionIds from "./types/dimensionids.js";
@@ -18,7 +19,6 @@ import Scoreboard from "./classes/scoreboard.js";
 import Selector from "./classes/selector.js";
 import Vector2 from "./classes/vector2.js";
 import Vector3 from "./classes/vector3.js";
-import Console from './classes/console.js';
 
 import {
   clearTickInterval,
@@ -49,4 +49,4 @@ export {
   Console,
 };
 
-console.log("§l§aLoading §bMBCore Module v1.1.0");
+console.log("§l§aLoading §bMBCore Module v1.2.0");
