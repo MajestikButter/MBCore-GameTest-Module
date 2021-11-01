@@ -1,5 +1,8 @@
 node_modules
 out
+
 typedoc.json
 gendocs.bat
 docexports.ts
+favicon.ico
+!docs/**/*
