@@ -1,28 +1,40 @@
 import {
   EntityInventoryComponent,
   MinecraftEffectTypes,
-  World,
+  world,
+  BlockRaycastOptions,
+  EntityRaycastOptions,
+  Player,
 } from "mojang-minecraft";
-import DimensionIds from "../types/dimensionids.js";
+import * as uuid from "../libraries/uuid.js";
 import CommandHandler from "./commandhandler.js";
 import Selector from "./selector.js";
 import Vector2 from "./vector2.js";
 import Scoreboard from "./scoreboard.js";
 import Vector3 from "./vector3.js";
+import DimensionIds from "../types/dimensionids.js";
+import JSONRequest from "./jsonrequest.js";
 
 let playerIdObj = Scoreboard.initialize("mbcPlayerId");
 
-export default class Player {
+const directionRequests = new Map<
+  string,
+  (value: { direction: Vector3; origin: Vector3 }) => void
+>();
+
+export default class MBCPlayer {
   /**
    * Gets the Player class for the specified player id
    * @param playerId A number or string representing the player's id or name
    * @returns A Player class representing the specified player
    */
-  static get(playerId: number | string) {
+  static get(playerId: number | string | Player) {
     if (typeof playerId === "string") {
       playerId = playerIdObj.get(playerId);
+    } else if (playerId instanceof Player) {
+      playerId = playerIdObj.get(`"${playerId.nameTag}"`);
     }
-    return new Player(playerId);
+    return new this(playerId);
   }
 
   /**
@@ -30,18 +42,6 @@ export default class Player {
    * @readonly
    */
   id: number;
-
-  /**
-   * A basic selector that refers to the player via playerId
-   * @readonly
-   */
-  get selector() {
-    let selector = new Selector(`a`);
-    selector.scores = {
-      mbcPlayerId: this.id,
-    };
-    return selector;
-  }
 
   /**
    * The player's minecraft instance
@@ -53,15 +53,15 @@ export default class Player {
       );
 
     CommandHandler.run(
-      `effect ${this.selector.toString()} fatal_poison 1 124 true`
+      `effect ${this.toSelector().toString()} fatal_poison 1 124 true`
     );
-    let player = World.getPlayers().find((v) => {
+    let player = world.getPlayers().find((v) => {
       let eff = v.getEffect(MinecraftEffectTypes.fatalPoison);
       return eff && eff.amplifier === 124;
     });
     if (player)
       CommandHandler.run(
-        `effect ${this.selector.toString()} fatal_poison 0 0 true`
+        `effect ${this.toSelector().toString()} fatal_poison 0 0 true`
       );
     return player;
   }
@@ -71,6 +71,13 @@ export default class Player {
    * @readonly
    */
   get dimension() {
+    return this.player.dimension;
+  }
+
+  /**
+   * The name of the dimension the player is currently in
+   */
+  get dimensionId() {
     if (!this.isOnline())
       throw new Error(
         "Unable to grab this player's dimension, the player is not online"
@@ -78,19 +85,19 @@ export default class Player {
 
     const dimensions: DimensionIds[] = ["overworld", "the end", "nether"];
     for (let i = 0; i < 3; i++) {
-      let dimension = World.getDimension(dimensions[i]);
+      let dimension = world.getDimension(dimensions[i]);
 
-      let selector = this.selector;
+      let selector = this.toSelector();
       selector.range = new Vector2(0.01, 0);
 
       let cmd = CommandHandler.run(`testfor ${selector.toString()}`, dimension);
 
       if (!cmd.error) {
-        return { name: dimensions[i], dimension };
+        return dimensions[i];
       }
     }
 
-    throw new Error("This player is not currently in a dimension");
+    throw new Error("Unable to gab this player's dimension");
   }
 
   /**
@@ -98,8 +105,44 @@ export default class Player {
    * @readonly
    */
   get inventory() {
-    let inv: EntityInventoryComponent = this.player.getComponent("inventory");
+    let inv = this.player.getComponent("inventory") as EntityInventoryComponent;
     return inv;
+  }
+
+  /**
+   *
+   */
+  getDirectionVectors() {
+    return new Promise<{ direction: Vector3; origin: Vector3 }>(
+      (resolve) => {
+        let id = uuid.v4();
+        directionRequests.set(id, resolve);
+
+        this.executeCommand(
+          `summon mbc:jsonrequest "$JSONRequest:${JSON.stringify(
+            JSON.stringify({
+              channel: "getPlayerDirectionVector",
+              id,
+              plrPos: Vector3.fromLocation(this.player.location).toJSON(),
+            })
+          ).slice(1, -1)}" ^^^1`
+        );
+      }
+    );
+  }
+
+  /**
+   * The block the player is currently looking at
+   */
+  getTargetBlock(raycastParams?: BlockRaycastOptions) {
+    return this.player.getBlockFromViewVector(raycastParams);
+  }
+
+  /**
+   * The entity the player is currently looking at
+   */
+  getTargetEntity(raycastParams?: EntityRaycastOptions) {
+    return this.player.getEntitiesFromViewVector(raycastParams)[0];
   }
 
   /**
@@ -107,11 +150,7 @@ export default class Player {
    * @returns An array of the player's tags
    */
   getTags(): string[] {
-    if (!this.isOnline())
-      throw new Error("This player is not currently online");
-    return CommandHandler.run(`tag ${this.selector} list`)
-      .result.statusMessage.match(/ §a.*?§r/g)
-      .map((v: string) => v.slice(3, -2));
+    return this.player.getTags();
   }
   /**
    * Sets the player's tags
@@ -119,10 +158,10 @@ export default class Player {
    */
   setTags(tags: string[]) {
     this.getTags().forEach((v) => {
-      CommandHandler.run(`tag ${this.selector} remove "${v}"`);
+      this.player.removeTag(v);
     });
     tags.forEach((v) => {
-      CommandHandler.run(`tag ${this.selector} add "${v}"`);
+      this.player.addTag(v);
     });
   }
 
@@ -131,7 +170,7 @@ export default class Player {
    * @returns A boolean representing whether the player is online or not
    */
   isOnline() {
-    return !CommandHandler.run(`testfor ${this.selector.toString()}`).error;
+    return this.toSelector().eval();
   }
 
   /**
@@ -152,7 +191,7 @@ export default class Player {
    * Sends a message to the player
    * @param msg The message to send
    */
-  sendMsg(msg: string) {
+  sendMessage(msg: string) {
     this.executeCommand(
       `tellraw @s {"rawtext":[{"text":${JSON.stringify(msg)}}]}`
     );
@@ -164,7 +203,19 @@ export default class Player {
    * @returns The result of the execute command
    */
   executeCommand(cmd: string) {
-    return CommandHandler.run(`execute ${this.selector} ~~~ ${cmd}`);
+    try {
+      return {
+        result: this.player.runCommand(
+          `execute ${this.toSelector()} ~~~ ${cmd}`
+        ),
+        error: false,
+      };
+    } catch (err) {
+      return {
+        result: err,
+        error: true,
+      };
+    }
   }
 
   /**
@@ -184,7 +235,27 @@ export default class Player {
       );
   }
 
+  /**
+   * A basic selector that refers to the player via playerId
+   */
+  toSelector() {
+    let selector = new Selector(`a`);
+    selector.scores = {
+      mbcPlayerId: this.id,
+    };
+    return selector;
+  }
+
   private constructor(id: number) {
     this.id = id;
   }
 }
+
+JSONRequest.on("getPlayerDirectionVector", (evd) => {
+  let dirCalcVec = Vector3.fromLocation(evd.orgEvd.source.location);
+  let plrPos = Vector3.fromObject(evd.request.plrPos);
+  let dirVec = dirCalcVec.subtract(plrPos).normalize();
+
+  directionRequests.get(evd.request.id)({ origin: plrPos, direction: dirVec });
+  directionRequests.delete(evd.request.id);
+});

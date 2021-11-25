@@ -8,7 +8,7 @@ function targetToSelectorStr(target: target) {
     ? target
     : target instanceof Selector
     ? target.toString()
-    : target.selector.toString();
+    : target.toSelector().toString();
 }
 
 export default class Scoreboard {

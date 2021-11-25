@@ -41,7 +41,9 @@ function logToChat(data: any[], prefix = "") {
         );
         return `{${object.join(", ")}}`;
       case "[object Function]":
-        return `Function ${item.toString()}`;
+        return `Function ${item.name}`;
+      case "[object Map]":
+        return `Map`;
       default:
         return item;
     }

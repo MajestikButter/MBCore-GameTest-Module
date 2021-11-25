@@ -1,4 +1,4 @@
-import { TickEvent, World } from "mojang-minecraft";
+import { TickEvent, world, World } from "mojang-minecraft";
 
 /**
  * Creates a tick interval that fires repeatedly at the specified rate
@@ -50,7 +50,7 @@ class TickInterval {
   }
 }
 
-World.events.tick.subscribe((evd) => {
+world.events.tick.subscribe((evd) => {
   for (let v of TickInterval.queued) {
     if (!v.firstTick) v.firstTick = evd.currentTick;
 

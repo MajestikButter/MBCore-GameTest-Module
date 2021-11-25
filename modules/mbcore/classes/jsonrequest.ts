@@ -1,4 +1,4 @@
-import { BeforeExplosionEvent, World } from "mojang-minecraft";
+import { BeforeExplosionEvent, world } from "mojang-minecraft";
 import EventEmitter from "./eventemitter.js";
 import Scoreboard from "./scoreboard.js";
 import Selector from "./selector.js";
@@ -35,7 +35,7 @@ const JSONRequest: JSONRequestEmitter = new EventEmitter();
 export default JSONRequest;
 
 // Emitting
-World.events.beforeExplosion.subscribe((evd) => {
+world.events.beforeExplosion.subscribe((evd) => {
   if (!evd.source.nameTag.startsWith("$JSONRequest:")) return;
   evd.cancel = true;
   let entSelector = new Selector("e");

@@ -1,4 +1,4 @@
-import { World } from "mojang-minecraft";
+import { world } from "mojang-minecraft";
 import Gamemode from "../types/gamemode.js";
 import CommandHandler from "./commandhandler.js";
 import Vector2 from "./vector2.js";
@@ -78,12 +78,12 @@ export default class Selector {
   };
 
   /**
-   * 
-   * @param dimension 
-   * @returns 
+   *
+   * @param dimension
+   * @returns
    */
-  results(dimension = World.getDimension("overworld")): string[] {
-    return CommandHandler.run(`testfor ${this.toString()}`).result.victim ?? [];
+  results(dimension = world.getDimension("overworld")): string[] {
+    return CommandHandler.run(`testfor ${this.toString()}`, dimension).result.victim ?? [];
   }
 
   /**
@@ -91,7 +91,7 @@ export default class Selector {
    * @param dimension
    * @returns
    */
-  eval(dimension = World.getDimension("overworld")) {
+  eval(dimension = world.getDimension("overworld")) {
     return this.results(dimension).length > 0;
   }
 
@@ -148,9 +148,10 @@ export default class Selector {
       for (let k in this.scores) {
         scoreStr += `${k}=`;
         let score = this.scores[k];
-        if (score instanceof Vector2) {
-          scoreStr += `${score.x}..${score.y}`;
-        } else scoreStr += score.toString();
+        if (score instanceof Vector2) scoreStr += `${score.x}..${score.y}`;
+        else if (typeof score === "number") scoreStr += `${score}`;
+        else scoreStr += score;
+
         scoreStr += ",";
       }
       scoreStr = scoreStr.slice(0, scoreStr.length - 1);

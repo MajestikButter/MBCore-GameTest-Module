@@ -13,7 +13,7 @@ import EventEmitter from "./classes/eventemitter.js";
 import Events from "./classes/events.js";
 import Gamemode from "./types/gamemode.js";
 import JSONRequest from "./classes/jsonrequest.js";
-import Player from "./classes/player.js";
+import MBCPlayer from "./classes/player.js";
 import Registry from "./classes/registry.js";
 import Scoreboard from "./classes/scoreboard.js";
 import Selector from "./classes/selector.js";
@@ -36,7 +36,7 @@ export {
   Events,
   Gamemode,
   JSONRequest,
-  Player,
+  MBCPlayer,
   Registry,
   Scoreboard,
   Selector,

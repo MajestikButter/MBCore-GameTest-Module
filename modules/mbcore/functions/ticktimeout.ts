@@ -1,4 +1,4 @@
-import { TickEvent, World } from "mojang-minecraft";
+import { TickEvent, world, World } from "mojang-minecraft";
 
 /**
  * Creates a tick timeout that fires after the specified amount of ticks
@@ -50,7 +50,7 @@ class TickTimeout {
   }
 }
 
-World.events.tick.subscribe((evd) => {
+world.events.tick.subscribe((evd) => {
   for (let v of TickTimeout.queued) {
     if (v.time <= 0 && !v.expire) {
       try {

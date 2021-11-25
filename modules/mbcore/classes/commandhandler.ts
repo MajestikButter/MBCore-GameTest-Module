@@ -1,4 +1,4 @@
-import { Commands, Dimension, World } from "mojang-minecraft";
+import { Dimension, world } from "mojang-minecraft";
 import DimensionIds from "../types/dimensionids.js";
 
 function runCmd(cmd: string, dimension: Dimension) {
@@ -6,7 +6,7 @@ function runCmd(cmd: string, dimension: Dimension) {
   let error = false;
 
   try {
-    result = Commands.run(cmd, dimension);
+    result = dimension.runCommand(cmd);
   } catch (err) {
     result = JSON.parse(err);
     error = true;
@@ -28,7 +28,7 @@ export default class CommandHandler {
    */
   static run(
     cmd: string,
-    dimension = World.getDimension("overworld")
+    dimension = world.getDimension("overworld")
   ): cmdResult {
     return runCmd(cmd, dimension);
   }
@@ -42,7 +42,7 @@ export default class CommandHandler {
     const dimensions: DimensionIds[] = ["overworld", "the end", "nether"];
     let resultArr: any[] = [];
     dimensions.forEach((v) => {
-      resultArr.push(runCmd(cmd, World.getDimension(v)));
+      resultArr.push(runCmd(cmd, world.getDimension(v)));
     });
     return resultArr;
   }
