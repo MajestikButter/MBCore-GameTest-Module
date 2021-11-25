@@ -220,19 +220,22 @@ export default class MBCPlayer {
    * Teleport player to a position
    * @param pos Position to teleport to
    */
-  teleport(pos: Vector3): void;
+  teleport(pos: Vector3): ReturnType<typeof this.executeCommand>;
   /**
    * Teleport player to a position and set rotation
    * @param pos Position to teleport to
    * @param rot Rotation to set to
    */
-  teleport(pos: Vector3, rot: Vector2): void;
+  teleport(pos: Vector3, rot: Vector2): ReturnType<typeof this.executeCommand>;
   /**
    * Teleport player to a position and face a position
    * @param pos Position to teleport to
    * @param facePos Position to face
    */
-  teleport(pos: Vector3, facePos: Vector3): void;
+  teleport(
+    pos: Vector3,
+    facePos: Vector3
+  ): ReturnType<typeof this.executeCommand>;
   teleport(pos: Vector3, rot?: Vector2 | Vector3) {
     if (!rot) return this.executeCommand(`tp @s ${pos.x} ${pos.y} ${pos.z}`);
 
