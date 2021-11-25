@@ -113,22 +113,20 @@ export default class MBCPlayer {
    *
    */
   getDirectionVectors() {
-    return new Promise<{ direction: Vector3; origin: Vector3 }>(
-      (resolve) => {
-        let id = uuid.v4();
-        directionRequests.set(id, resolve);
+    return new Promise<{ direction: Vector3; origin: Vector3 }>((resolve) => {
+      let id = uuid.v4();
+      directionRequests.set(id, resolve);
 
-        this.executeCommand(
-          `summon mbc:jsonrequest "$JSONRequest:${JSON.stringify(
-            JSON.stringify({
-              channel: "getPlayerDirectionVector",
-              id,
-              plrPos: Vector3.fromLocation(this.player.location).toJSON(),
-            })
-          ).slice(1, -1)}" ^^^1`
-        );
-      }
-    );
+      this.executeCommand(
+        `summon mbc:jsonrequest "$JSONRequest:${JSON.stringify(
+          JSON.stringify({
+            channel: "getPlayerDirectionVector",
+            id,
+            plrPos: Vector3.fromLocation(this.player.location).toJSON(),
+          })
+        ).slice(1, -1)}" ^^^1`
+      );
+    });
   }
 
   /**
@@ -222,6 +220,19 @@ export default class MBCPlayer {
    * Teleport player to a position
    * @param pos Position to teleport to
    */
+  teleport(pos: Vector3): void;
+  /**
+   * Teleport player to a position and set rotation
+   * @param pos Position to teleport to
+   * @param rot Rotation to set to
+   */
+  teleport(pos: Vector3, rot: Vector2): void;
+  /**
+   * Teleport player to a position and face a position
+   * @param pos Position to teleport to
+   * @param facePos Position to face
+   */
+  teleport(pos: Vector3, facePos: Vector3): void;
   teleport(pos: Vector3, rot?: Vector2 | Vector3) {
     if (!rot) return this.executeCommand(`tp @s ${pos.x} ${pos.y} ${pos.z}`);
 
