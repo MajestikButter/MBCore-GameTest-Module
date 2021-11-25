@@ -111,6 +111,7 @@ export default class MBCPlayer {
 
   /**
    *
+   * @returns
    */
   getDirectionVectors() {
     return new Promise<{ direction: Vector3; origin: Vector3 }>((resolve) => {
@@ -126,6 +127,25 @@ export default class MBCPlayer {
           })
         ).slice(1, -1)}" ^^^1`
       );
+    });
+  }
+
+  /**
+   * 
+   * @returns 
+   */
+  getRotation() {
+    return new Promise<Vector2>((resolve) => {
+      this.getDirectionVectors().then((v) => {
+        const conv = 180 / Math.PI;
+        const dir = v.direction;
+        resolve(
+          new Vector2(
+            Math.asin(-dir.y) * conv,
+            Math.atan2(-dir.x, dir.z) * conv
+          )
+        );
+      });
     });
   }
 
