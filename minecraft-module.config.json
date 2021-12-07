@@ -1,4 +1,5 @@
 {
+    "type": "ts",
     "exports": {
         "modules/mbcore": "BP/scripts/modules",
         "entities": "BP/entities"
