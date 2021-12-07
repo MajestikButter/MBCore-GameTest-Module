@@ -1,5 +1,5 @@
 {
-  "name": "mb-core",
+  "name": "mbcore",
   "dependencies": {
     "@types/mojang-minecraft": "^0.1.2"
   }
