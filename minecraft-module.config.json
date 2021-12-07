@@ -1,6 +1,6 @@
 {
     "exports": {
-        "modules/mbcore": "BP/scripts/.modules/mbcore",
+        "modules/mbcore": "BP/scripts/modules/mbcore",
         "entities": "BP/entities"
     }
 }
