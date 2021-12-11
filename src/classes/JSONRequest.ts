@@ -27,7 +27,7 @@ export interface JSONRequestEmitter extends EventEmitter {
 }
 
 // Create and export emitter
-const JSONRequest: JSONRequestEmitter = new EventEmitter();
+export const JSONRequest: JSONRequestEmitter = new EventEmitter();
 
 // Emitting
 world.events.beforeExplosion.subscribe((evd) => {

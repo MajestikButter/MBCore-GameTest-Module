@@ -1,6 +1,6 @@
 {
     "exports": {
-        "modules/mbcore": "BP/scripts/modules/mbcore-gametest",
+        "src": "BP/scripts/modules/mbcore-gametest",
         "entities": "BP/entities"
     }
 }

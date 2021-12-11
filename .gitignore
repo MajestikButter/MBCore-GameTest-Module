@@ -1,5 +1,5 @@
 node_modules
-out
+test
 
 typedoc.json
 gendocs.bat
