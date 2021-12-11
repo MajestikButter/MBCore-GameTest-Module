@@ -1,6 +1,7 @@
 node_modules
 test
 
+tsconfig.json
 typedoc.json
 gendocs.bat
 docexports.ts
