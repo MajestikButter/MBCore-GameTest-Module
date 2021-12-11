@@ -1,6 +1,6 @@
-import { world, World } from "mojang-minecraft";
-import Scoreboard from "../classes/scoreboard.js";
-import Selector from "../classes/selector.js";
+import { world } from "mojang-minecraft";
+import { Scoreboard } from "../classes/Scoreboard.js";
+import { Selector } from "../classes/Selector.js";
 
 let playerIdObj = Scoreboard.get("mbcPlayerId");
 

@@ -1,28 +1,24 @@
 import { BeforeExplosionEvent, world } from "mojang-minecraft";
-import EventEmitter from "./eventemitter.js";
-import Scoreboard from "./scoreboard.js";
-import Selector from "./selector.js";
-import Vector3 from "./vector3.js";
+import { EventEmitter } from "./EventEmitter.js";
+import { Scoreboard } from "./Scoreboard.js";
+import { Selector } from "./Selector.js";
+import { Vector3 } from "./Vector3.js";
 
 let JSONIdObj = Scoreboard.initialize("mbcJSONId");
 
 // Response Interface
-interface JSONRequestEvd {
+export interface JSONRequestEvd {
   id: number;
   orgEvd: BeforeExplosionEvent;
-  request: {
-    [key: string]: any;
-  };
+  request: JSONRequest;
 }
-interface JSONRequest {
+export interface JSONRequest {
   channel: string;
-  data: {
-    [key: string]: any;
-  };
+  [key: string]: any;
 }
 
 // Events interface
-interface JSONRequestEmitter extends EventEmitter {
+export interface JSONRequestEmitter extends EventEmitter {
   on(channel: string, eventCallback: (evd: JSONRequestEvd) => any): any;
 
   once(channel: string, eventCallback: (evd: JSONRequestEvd) => any): any;
@@ -32,7 +28,6 @@ interface JSONRequestEmitter extends EventEmitter {
 
 // Create and export emitter
 const JSONRequest: JSONRequestEmitter = new EventEmitter();
-export default JSONRequest;
 
 // Emitting
 world.events.beforeExplosion.subscribe((evd) => {

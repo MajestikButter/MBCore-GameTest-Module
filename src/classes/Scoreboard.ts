@@ -1,17 +1,16 @@
-import CommandHandler from "./commandhandler.js";
-import ProxyTemplate from "./proxytemplate.js";
-import Selector from "./selector.js";
-import target from '../types/target.js';
+import { CommandHandler } from "./CommandHandler.js";
+import { Selector } from "./Selector.js";
+import { Target } from "../types/Target.js";
 
-function targetToSelectorStr(target: target) {
-  return typeof target === 'string'
+function targetToSelectorStr(target: Target) {
+  return typeof target === "string"
     ? target
     : target instanceof Selector
     ? target.toString()
     : target.toSelector().toString();
 }
 
-export default class Scoreboard {
+export class Scoreboard {
   /**
    * Property containing all initialized Scoreboards
    */
@@ -90,18 +89,21 @@ export default class Scoreboard {
   //
   /////////////////
 
+  private _id: string;
   /**
    * A string representing the objective's name
    * @readonly
    */
-  id: string;
+  get id() {
+    return this._id;
+  }
 
   /**
    * Adds the specified amount to the provided target on this Scoreboard
    * @param target A Selector, Player, Entity or string representing the target
    * @param val The amount to add
    */
-  add(target: target, val: number) {
+  add(target: Target, val: number) {
     let selectorStr = targetToSelectorStr(target);
     CommandHandler.run(
       `scoreboard players add ${selectorStr} ${this.id} ${val}`
@@ -112,7 +114,7 @@ export default class Scoreboard {
    * Resets the score for the provided target on this Scoreboard
    * @param target A Selector, Player, Entity or string representing the target
    */
-  reset(target: target) {
+  reset(target: Target) {
     let selectorStr = targetToSelectorStr(target);
     CommandHandler.run(`scoreboard players reset ${selectorStr} ${this.id}`);
   }
@@ -122,7 +124,7 @@ export default class Scoreboard {
    * @param target A Selector, Player, Entity or string representing the target
    * @param val The amount to set to
    */
-  set(target: target, val: number) {
+  set(target: Target, val: number) {
     let selectorStr = targetToSelectorStr(target);
     CommandHandler.run(
       `scoreboard players set ${selectorStr} ${this.id} ${val}`
@@ -133,7 +135,7 @@ export default class Scoreboard {
    * Gets the score of the provided target on this Scoreboard
    * @param target A Selector, Player, Entity or string representing the target
    */
-  get(target: target) {
+  get(target: Target) {
     let selectorStr = targetToSelectorStr(target);
     let cmd = CommandHandler.run(
       `scoreboard players test ${selectorStr} ${this.id} * *`
@@ -145,20 +147,7 @@ export default class Scoreboard {
     return result ? parseInt(result[0]) : 0;
   }
 
-  onPropertyChange(obj: Scoreboard, prop: string, val: any) {
-    switch (prop) {
-      case "id":
-        throw new Error(
-          "Unable to set id property on Scoreboard, id is read-only"
-        );
-      default:
-        return true;
-    }
-  }
-
   private constructor(id: string) {
-    this.id = id;
-
-    return new Proxy(this, ProxyTemplate);
+    this._id = id;
   }
 }

@@ -1,23 +1,28 @@
-import CommandHandler from "./commandhandler.js";
+import { CommandHandler } from "./CommandHandler.js";
 
 /**
  * Change the outputs of specific console functions;
  * To enable chat log ingame, run `/tag @s add devLog`
  */
-const Console = {
+export class Console {
+  /**
+   * @throws
+   */
+  constructor() {
+    throw new Error("Cannot create instance of this class");
+  }
+
   /**
    * Make console.log() output to chat
    * @default true
    */
-  outputConsoleLogToChat: true,
+  static outputConsoleLogToChat: true;
   /**
    * Make console.error() output to chat
    * @default true
    */
-  outputConsoleErrorToChat: true,
-};
-
-export default Console;
+  static outputConsoleErrorToChat: true;
+}
 
 function logToChat(data: any[], prefix = "") {
   // Source: https://wiki.bedrock.dev/scripting/scripting-intro.html#log

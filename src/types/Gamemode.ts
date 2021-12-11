@@ -1,4 +1,4 @@
-type Gamemode =
+export type Gamemode =
   | "creative"
   | "survival"
   | "adventure"
@@ -7,7 +7,6 @@ type Gamemode =
   | "s"
   | "a"
   | "d"
-  | "0"
-  | "1"
-  | "2";
-export default Gamemode;
+  | 0
+  | 1
+  | 2;

@@ -1,7 +1,7 @@
 import { BlockLocation, Location } from "mojang-minecraft";
-import CommandHandler from "./commandhandler.js";
+import { CommandHandler } from "./CommandHandler.js";
 
-export default class Vector3 {
+export class Vector3 {
   /**
    * Creates a Vector3 from a minecraft Location
    * @param loc Location to create Vector3 from

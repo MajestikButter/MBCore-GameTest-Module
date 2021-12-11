@@ -1,11 +1,11 @@
 import { world } from "mojang-minecraft";
-import Gamemode from "../types/gamemode.js";
-import CommandHandler from "./commandhandler.js";
-import Vector2 from "./vector2.js";
-import Vector3 from "./vector3.js";
+import { Gamemode } from "../types/Gamemode.js";
+import { CommandHandler } from "./CommandHandler.js";
+import { Vector2 } from "./Vector2.js";
+import { Vector3 } from "./Vector3.js";
 
 type SelectorType = "a" | "e" | "r" | "p" | "s" | "c" | "initiator";
-export default class Selector {
+export class Selector {
   /**
    * The type of selector; a for all players, e for entity,
    * r for random player (or entity if type is supplied), p for nearest player,
@@ -83,7 +83,10 @@ export default class Selector {
    * @returns
    */
   results(dimension = world.getDimension("overworld")): string[] {
-    return CommandHandler.run(`testfor ${this.toString()}`, dimension).result.victim ?? [];
+    return (
+      CommandHandler.run(`testfor ${this.toString()}`, dimension).result
+        .victim ?? []
+    );
   }
 
   /**

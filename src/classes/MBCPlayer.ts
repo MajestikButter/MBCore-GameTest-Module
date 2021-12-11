@@ -7,13 +7,14 @@ import {
   Player,
 } from "mojang-minecraft";
 import * as uuid from "../libraries/uuid.js";
-import CommandHandler from "./commandhandler.js";
-import Selector from "./selector.js";
-import Vector2 from "./vector2.js";
-import Scoreboard from "./scoreboard.js";
-import Vector3 from "./vector3.js";
-import DimensionIds from "../types/dimensionids.js";
-import JSONRequest from "./jsonrequest.js";
+import { CommandHandler } from "./CommandHandler.js";
+import { Selector } from "./Selector.js";
+import { Vector2 } from "./Vector2.js";
+import { Scoreboard } from "./Scoreboard.js";
+import { Vector3 } from "./Vector3.js";
+import { DimensionIds } from "../types/DimensionIds.js";
+import { JSONRequest } from "./JSONRequest.js";
+import { CommandResult } from "../types/CommandResult.js";
 
 let playerIdObj = Scoreboard.initialize("mbcPlayerId");
 
@@ -22,7 +23,7 @@ const directionRequests = new Map<
   (value: { direction: Vector3; origin: Vector3 }) => void
 >();
 
-export default class MBCPlayer {
+export class MBCPlayer {
   /**
    * Gets the Player class for the specified player id
    * @param playerId A number or string representing the player's id or name
@@ -131,8 +132,8 @@ export default class MBCPlayer {
   }
 
   /**
-   * 
-   * @returns 
+   *
+   * @returns
    */
   getRotation() {
     return new Promise<Vector2>((resolve) => {
@@ -220,7 +221,7 @@ export default class MBCPlayer {
    * @param cmd The command to execute
    * @returns The result of the execute command
    */
-  executeCommand(cmd: string) {
+  executeCommand(cmd: string): CommandResult {
     try {
       return {
         result: this.player.runCommand(

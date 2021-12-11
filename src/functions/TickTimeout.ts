@@ -19,7 +19,7 @@ export function clearTickTimeout(tickTimeout: TickTimeout) {
   tickTimeout.clear();
 }
 
-class TickTimeout {
+export class TickTimeout {
   static queued: TickTimeout[] = [];
 
   /**

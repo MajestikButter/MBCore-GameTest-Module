@@ -1,5 +1,24 @@
 {
-  "name": "mbcore",
+  "name": "mbcore-gametest",
+  "version": "1.2.0",
+  "description": "A set of scripts aimed to make some things easier with the GameTest Framework.",
+  "main": "src/index.ts",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MajestikButter/MBCore-GameTest-Module.git"
+  },
+  "author": "MajestikButter",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MajestikButter/MBCore-GameTest-Module/issues"
+  },
+  "homepage": "https://github.com/MajestikButter/MBCore-GameTest-Module#readme",
   "dependencies": {
     "@types/mojang-minecraft": "^0.1.2"
   }

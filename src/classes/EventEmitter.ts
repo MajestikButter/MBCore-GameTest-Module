@@ -13,7 +13,7 @@ class EventListener {
     this.callback = callback;
   }
 }
-export default class EventEmitter {
+export class EventEmitter {
   private events: {
     [event: string]: {
       listeners: EventListener[];

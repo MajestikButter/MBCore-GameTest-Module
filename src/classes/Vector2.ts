@@ -1,4 +1,4 @@
-export default class Vector2 {
+export class Vector2 {
   /**
    * First value in vector
    */

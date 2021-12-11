@@ -19,7 +19,7 @@ export function clearTickInterval(tickInterval: TickInterval) {
   tickInterval.clear();
 }
 
-class TickInterval {
+export class TickInterval {
   static queued: TickInterval[] = [];
 
   /**

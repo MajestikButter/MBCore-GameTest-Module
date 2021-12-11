@@ -1,10 +1,28 @@
-import { world } from "mojang-minecraft";
-import { MBCPlayer } from "../modules/mbcore.js";
+////////////////////////////
+// MBCore GameTest Module
+//
+// By: MajestikButter
+////////////////////////////
 
-world.events.beforeChat.subscribe((evd) => {
-  let plr = MBCPlayer.get(evd.sender.nameTag);
+export * from "./classes/Console.js";
+export * from "./classes/CommandHandler.js";
+export * from "./classes/DataSave.js";
+export * from "./classes/EventEmitter.js";
+export * from "./classes/JSONRequest.js";
+export * from "./classes/MBCPlayer.js";
+export * from "./classes/Registry.js";
+export * from "./classes/Scoreboard.js";
+export * from "./classes/Selector.js";
+export * from "./classes/Vector2.js";
+export * from "./classes/Vector3.js";
 
-  plr.executeCommand(
-    `title @s actionbar $[{evd.sender.nameTag}]\n${evd.message}`
-  );
-});
+export * from "./functions/TickInterval.js";
+export * from "./functions/TickTimeout.js";
+
+export * from "./types/DimensionIds.js";
+export * from "./types/Gamemode.js";
+export * from "./types/Target.js";
+
+import "./ticked/index.js";
+
+console.log("§l§aLoading §bMBCore Module v1.2.0");

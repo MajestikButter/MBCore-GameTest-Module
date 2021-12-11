@@ -1,5 +1,6 @@
 import { Dimension, world } from "mojang-minecraft";
-import DimensionIds from "../types/dimensionids.js";
+import { CommandResult } from "../types/CommandResult.js";
+import { DimensionIds } from "../types/DimensionIds.js";
 
 function runCmd(cmd: string, dimension: Dimension) {
   let result: any = {};
@@ -14,12 +15,7 @@ function runCmd(cmd: string, dimension: Dimension) {
   return { error, result };
 }
 
-interface cmdResult {
-  error: boolean;
-  result: any;
-}
-
-export default class CommandHandler {
+export class CommandHandler {
   /**
    * Runs a command and returns whether it ran successfully or errored, along with the result object
    * @param cmd A command to run
@@ -29,7 +25,7 @@ export default class CommandHandler {
   static run(
     cmd: string,
     dimension = world.getDimension("overworld")
-  ): cmdResult {
+  ): CommandResult {
     return runCmd(cmd, dimension);
   }
 
@@ -38,7 +34,7 @@ export default class CommandHandler {
    * @param cmd A command to run
    * @returns An array of objects with an error property and the result of the command
    */
-  static runInAll(cmd: string): cmdResult[] {
+  static runInAll(cmd: string): CommandResult[] {
     const dimensions: DimensionIds[] = ["overworld", "the end", "nether"];
     let resultArr: any[] = [];
     dimensions.forEach((v) => {

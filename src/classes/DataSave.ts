@@ -1,6 +1,5 @@
-import CommandHandler from "./commandhandler.js";
-import Scoreboard from "./scoreboard.js";
-import ProxyTemplate from "./proxytemplate.js";
+import { CommandHandler } from "./CommandHandler.js";
+import { Scoreboard } from "./Scoreboard.js";
 
 function createRegex(id: string) {
   return new RegExp(
@@ -15,7 +14,7 @@ interface Obj {
 
 const DataSaves = Scoreboard.initialize("mbcDataSaves");
 
-export default class DataSave {
+export class DataSave {
   /**
    * Property containing all initialized DataSaves
    */
@@ -92,11 +91,14 @@ export default class DataSave {
   //
   /////////////////
 
+  private _id: string;
   /**
    * A string representing this DataSave's id
    * @readonly
    */
-  id: string;
+  get id() {
+    return this._id;
+  }
 
   /**
    * Clears all scores associated with this DataSave
@@ -198,21 +200,7 @@ export default class DataSave {
     DataSaves.set(selector, 0);
   }
 
-  private onPropertySet(prop: string, val: any) {
-    switch (prop) {
-      case "id":
-        throw new Error(
-          "Unable to set id property on DataSave, id is read-only"
-        );
-    }
-    return 1;
-  }
-
   private constructor(id: string) {
-    this.id = id;
-
-    let proxy = new Proxy<DataSave>(this, ProxyTemplate);
-
-    return proxy;
+    this._id = id;
   }
 }
