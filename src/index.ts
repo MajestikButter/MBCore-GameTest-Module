@@ -4,7 +4,7 @@
 // By: MajestikButter
 ////////////////////////////
 
-export * from "./classes/Console.js";
+export * from "./classes/Debug.js";
 export * from "./classes/CommandHandler.js";
 export * from "./classes/DataSave.js";
 export * from "./classes/EventEmitter.js";
@@ -17,6 +17,8 @@ export * from "./classes/Raycast/Raycast.js";
 export * from "./classes/Raycast/RaycastProperties.js";
 export * from "./classes/Raycast/RaycastPropertiesBuilder.js";
 export * from "./classes/Raycast/RaycastResult.js";
+
+export * from "./enums/Particle.js";
 
 export * from "./functions/TickInterval.js";
 export * from "./functions/TickTimeout.js";

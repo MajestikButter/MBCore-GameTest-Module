@@ -1,10 +1,13 @@
+import { Vector3 } from "gametest-maths";
+import { world } from "mojang-minecraft";
+import { Particle } from "../enums/Particle.js";
 import { CommandHandler } from "./CommandHandler.js";
 
 /**
  * Change the outputs of specific console functions;
  * To enable chat log ingame, run `/tag @s add devLog`
  */
-export class Console {
+export class Debug {
   /**
    * @throws
    */
@@ -22,6 +25,25 @@ export class Console {
    * @default true
    */
   static outputConsoleErrorToChat: true;
+
+  static visualize(
+    origin: Vector3,
+    direction: Vector3,
+    dimension = world.getDimension("overworld"),
+    particle = Particle,
+    segments = 10
+  ) {
+    for (let i = 0; i < 1; i += 1 / segments) {
+      let p = origin.add(direction.mul(i));
+      try {
+        dimension.runCommand(
+          `particle ${particle} ${p.x.toFixed(2)} ${p.y.toFixed(
+            2
+          )} ${p.z.toFixed(2)}`
+        );
+      } catch {}
+    }
+  }
 }
 
 function logToChat(data: any[], prefix = "") {
@@ -67,7 +89,7 @@ const logFunc = console.log;
 console.log = function (...data: any[]) {
   logFunc.apply(console, arguments);
 
-  if (!Console.outputConsoleLogToChat) return;
+  if (!Debug.outputConsoleLogToChat) return;
 
   logToChat(data, "§b[Info] §r");
 };
@@ -76,7 +98,7 @@ const errorFunc = console.error;
 console.error = function (...data: any[]) {
   errorFunc.apply(console, data);
 
-  if (!Console.outputConsoleErrorToChat) return;
+  if (!Debug.outputConsoleErrorToChat) return;
 
   logToChat(data, "§4[Error] §c");
 };

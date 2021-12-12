@@ -288,9 +288,9 @@ export class MBCPlayer {
 }
 
 JSONRequest.on("getPlayerDirectionVector", (evd) => {
-  let dirCalcVec = new Vector3(evd.orgEvd.source.location);
+  let dirVec = new Vector3(evd.orgEvd.source.location);
   let plrPos = new Vector3(evd.request.plrPos);
-  let dirVec = dirCalcVec.sub(plrPos).normalize();
+  dirVec.sub(plrPos).normalize();
 
   directionRequests.get(evd.request.id)({ origin: plrPos, direction: dirVec });
   directionRequests.delete(evd.request.id);
