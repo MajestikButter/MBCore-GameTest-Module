@@ -45,22 +45,31 @@ export class Vector3 {
   }
 
   /**
+   * Add 3 numbers to respective Vector3 properties
+   * @param other
+   * @returns A Vector3 with the new values
+   */
+  add(x: number, y: number, z: number): Vector3;
+  /**
    * Add two Vector3 instances
    * @param other The Vector3 to add to this Vector3
    * @returns A Vector3 with the new values
    */
-  add(other: Vector3) {
-    return new Vector3(this.x + other.x, this.y + other.y, this.z + other.z);
+  add(other: Vector3): Vector3;
+  add(arg0: Vector3 | number, arg1?: number, arg2?: number) {
+    if (arg0 instanceof Vector3) {
+      return new Vector3(this.x + arg0.x, this.y + arg0.y, this.z + arg0.z);
+    }
   }
 
   /**
-   * Multiply a Vector3 by a number
+   * Scales a Vector3 by a number
    * @param num The number to multiply each Vector3 value by
    * @returns A Vector3 with the new values
    */
   mul(num: number): Vector3;
   /**
-   * Multiply a Vector3 by a Vector3
+   * Dot multiply a Vector3 by a Vector3
    * @param vector The Vector3 to multiply the Vector3 by
    * @returns A Vector3 with the new values
    */
@@ -76,13 +85,23 @@ export class Vector3 {
   }
 
   /**
-   * Subtract
+   * Subtract 3 numbers from respective Vector3 properties
+   * @param other
+   * @returns A Vector3 with the new values
+   */
+  sub(x: number, y: number, z: number): Vector3;
+  /**
+   * Subtract two Vector3 instances
    * @param other The Vector3 to subtract from this Vector3
    * @returns A Vector3 with the new values
    */
-  sub(other: Vector3) {
-    other = other.mul(-1);
-    return this.add(other);
+  sub(other: Vector3): Vector3;
+  sub(arg0: Vector3 | number, arg1?: number, arg2?: number) {
+    if (arg0 instanceof Vector3) {
+      arg0 = arg0.mul(-1);
+      return this.add(arg0);
+    }
+    return this.add(-arg0, -arg1, -arg2);
   }
 
   /**
