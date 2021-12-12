@@ -58,14 +58,14 @@ export class Vector3 {
    * @param num The number to multiply each Vector3 value by
    * @returns A Vector3 with the new values
    */
-  mult(num: number): Vector3;
+  mul(num: number): Vector3;
   /**
    * Multiply a Vector3 by a Vector3
    * @param vector The Vector3 to multiply the Vector3 by
    * @returns A Vector3 with the new values
    */
-  mult(vector: Vector3): Vector3;
-  mult(arg: number | Vector3) {
+  mul(vector: Vector3): Vector3;
+  mul(arg: number | Vector3) {
     if (arg instanceof Vector3) {
       return new Vector3(
         this.x * arg.x + this.x * arg.y + this.x * arg.z,
@@ -81,7 +81,7 @@ export class Vector3 {
    * @returns A Vector3 with the new values
    */
   sub(other: Vector3) {
-    other = other.mult(-1);
+    other = other.mul(-1);
     return this.add(other);
   }
 
@@ -142,7 +142,7 @@ export class Vector3 {
    */
   rotate(euler: Vector3) {
     // Formulas from: https://stackoverflow.com/questions/14607640/rotating-a-vector-in-3d-space
-    const e = euler.mult(Math.PI / 180);
+    const e = euler.mul(Math.PI / 180);
     const v = this;
     const sin = Math.sin;
     const cos = Math.cos;
@@ -217,7 +217,7 @@ export class Vector3 {
     particle = "minecraft:basic_flame_particle"
   ) {
     for (let i = 0; i < distance; i += increment) {
-      let pos = this.normalize().mult(i).add(startPos);
+      let pos = this.normalize().mul(i).add(startPos);
       CommandHandler.run(`particle ${particle} ${pos.x} ${pos.y} ${pos.z}`);
     }
   }
