@@ -22,6 +22,8 @@ export * from "./functions/TickTimeout.js";
 export * from "./types/DimensionIds.js";
 export * from "./types/Gamemode.js";
 export * from "./types/Target.js";
+export * from "./types/SelectorType.js";
+export * from "./types/CommandResult.js";
 
 import "./ticked/index.js";
 

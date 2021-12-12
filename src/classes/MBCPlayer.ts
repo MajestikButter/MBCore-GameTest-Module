@@ -289,7 +289,7 @@ export class MBCPlayer {
 JSONRequest.on("getPlayerDirectionVector", (evd) => {
   let dirCalcVec = Vector3.fromLocation(evd.orgEvd.source.location);
   let plrPos = Vector3.fromObject(evd.request.plrPos);
-  let dirVec = dirCalcVec.subtract(plrPos).normalize();
+  let dirVec = dirCalcVec.sub(plrPos).normalize();
 
   directionRequests.get(evd.request.id)({ origin: plrPos, direction: dirVec });
   directionRequests.delete(evd.request.id);

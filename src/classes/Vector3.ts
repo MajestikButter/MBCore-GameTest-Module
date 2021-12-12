@@ -58,14 +58,14 @@ export class Vector3 {
    * @param num The number to multiply each Vector3 value by
    * @returns A Vector3 with the new values
    */
-  multiply(num: number): Vector3;
+  mult(num: number): Vector3;
   /**
    * Multiply a Vector3 by a Vector3
    * @param vector The Vector3 to multiply the Vector3 by
    * @returns A Vector3 with the new values
    */
-  multiply(vector: Vector3): Vector3;
-  multiply(arg: number | Vector3) {
+  mult(vector: Vector3): Vector3;
+  mult(arg: number | Vector3) {
     if (arg instanceof Vector3) {
       return new Vector3(
         this.x * arg.x + this.x * arg.y + this.x * arg.z,
@@ -80,9 +80,9 @@ export class Vector3 {
    * @param other The Vector3 to subtract from this Vector3
    * @returns A Vector3 with the new values
    */
-  subtract(other: Vector3) {
-    other = other.multiply(-1);
-    return new Vector3(this.x + other.x, this.y + other.y, this.z + other.z);
+  sub(other: Vector3) {
+    other = other.mult(-1);
+    return this.add(other);
   }
 
   /**
@@ -90,7 +90,7 @@ export class Vector3 {
    * @param num The number to divide each Vector3 value by
    * @returns A Vector3 with the new values
    */
-  divide(num: number) {
+  div(num: number) {
     return new Vector3(this.x / num, this.y / num, this.z / num);
   }
 
@@ -103,7 +103,7 @@ export class Vector3 {
     return new Vector3(this.x % num, this.y % num, this.z % num);
   }
 
-  runMathFunc(func: Function, ...args: any[]) {
+  private runMathFunc(func: Function, ...args: any[]) {
     return new Vector3(
       func(this.x, ...args),
       func(this.y, ...args),
@@ -132,7 +132,7 @@ export class Vector3 {
    * @returns A Vector3 with a length of 1
    */
   normalize() {
-    return this.divide(this.magnitude);
+    return this.div(this.magnitude);
   }
 
   /**
@@ -142,7 +142,7 @@ export class Vector3 {
    */
   rotate(euler: Vector3) {
     // Formulas from: https://stackoverflow.com/questions/14607640/rotating-a-vector-in-3d-space
-    const e = euler.multiply(Math.PI / 180);
+    const e = euler.mult(Math.PI / 180);
     const v = this;
     const sin = Math.sin;
     const cos = Math.cos;
@@ -180,7 +180,7 @@ export class Vector3 {
    * @returns A boolean representing whether the Vector3s are within distance of each other
    */
   isWithinDistance(other: Vector3, distance: number) {
-    other = this.subtract(other);
+    other = this.sub(other);
     return (
       Math.sqrt(other.x * other.x + other.y * other.y + other.z * other.z) <=
       distance
@@ -217,7 +217,7 @@ export class Vector3 {
     particle = "minecraft:basic_flame_particle"
   ) {
     for (let i = 0; i < distance; i += increment) {
-      let pos = this.normalize().multiply(i).add(startPos);
+      let pos = this.normalize().mult(i).add(startPos);
       CommandHandler.run(`particle ${particle} ${pos.x} ${pos.y} ${pos.z}`);
     }
   }

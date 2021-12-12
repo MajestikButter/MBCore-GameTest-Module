@@ -1,10 +1,10 @@
 import { world } from "mojang-minecraft";
 import { Gamemode } from "../types/Gamemode.js";
+import { SelectorType } from "../types/SelectorType.js";
 import { CommandHandler } from "./CommandHandler.js";
 import { Vector2 } from "./Vector2.js";
 import { Vector3 } from "./Vector3.js";
 
-type SelectorType = "a" | "e" | "r" | "p" | "s" | "c" | "initiator";
 export class Selector {
   /**
    * The type of selector; a for all players, e for entity,
