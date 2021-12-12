@@ -35,7 +35,7 @@ export class Raycast {
         direction.toLocation(),
         opts.getOptions().block
       );
-        
+
     let planes = Vector3.fromBlockLocation(block.location);
     if (planes.x < origin.x) planes.x++;
     if (planes.y < origin.y) planes.y++;
@@ -60,7 +60,7 @@ export class Raycast {
     let entResult: Entity[] = [];
     try {
       entResult = this.entityCast(origin, direction, properties, entityFilter);
-    } catch {}
+    } catch { }
     if (entResult.length <= 0 || !properties.stopAfterEntities()) {
       try {
         var { collisionPoint, block } = this.blockCast(
@@ -68,7 +68,7 @@ export class Raycast {
           direction,
           properties
         );
-      } catch {}
+      } catch { }
     }
     return new RaycastResult(
       origin,
