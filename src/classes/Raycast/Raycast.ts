@@ -35,17 +35,16 @@ export class Raycast {
         direction.toLocation(),
         opts.getOptions().block
       );
-    let blockPos = Vector3.fromBlockLocation(block.location);
-    
-    let plane = Vector3.fromBlockLocation(block.location);
-    if (plane.x < origin.x) plane.x++;
-    if (plane.y < origin.y) plane.y++;
-    if (plane.z < origin.z) plane.z++;
+        
+    let planes = Vector3.fromBlockLocation(block.location);
+    if (planes.x < origin.x) planes.x++;
+    if (planes.y < origin.y) planes.y++;
+    if (planes.z < origin.z) planes.z++;
 
     const intersectTime = Math.max(
-      (plane.x - origin.x) / direction.x,
-      (plane.y - origin.y) / direction.y,
-      (plane.z - origin.z) / direction.z,
+      (planes.x - origin.x) / direction.x,
+      (planes.y - origin.y) / direction.y,
+      (planes.z - origin.z) / direction.z,
     )
     const collisionPoint = origin.add(direction.mul(intersectTime));
 
