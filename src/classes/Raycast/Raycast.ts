@@ -35,21 +35,19 @@ export class Raycast {
         direction.toLocation(),
         opts.getOptions().block
       );
-    let blockPos = Vector3.fromBlockLocation(block.location);
-    let offBlockPos = blockPos.add(new Vector3(0.5, 0.5, 0.5));
-    let collisionPoint: Vector3;
-    for (let i = 1; i <= 100; i += 0.1) {
-      let curr = direction.mul(i).add(origin);
-      if (
-        curr.isWithinVolume(
-          offBlockPos.floor().sub(new Vector3(0.1, 0.1, 0.1)),
-          offBlockPos.ceil().add(new Vector3(0.1, 0.1, 0.1))
-        )
-      ) {
-        collisionPoint = curr.sub(direction.div(10));
-        break;
-      }
-    }
+
+    let planes = Vector3.fromBlockLocation(block.location);
+    if (planes.x < origin.x) planes.x++;
+    if (planes.y < origin.y) planes.y++;
+    if (planes.z < origin.z) planes.z++;
+
+    const intersectTime = Math.max(
+      (planes.x - origin.x) / direction.x,
+      (planes.y - origin.y) / direction.y,
+      (planes.z - origin.z) / direction.z,
+    )
+    const collisionPoint = origin.add(direction.mul(intersectTime));
+
     return { collisionPoint, block };
   }
 
@@ -62,7 +60,7 @@ export class Raycast {
     let entResult: Entity[] = [];
     try {
       entResult = this.entityCast(origin, direction, properties, entityFilter);
-    } catch {}
+    } catch { }
     if (entResult.length <= 0 || !properties.stopAfterEntities()) {
       try {
         var { collisionPoint, block } = this.blockCast(
@@ -70,7 +68,7 @@ export class Raycast {
           direction,
           properties
         );
-      } catch {}
+      } catch { }
     }
     return new RaycastResult(
       origin,
