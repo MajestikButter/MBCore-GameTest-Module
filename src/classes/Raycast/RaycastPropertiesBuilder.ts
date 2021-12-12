@@ -1,6 +1,6 @@
-import RaycastProperties from "./RaycastProperties.js";
+import { RaycastProperties } from "./RaycastProperties.js";
 
-export default class RaycastPropertiesBuilder {
+export class RaycastPropertiesBuilder {
   private liquidCollision = false;
   private passableCollision = false;
   private _maxDistance = 10;

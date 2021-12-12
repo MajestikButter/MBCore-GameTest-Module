@@ -1,9 +1,9 @@
 import { Entity, world } from "mojang-minecraft";
 import { Vector3 } from "../Vector3.js";
-import RaycastProperties from "./RaycastProperties.js";
-import RaycastResult from "./RaycastResult.js";
+import { RaycastProperties } from "./RaycastProperties.js";
+import { RaycastResult } from "./RaycastResult.js";
 
-export default class Raycast {
+export class Raycast {
   private static entityCast(
     origin: Vector3,
     direction: Vector3,

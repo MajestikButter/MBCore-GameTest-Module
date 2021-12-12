@@ -1,7 +1,7 @@
 import { BlockRaycastOptions, EntityRaycastOptions } from "mojang-minecraft";
-import RaycastPropertiesBuilder from "./RaycastPropertiesBuilder.js";
+import { RaycastPropertiesBuilder } from "./RaycastPropertiesBuilder.js";
 
-export default class RaycastProperties {
+export class RaycastProperties {
   static builder() {
     return new RaycastPropertiesBuilder();
   }
