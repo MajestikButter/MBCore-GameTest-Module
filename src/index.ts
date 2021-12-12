@@ -15,6 +15,10 @@ export * from "./classes/Scoreboard.js";
 export * from "./classes/Selector.js";
 export * from "./classes/Vector2.js";
 export * from "./classes/Vector3.js";
+export * from "./classes/Raycast/Raycast.js";
+export * from "./classes/Raycast/RaycastProperties.js";
+export * from "./classes/Raycast/RaycastPropertiesBuilder.js";
+export * from "./classes/Raycast/RaycastResult.js";
 
 export * from "./functions/TickInterval.js";
 export * from "./functions/TickTimeout.js";
