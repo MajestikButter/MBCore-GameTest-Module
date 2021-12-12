@@ -1,4 +1,4 @@
-class EventListener {
+export class EventListener {
   eventName: string;
   callback: (...args: any[]) => any;
   type: "once" | "always";
