@@ -6,12 +6,13 @@ import {
   EntityRaycastOptions,
   Player,
 } from "mojang-minecraft";
+import { Vector3, Vector2 } from "gametest-maths";
+
 import * as uuid from "../libraries/uuid.js";
+
 import { CommandHandler } from "./CommandHandler.js";
 import { Selector } from "./Selector.js";
-import { Vector2 } from "./Vector2.js";
 import { Scoreboard } from "./Scoreboard.js";
-import { Vector3 } from "./Vector3.js";
 import { DimensionIds } from "../types/DimensionIds.js";
 import { JSONRequest } from "./JSONRequest.js";
 import { CommandResult } from "../types/CommandResult.js";
@@ -124,7 +125,7 @@ export class MBCPlayer {
           JSON.stringify({
             channel: "getPlayerDirectionVector",
             id,
-            plrPos: Vector3.fromLocation(this.player.location).toJSON(),
+            plrPos: new Vector3(this.player.location),
           })
         ).slice(1, -1)}" ^^^1`
       );
@@ -287,8 +288,8 @@ export class MBCPlayer {
 }
 
 JSONRequest.on("getPlayerDirectionVector", (evd) => {
-  let dirCalcVec = Vector3.fromLocation(evd.orgEvd.source.location);
-  let plrPos = Vector3.fromObject(evd.request.plrPos);
+  let dirCalcVec = new Vector3(evd.orgEvd.source.location);
+  let plrPos = new Vector3(evd.request.plrPos);
   let dirVec = dirCalcVec.sub(plrPos).normalize();
 
   directionRequests.get(evd.request.id)({ origin: plrPos, direction: dirVec });

@@ -1,9 +1,8 @@
+import { Vector2, Vector3 } from "gametest-maths";
 import { world } from "mojang-minecraft";
 import { Gamemode } from "../types/Gamemode.js";
 import { SelectorType } from "../types/SelectorType.js";
 import { CommandHandler } from "./CommandHandler.js";
-import { Vector2 } from "./Vector2.js";
-import { Vector3 } from "./Vector3.js";
 
 export class Selector {
   /**

@@ -1,8 +1,8 @@
+import { Vector3 } from "gametest-maths";
 import { BeforeExplosionEvent, world } from "mojang-minecraft";
 import { EventEmitter } from "./EventEmitter.js";
 import { Scoreboard } from "./Scoreboard.js";
 import { Selector } from "./Selector.js";
-import { Vector3 } from "./Vector3.js";
 
 let JSONIdObj = Scoreboard.initialize("mbcJSONId");
 
@@ -36,7 +36,7 @@ world.events.beforeExplosion.subscribe((evd) => {
   let entSelector = new Selector("e");
   entSelector.count = 1;
   entSelector.type = "mbc:jsonrequest";
-  entSelector.pos = Vector3.fromLocation(evd.source.location);
+  entSelector.pos = new Vector3(evd.source.location);
   let id = JSONIdObj.get(entSelector);
 
   try {

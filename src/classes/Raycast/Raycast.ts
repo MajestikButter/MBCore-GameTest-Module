@@ -1,5 +1,5 @@
+import { Vector3 } from "gametest-maths";
 import { Entity, world } from "mojang-minecraft";
-import { Vector3 } from "../Vector3.js";
 import { RaycastProperties } from "./RaycastProperties.js";
 import { RaycastResult } from "./RaycastResult.js";
 
@@ -36,7 +36,7 @@ export class Raycast {
         opts.getOptions().block
       );
 
-    let planes = Vector3.fromBlockLocation(block.location);
+    let planes = new Vector3(block.location);
     if (planes.x < origin.x) planes.x++;
     if (planes.y < origin.y) planes.y++;
     if (planes.z < origin.z) planes.z++;

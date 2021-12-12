@@ -1,5 +1,5 @@
+import { Vector3 } from "gametest-maths";
 import { Block, Entity } from "mojang-minecraft";
-import { Vector3 } from "../Vector3.js";
 import { RaycastProperties } from "./RaycastProperties.js";
 
 export class RaycastResult {
@@ -49,7 +49,7 @@ export class RaycastResult {
   }
 
   getDistanceFromEntity(entity: Entity) {
-    return Vector3.fromLocation(entity.location).sub(this.origin).magnitude;
+    return new Vector3(entity.location).sub(this.origin).length();
   }
 
   constructor(
