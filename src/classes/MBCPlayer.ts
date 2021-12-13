@@ -39,6 +39,14 @@ export class MBCPlayer {
     return new this(playerId);
   }
 
+  static getOnline(): MBCPlayer[] {
+    const res = CommandHandler.run('list');
+    
+    if (res.error) return [];
+
+    return res.result.players.map((v: string) => this.get(v));
+  }
+
   /**
    * A number representing this Player's id
    * @readonly
@@ -109,6 +117,14 @@ export class MBCPlayer {
   get inventory() {
     let inv = this.player.getComponent("inventory") as EntityInventoryComponent;
     return inv;
+  }
+
+  /**
+   * The player's position Vector3
+   * @readonly
+   */
+  get position() {
+    return new Vector3(this.player.location);
   }
 
   /**

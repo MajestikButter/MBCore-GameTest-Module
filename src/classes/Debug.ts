@@ -19,12 +19,12 @@ export class Debug {
    * Make console.log() output to chat
    * @default true
    */
-  static outputConsoleLogToChat: true;
+  static outputConsoleLogToChat = true;
   /**
    * Make console.error() output to chat
    * @default true
    */
-  static outputConsoleErrorToChat: true;
+  static outputConsoleErrorToChat = true;
 
   static visualize(
     origin: Vector3,

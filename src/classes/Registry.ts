@@ -1,21 +1,4 @@
-let Registries: { [id: string]: Registry<any, any> } = {};
-
 export class Registry<K, V> {
-  /**
-   * Gets/creates a registry
-   * @param id A string id referring the a registry
-   * @returns
-   */
-  static get<K, V>(id: string) {
-    if (!Registries[id]) Registries[id] = new Registry(id);
-    return Registries[id] as Registry<K, V>;
-  }
-
-  /**
-   * Registry id
-   * @readonly
-   */
-  id: string;
   /**
    * Registry object
    */
@@ -27,7 +10,7 @@ export class Registry<K, V> {
    * @param val
    * @returns
    */
-  register(key: K, val: V) {
+  register(key: K, val: V): V {
     this.registry.set(key, val);
     return this.registry.get(key);
   }
@@ -37,7 +20,7 @@ export class Registry<K, V> {
    * @param key A string id referring to an entry
    * @returns A boolean representing whether a registry entry exists or not
    */
-  has(key: K) {
+  has(key: K): boolean {
     return this.registry.has(key);
   }
 
@@ -46,9 +29,9 @@ export class Registry<K, V> {
    * @param key A string id referring to an entry
    * @returns A registry entry
    */
-  get(key: K) {
+  get(key: K): V {
     if (!this.has(key))
-      throw new Error(`${key} is not a valid registry entry on ${this.id}`);
+      throw new Error(`${key} is not a valid registry entry`);
     return this.registry.get(key);
   }
 
@@ -56,7 +39,7 @@ export class Registry<K, V> {
    * Get all this registry's entries
    * @returns An array of all the registry entries
    */
-  getValues() {
+  getValues(): V[] {
     let res = [];
     for (let v of this.registry.values()) {
       res.push(v);
@@ -68,15 +51,11 @@ export class Registry<K, V> {
    * Gets all the ids for this registry's entries
    * @returns An array of all the entry ids in this registry
    */
-  getKeys() {
+  getKeys(): K[] {
     let res = [];
     for (let v of this.registry.keys()) {
       res.push(v);
     }
     return res;
-  }
-
-  private constructor(id: string) {
-    this.id = id;
   }
 }
