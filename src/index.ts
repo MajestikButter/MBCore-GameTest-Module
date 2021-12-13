@@ -18,7 +18,7 @@ export * from "./classes/Raycast/RaycastProperties.js";
 export * from "./classes/Raycast/RaycastPropertiesBuilder.js";
 export * from "./classes/Raycast/RaycastResult.js";
 
-export * from "./enums/Particle.js";
+export * from "./enums/MinecraftParticles.js";
 
 export * from "./functions/TickInterval.js";
 export * from "./functions/TickTimeout.js";

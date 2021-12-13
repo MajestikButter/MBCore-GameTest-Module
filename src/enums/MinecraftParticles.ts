@@ -1,4 +1,4 @@
-export enum Particle {
+export enum MinecraftParticles {
   arrowSpellEmitter = "minecraft:arrow_spell_emitter",
   balloonGas = "minecraft:balloon_gas_particle",
   basicBubble = "minecraft:basic_bubble_particle",

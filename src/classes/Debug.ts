@@ -1,6 +1,6 @@
 import { Vector3 } from "gametest-maths";
 import { world } from "mojang-minecraft";
-import { Particle } from "../enums/Particle.js";
+import { MinecraftParticles } from "../enums/MinecraftParticles.js";
 import { CommandHandler } from "./CommandHandler.js";
 
 /**
@@ -30,7 +30,7 @@ export class Debug {
     origin: Vector3,
     direction: Vector3,
     dimension = world.getDimension("overworld"),
-    particle = Particle,
+    particle: string = MinecraftParticles.basicFlame,
     segments = 10
   ) {
     for (let i = 0; i < 1; i += 1 / segments) {
