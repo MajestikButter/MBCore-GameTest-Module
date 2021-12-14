@@ -134,36 +134,35 @@ export class MBCPlayer {
   }
 
   /**
-   *
-   * @returns
-   * @throws
+   * Gets a direction Vector3 based on the player's facing direction
+   * @returns Normalized Direction Vector3
+   * @throws If command fails to return position (may be due to unloaded chunks)
    */
   getDirectionVectors() {
-      const r = this.executeCommand(
-        `summon mbc:jsonrequest "$JSONRequest:{\\"channel\\":\\"\\"}" ^^^1`
-      );
-      if (r.error) {
-        throw new Error('Failed to get direction vectors');
-      }
+    const r = this.executeCommand(
+      `summon mbc:jsonrequest "$JSONRequest:{\\"channel\\":\\"\\"}" ^^^1`
+    );
+    if (r.error) {
+      throw new Error("Failed to get direction vectors");
+    }
 
-      let dirVec = new Vector3(r.result.spawnPos);
-      dirVec.sub(this.position).normalize();
-    
-      return { origin: this.position, direction: dirVec };
+    let dirVec = new Vector3(r.result.spawnPos);
+    dirVec.sub(this.position).normalize();
+
+    return { origin: this.position, direction: dirVec };
   }
 
   /**
-   *
-   * @returns
+   * Gets the player's current rotation based on the direction vector.
+   * Fetches current direction vector if none is supplied.
+   * @returns A Vector2 containing the rotation in degrees
    */
-  getRotation() {
-      const v = this.getDirectionVectors()
-        const conv = 180 / Math.PI;
-        const dir = v.direction;
-          return new Vector2(
-            Math.asin(-dir.y) * conv,
-            Math.atan2(-dir.x, dir.z) * conv
-          )
+  getRotation(dir = this.getDirectionVectors().direction) {
+    const conv = 180 / Math.PI;
+    return new Vector2(
+      Math.asin(-dir.y) * conv,
+      Math.atan2(-dir.x, dir.z) * conv
+    );
   }
 
   /**
@@ -240,9 +239,7 @@ export class MBCPlayer {
   executeCommand(cmd: string): CommandResult {
     try {
       return {
-        result: this.player.runCommand(
-          cmd
-        ),
+        result: this.player.runCommand(cmd),
         error: false,
       };
     } catch (err) {
