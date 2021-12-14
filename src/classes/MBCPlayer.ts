@@ -40,11 +40,17 @@ export class MBCPlayer {
   }
 
   static getOnline(): MBCPlayer[] {
-    const res = CommandHandler.run('list');
-    
+    const res = CommandHandler.run("list");
+
     if (res.error) return [];
 
-    return res.result.players.map((v: string) => this.get(v));
+    return res.result.players
+      .split(", ")
+      .map((v: string) => {
+        const p = this.get(v);
+        return p.isOnline() ? p : undefined;
+      })
+      .filter((v: MBCPlayer) => v);
   }
 
   /**
@@ -130,22 +136,20 @@ export class MBCPlayer {
   /**
    *
    * @returns
+   * @throws
    */
   getDirectionVectors() {
-    return new Promise<{ direction: Vector3; origin: Vector3 }>((resolve) => {
-      let id = uuid.v4();
-      directionRequests.set(id, resolve);
-
-      this.executeCommand(
-        `summon mbc:jsonrequest "$JSONRequest:${JSON.stringify(
-          JSON.stringify({
-            channel: "getPlayerDirectionVector",
-            id,
-            plrPos: new Vector3(this.player.location),
-          })
-        ).slice(1, -1)}" ^^^1`
+      const r = this.executeCommand(
+        `summon mbc:jsonrequest "$JSONRequest:{\\"channel\\":\\"\\"}" ^^^1`
       );
-    });
+      if (r.error) {
+        throw new Error('Failed to get direction vectors');
+      }
+
+      let dirVec = new Vector3(r.result.spawnPos);
+      dirVec.sub(this.position).normalize();
+    
+      return { origin: this.position, direction: dirVec };
   }
 
   /**
@@ -153,18 +157,13 @@ export class MBCPlayer {
    * @returns
    */
   getRotation() {
-    return new Promise<Vector2>((resolve) => {
-      this.getDirectionVectors().then((v) => {
+      const v = this.getDirectionVectors()
         const conv = 180 / Math.PI;
         const dir = v.direction;
-        resolve(
-          new Vector2(
+          return new Vector2(
             Math.asin(-dir.y) * conv,
             Math.atan2(-dir.x, dir.z) * conv
           )
-        );
-      });
-    });
   }
 
   /**
@@ -242,13 +241,13 @@ export class MBCPlayer {
     try {
       return {
         result: this.player.runCommand(
-          `execute ${this.toSelector()} ~~~ ${cmd}`
+          cmd
         ),
         error: false,
       };
     } catch (err) {
       return {
-        result: err,
+        result: JSON.parse(err),
         error: true,
       };
     }
@@ -302,12 +301,3 @@ export class MBCPlayer {
     this.id = id;
   }
 }
-
-JSONRequest.on("getPlayerDirectionVector", (evd) => {
-  let dirVec = new Vector3(evd.orgEvd.source.location);
-  let plrPos = new Vector3(evd.request.plrPos);
-  dirVec.sub(plrPos).normalize();
-
-  directionRequests.get(evd.request.id)({ origin: plrPos, direction: dirVec });
-  directionRequests.delete(evd.request.id);
-});

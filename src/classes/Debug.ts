@@ -34,7 +34,7 @@ export class Debug {
     segments = 10
   ) {
     for (let i = 0; i < 1; i += 1 / segments) {
-      let p = origin.add(direction.mul(i));
+      let p = origin.add(direction.mul(i, new Vector3()), new Vector3());
       try {
         dimension.runCommand(
           `particle ${particle} ${p.x.toFixed(2)} ${p.y.toFixed(
