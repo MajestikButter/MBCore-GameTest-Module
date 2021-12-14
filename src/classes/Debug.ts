@@ -21,11 +21,25 @@ export class Debug {
    */
   static outputConsoleLogToChat = true;
   /**
+   * Make console.warn() output to chat
+   * @default true
+   */
+  static outputConsoleWarnToChat = true;
+  /**
    * Make console.error() output to chat
    * @default true
    */
   static outputConsoleErrorToChat = true;
 
+  /**
+   * Visualizes a Vector by using particles
+   * @param origin The start position for the visualization
+   * @param direction The direction to cast the visualization in (length is also determined by this direction)
+   * @param dimension Optional Dimension to visualize in. Set to 'overworld' by default
+   * @param particle Optional particle id string used to specify what particle to use in the visualization
+   * Set to 'minecraft:basic_flame_particle' by default
+   * @param segments Optional number specifying how many points to visualize. Set to 10 by default
+   */
   static visualize(
     origin: Vector3,
     direction: Vector3,
@@ -92,6 +106,15 @@ console.log = function (...data: any[]) {
   if (!Debug.outputConsoleLogToChat) return;
 
   logToChat(data, "§b[Info] §r");
+};
+
+const warnFunc = console.warn;
+console.warn = function (...data: any[]) {
+  warnFunc.apply(console, arguments);
+
+  if (!Debug.outputConsoleWarnToChat) return;
+
+  logToChat(data, "§6[Warn] §r");
 };
 
 const errorFunc = console.error;
