@@ -1,6 +1,6 @@
 {
   "name": "mbcore-gametest",
-  "version": "1.7.6",
+  "version": "1.8.0",
   "description": "A set of scripts aimed to make some things easier with the GameTest Framework.",
   "main": "src/index.ts",
   "directories": {
