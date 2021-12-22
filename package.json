@@ -22,7 +22,9 @@
   "homepage": "https://github.com/MajestikButter/MBCore-GameTest-Module#readme",
   "dependencies": {
     "@types/mojang-minecraft": "^0.1.2",
-    "gametest-maths": "^1.0.5",
+    "gametest-maths": "^1.0.5"
+  },
+  "devDependencies": {
     "typedoc-plugin-extras": "^2.2.1"
   }
 }

@@ -5,6 +5,8 @@ import {
   BlockRaycastOptions,
   EntityRaycastOptions,
   Player,
+  EntityQueryScoreOptions,
+  EntityQueryOptions,
 } from "mojang-minecraft";
 import { Vector3, Vector2 } from "gametest-maths";
 
@@ -27,16 +29,16 @@ const directionRequests = new Map<
 export class MBCPlayer {
   /**
    * Gets the Player class for the specified player id
-   * @param playerId A number or string representing the player's id or name
+   * @param mbcPlayerId A number or string representing the player's id or name
    * @returns A Player class representing the specified player
    */
-  static get(playerId: number | string | Player) {
-    if (typeof playerId === "string") {
-      playerId = playerIdObj.get(playerId);
-    } else if (playerId instanceof Player) {
-      playerId = playerIdObj.get(`"${playerId.nameTag}"`);
+  static get(mbcPlayerId: number | string | Player) {
+    if (typeof mbcPlayerId === "string") {
+      mbcPlayerId = playerIdObj.get(mbcPlayerId);
+    } else if (mbcPlayerId instanceof Player) {
+      mbcPlayerId = playerIdObj.get(`"${mbcPlayerId.nameTag}"`);
     }
-    return new this(playerId);
+    return new this(mbcPlayerId);
   }
 
   static getOnline(): MBCPlayer[] {
@@ -71,10 +73,14 @@ export class MBCPlayer {
     CommandHandler.run(
       `effect ${this.toSelector().toString()} fatal_poison 1 124 true`
     );
-    let player = world.getPlayers().find((v) => {
-      let eff = v.getEffect(MinecraftEffectTypes.fatalPoison);
-      return eff && eff.amplifier === 124;
-    });
+    const query = new EntityQueryOptions();
+    const queryScore = new EntityQueryScoreOptions();
+    queryScore.objective = 'mbcPlayerId';
+    queryScore.exclude = false;
+    queryScore.maxScore = this.id;
+    queryScore.minScore = this.id;
+    query.scoreOptions = [ queryScore ];
+    let player = [...world.getPlayers(query)][0];
     if (player)
       CommandHandler.run(
         `effect ${this.toSelector().toString()} fatal_poison 0 0 true`
@@ -243,8 +249,13 @@ export class MBCPlayer {
         error: false,
       };
     } catch (err) {
+      try {
+        var result = JSON.parse(err)
+      } catch (err2) {
+        throw err;
+      }
       return {
-        result: JSON.parse(err),
+        result,
         error: true,
       };
     }
@@ -284,7 +295,7 @@ export class MBCPlayer {
   }
 
   /**
-   * A basic selector that refers to the player via playerId
+   * A basic selector that refers to the player via mbcPlayerId
    */
   toSelector() {
     let selector = new Selector(`a`);

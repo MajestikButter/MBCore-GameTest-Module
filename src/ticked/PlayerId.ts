@@ -12,7 +12,7 @@ world.events.tick.subscribe((evd) => {
     mbcPlayerId: 0,
   };
   if (selector.eval()) {
-    playerIdObj.set(selector, playerIdObj.get("#currentId"));
-    playerIdObj.add("#currentId", 1);
+    playerIdObj.set(selector, playerIdObj.get('"#currentId"'));
+    playerIdObj.add('"#currentId"', 1);
   }
 });

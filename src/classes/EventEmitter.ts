@@ -73,6 +73,14 @@ export class EventEmitter {
   }
 
   /**
+   * Stops listening to an event
+   * @param eventListener 
+   */
+  off(eventListener: EventListener) {
+    this.removeListener(eventListener);
+  }
+
+  /**
    * Fires all listeners attached to the specified event
    * @param eventName The event to fire on
    * @param args Arguments passed to the listener callbacks

@@ -32,6 +32,12 @@ export class Debug {
   static outputConsoleErrorToChat = true;
 
   /**
+   * Max formatter depth
+   * @default 3
+   */
+  static maxFormatterDepth = 3;
+
+  /**
    * Visualizes a Vector by using particles
    * @param origin The start position for the visualization
    * @param direction The direction to cast the visualization in (length is also determined by this direction)
@@ -60,43 +66,55 @@ export class Debug {
   }
 }
 
-function logToChat(data: any[], prefix = "") {
-  // Source: https://wiki.bedrock.dev/scripting/scripting-intro.html#log
-  function toString(item: any): string {
-    if (item instanceof Error) {
-      return `${item.name} ${item.message} ${item.stack}`;
+function formatObject(item: any, layer: number): string {
+  const name = item.constructor.name;
+  if (layer > Debug.maxFormatterDepth) return `§5${name}`;
+
+  switch (name) {
+    case 'Array': {
+      return `§2[${item.map((v: any) => format(v, layer + 1)).join('§a, ')}§2]`;
     }
-    switch (Object.prototype.toString.call(item)) {
-      case "[object Undefined]":
-        return "undefined";
-      case "[object Null]":
-        return "null";
-      case "[object String]":
-        return `"${item}"`;
-      case "[object Array]":
-        const array = item.map(toString);
-        return `[${array.join(", ")}]`;
-      case "[object Object]":
-        const object = Object.keys(item).map(
-          (key) => `${key}: ${toString(item[key])}`
-        );
-        return `{${object.join(", ")}}`;
-      case "[object Function]":
-        return `Function ${item.name}`;
-      case "[object Map]":
-        return `Map`;
-      default:
-        return item;
+    default: {
+      const object: string[] = Object.keys(item).map(
+        (key) => {
+          return `§6${key}§d: ${format(item[key], layer + 1)}`
+        }
+      );
+      return `§5${name} §d{${object.join("§a, ")}§d}`;
     }
   }
+}
 
-  let msg = data.map(toString).join(" ");
+function formatNonObject(item: any) {
+  switch (Object.prototype.toString.call(item)) {
+    case '[object Undefined]': 
+      return '§9undefined';
+    case "[object Null]":
+      return "§9null";
+    case "[object String]":
+      return `§6"§e${item}§6"`;
+    default:
+      return `${item}`
+  }
+}
 
+function format(data: any, layer = 0) {
+  if (typeof data === 'object') {
+    return formatObject(data, layer);
+  } else {
+    return formatNonObject(data);
+  }
+}
+
+function sendDevLog(msg: string, prefix: string) {
   CommandHandler.run(
     `tellraw @a[tag=devLog] {"rawtext":[{"text":"${prefix}${JSON.stringify(
       msg
     ).slice(1)}}]}`
   );
+}
+function formatArgs(data: any[]) {
+  return data.map(v=>format(v)).join(' ');
 }
 
 const logFunc = console.log;
@@ -105,7 +123,7 @@ console.log = function (...data: any[]) {
 
   if (!Debug.outputConsoleLogToChat) return;
 
-  logToChat(data, "§b[Info] §r");
+  sendDevLog(formatArgs(data), "§b[Info] §r");
 };
 
 const warnFunc = console.warn;
@@ -114,7 +132,7 @@ console.warn = function (...data: any[]) {
 
   if (!Debug.outputConsoleWarnToChat) return;
 
-  logToChat(data, "§6[Warn] §r");
+  sendDevLog(formatArgs(data), "§6[Warn] §r");
 };
 
 const errorFunc = console.error;
@@ -123,5 +141,5 @@ console.error = function (...data: any[]) {
 
   if (!Debug.outputConsoleErrorToChat) return;
 
-  logToChat(data, "§4[Error] §c");
+  sendDevLog(formatArgs(data), "§4[Error] §c");
 };
