@@ -93,6 +93,8 @@ function formatNonObject(item: any) {
       return "§9null";
     case "[object String]":
       return `§6"§e${item}§6"`;
+    case '[object Function]':
+      return `§5Function ${item.name}`;
     default:
       return `${item}`
   }
