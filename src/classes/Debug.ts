@@ -82,6 +82,10 @@ function formatObject(item: any, layer: number, indent: string, maxDepth: number
   const name = item.constructor.name;
   if (layer > maxDepth) return `§5${name}`;
 
+  if (item instanceof Error) {
+    return `${item.name}: ${item.message}\n${item.stack}`;
+  }
+
   if (indent) {
     switch (name) {
       case 'Array': {
