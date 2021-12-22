@@ -26,14 +26,16 @@ export class EventEmitter {
     type: "once" | "always"
   ) {
     let event = this.events[eventName];
+    const listener = new EventListener(eventName, type, eventCallback);
     if (!event) {
       event = {
-        listeners: [new EventListener(eventName, type, eventCallback)],
+        listeners: [listener],
       };
     } else {
-      event.listeners.push(new EventListener(eventName, type, eventCallback));
+      event.listeners.push(listener);
     }
     this.events[eventName] = event;
+    return listener;
   }
 
   private removeListener(listener: EventListener) {
@@ -60,7 +62,7 @@ export class EventEmitter {
    * @param eventCallback The function to call when the specified event is fired
    */
   on(eventName: string, eventCallback: (...args: any[]) => any) {
-    this.addListener(eventName, eventCallback, "always");
+    return this.addListener(eventName, eventCallback, "always");
   }
 
   /**
@@ -69,7 +71,7 @@ export class EventEmitter {
    * @param eventCallback The function to call when the specified event is fired
    */
   once(eventName: string, eventCallback: (...args: any[]) => any) {
-    this.addListener(eventName, eventCallback, "once");
+    return this.addListener(eventName, eventCallback, "once");
   }
 
   /**

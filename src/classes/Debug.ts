@@ -64,23 +64,51 @@ export class Debug {
       } catch {}
     }
   }
+
+  /**
+   * Format data into a colored string
+   * @param data Data to format
+   * @param indent A string used to indent
+   * @param maxDepth The max depth to format to
+   * @returns A formatted string version of the data
+   */
+  static format(data: any, indent?: string, maxDepth?: number) {
+    return format(data, 0, indent, maxDepth);
+  }
 }
 
-function formatObject(item: any, layer: number): string {
+function formatObject(item: any, layer: number, indent: string, maxDepth: number): string {
+  const lineStart = indent.repeat(layer);
   const name = item.constructor.name;
-  if (layer > Debug.maxFormatterDepth) return `§5${name}`;
+  if (layer > maxDepth) return `§5${name}`;
 
-  switch (name) {
-    case 'Array': {
-      return `§2[${item.map((v: any) => format(v, layer + 1)).join('§a, ')}§2]`;
-    }
-    default: {
-      const object: string[] = Object.keys(item).map(
-        (key) => {
-          return `§6${key}§d: ${format(item[key], layer + 1)}`
+  if (indent) {
+    switch (name) {
+      case 'Array': {
+        return item.length > 0 ? `§2[\n${lineStart + indent}${item.map(
+          (v: any) => format(v, layer + 1, indent, maxDepth)).join(`§a, \n${lineStart + indent}`
+        )}§2\n${lineStart}]` : `§2[]`;
+      }
+      default: {
+        const object: string[] = [];
+        for (let k in item) {
+          object.push(`\n${lineStart + indent}§6${k}§d: ${format(item[k], layer + 1, indent, maxDepth)}`)
         }
-      );
-      return `§5${name} §d{${object.join("§a, ")}§d}`;
+        return `§5${name} §d{${object.join("§a, ")}\n${lineStart}§d}`;
+      }
+    }
+  } else {
+    switch (name) {
+      case 'Array': {
+        return `§2[${item.map((v: any) => format(v, layer + 1, indent, maxDepth)).join(`§a, `)}§2]`;
+      }
+      default: {
+        const object: string[] = [];
+        for (let k in item) {
+          object.push(`§6${k}§d: ${format(item[k], layer + 1, indent, maxDepth)}`)
+        }
+        return `§5${name} §d{${object.join("§a, ")}§d}`;
+      }
     }
   }
 }
@@ -100,9 +128,9 @@ function formatNonObject(item: any) {
   }
 }
 
-function format(data: any, layer = 0) {
+function format(data: any, layer = 0, indent = '', maxDepth = Debug.maxFormatterDepth) {
   if (typeof data === 'object') {
-    return formatObject(data, layer);
+    return formatObject(data, layer, indent, maxDepth);
   } else {
     return formatNonObject(data);
   }
