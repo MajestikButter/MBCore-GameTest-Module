@@ -1,6 +1,5 @@
 import {
   EntityInventoryComponent,
-  MinecraftEffectTypes,
   world,
   BlockRaycastOptions,
   EntityRaycastOptions,
@@ -10,21 +9,13 @@ import {
 } from "mojang-minecraft";
 import { Vector3, Vector2 } from "gametest-maths";
 
-import * as uuid from "../libraries/uuid.js";
-
 import { CommandHandler } from "./CommandHandler.js";
 import { Selector } from "./Selector.js";
 import { Scoreboard } from "./Scoreboard.js";
 import { DimensionIds } from "../types/DimensionIds.js";
-import { JSONRequest } from "./JSONRequest.js";
 import { CommandResult } from "../types/CommandResult.js";
 
 let playerIdObj = Scoreboard.initialize("mbcPlayerId");
-
-const directionRequests = new Map<
-  string,
-  (value: { direction: Vector3; origin: Vector3 }) => void
->();
 
 export class MBCPlayer {
   /**
