@@ -133,7 +133,7 @@ function formatNonObject(item: any) {
 }
 
 function format(data: any, layer = 0, indent = '', maxDepth = Debug.maxFormatterDepth) {
-  if (typeof data === 'object') {
+  if (typeof data === 'object' && data !== null) {
     return formatObject(data, layer, indent, maxDepth);
   } else {
     return formatNonObject(data);
