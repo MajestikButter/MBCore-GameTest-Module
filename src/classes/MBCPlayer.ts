@@ -76,7 +76,7 @@ export class MBCPlayer {
       CommandHandler.run(
         `effect ${this.toSelector().toString()} fatal_poison 0 0 true`
       );
-    return player;
+    return player as Player;
   }
 
   /**
