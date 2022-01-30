@@ -15,14 +15,11 @@ export class Slider extends FormComponent<"slider"> {
     default?: number;
   }) {
     super("slider");
+    
     this.label = data.label ?? "Slider";
     this.minVal = data.minVal;
     this.maxVal = data.maxVal;
     this.valStep = data.valStep ?? 1;
     this.default = data.default ?? this.minVal;
-  }
-
-  toArgs() {
-    return [this.label, this.minVal, this.maxVal, this.valStep, this.default];
   }
 }

@@ -13,8 +13,4 @@ export class Toggle extends FormComponent<"toggle"> {
     this.label = data.label ?? 'Toggle';
     this.default = data.default ?? false;
   }
-
-  toArgs() {
-    return [this.label, this.default];
-  }
 }

@@ -31,12 +31,9 @@ export class DropDown extends FormComponent<"dropdown"> {
     default?: number;
   }) {
     super("dropdown");
+    
     this.label = data.label ?? "Drop-down";
     this.options = data.options;
     this.default = data.default ?? 0;
-  }
-
-  toArgs() {
-    return [this.label, this.options, this.default];
   }
 }

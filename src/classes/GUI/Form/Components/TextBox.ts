@@ -16,8 +16,4 @@ export class TextBox extends FormComponent<"textbox"> {
     this.placeholder = data.placeholder ?? "Placeholder";
     this.default = data.default;
   }
-
-  toArgs() {
-    return [this.label, this.placeholder, this.default];
-  }
 }
