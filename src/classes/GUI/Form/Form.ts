@@ -21,6 +21,9 @@ interface nativeDataType {
 type nativeResponseTypes = nativeResponseType[keyof nativeResponseType]
 
 export abstract class Form<formType extends keyof nativeResponseType> {
+  /**
+   * The type of Form
+   */
   type: formType;
 
   constructor(type: formType) {

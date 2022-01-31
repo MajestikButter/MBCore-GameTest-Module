@@ -2,9 +2,13 @@ type formComponents = "slider" | "button" | "textbox" | "dropdown" | "toggle";
 
 export class FormComponent<type extends formComponents> {
   /**
-   * Type of this FormComponent
+   * The type of FormComponent
    */
   type: type;
+
+  protected setDef(curr: any, to: any) {
+    return curr === undefined ? to : curr;
+  }
 
   constructor(type: type) {
     this.type = type;

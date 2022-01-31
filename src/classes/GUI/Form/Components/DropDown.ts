@@ -14,10 +14,14 @@ export class DropDown extends FormComponent<"dropdown"> {
    */
   default: number;
 
+  /**
+   * Creates a new drop-down with the provided data
+   * @param data The data to build the drop-down with
+   */
   constructor(data: {
     /**
      * The label of the dropdown
-     * @default Text Label
+     * @default "Drop-down"
      */
     label?: string;
     /**
@@ -31,9 +35,9 @@ export class DropDown extends FormComponent<"dropdown"> {
     default?: number;
   }) {
     super("dropdown");
-    
-    this.label = data.label ?? "Drop-down";
+
+    this.label = this.setDef(data.label, "Drop-down");
     this.options = data.options;
-    this.default = data.default ?? 0;
+    this.default = this.setDef(data.default, 0);
   }
 }
