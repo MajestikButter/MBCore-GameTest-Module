@@ -6,8 +6,8 @@ import { TextBox } from "./Components/TextBox.js";
 import { Toggle } from "./Components/Toggle.js";
 import { Form } from "./Form.js";
 
-type ModalComponent = DropDown | Slider | TextBox | Toggle;
-type ModalResponse = {
+export type ModalComponent = DropDown | Slider | TextBox | Toggle;
+export type ModalResponse = {
   [componentId: string]:
     | { value: string; index: number }
     | string

@@ -29,6 +29,8 @@ export * from "./types/Target.js";
 export * from "./types/SelectorType.js";
 export * from "./types/CommandResult.js";
 
+export * from "./classes/GUI/index.js";
+
 import "./ticked/index.js";
 
 console.log("§l§aLoading §bMBCore Module v1.2.0");
