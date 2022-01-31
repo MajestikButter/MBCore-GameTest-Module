@@ -33,4 +33,4 @@ export * from "./classes/GUI/index.js";
 
 import "./ticked/index.js";
 
-console.log("§l§aLoading §bMBCore Module v1.2.0");
+console.log("§l§aLoading §bMBCore Module v1.10.2");
