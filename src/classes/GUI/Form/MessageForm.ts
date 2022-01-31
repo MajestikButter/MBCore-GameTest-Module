@@ -28,9 +28,9 @@ export class MessageForm extends Form<"message"> {
   }) {
     super("message");
 
-    this.text = data.text ?? "";
-    this.title = data.title ?? "Modal Form";
-    this.buttons = data.buttons ?? [new Button({}), new Button({})];
+    this.text = this.setDef(data.text, "");
+    this.title = this.setDef(data.title, "Modal Form");
+    this.buttons = this.setDef(data.buttons, [new Button({}), new Button({})]);
   }
 
   protected createForm() {

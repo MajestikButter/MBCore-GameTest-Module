@@ -47,8 +47,8 @@ export class ModalForm extends Form<"modal"> {
   }) {
     super("modal");
     this.icon = data.icon;
-    this.title = data.title ?? "Modal Form";
-    this.components = data.components ?? [];
+    this.title = this.setDef(data.title, "Modal Form");
+    this.components = this.setDef(data.components, []);
   }
 
   /**

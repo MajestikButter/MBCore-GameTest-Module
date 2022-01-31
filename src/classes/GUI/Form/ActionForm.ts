@@ -45,9 +45,9 @@ export class ActionForm extends Form<"action"> {
     buttons?: ActionForm["buttons"];
   }) {
     super("action");
-    this.text = data.text ?? "";
-    this.title = data.title ?? "Modal Form";
-    this.buttons = data.buttons ?? [];
+    this.text = this.setDef(data.text, "");
+    this.title = this.setDef(data.title, "Modal Form");
+    this.buttons = this.setDef(data.buttons, []);
   }
 
   /**

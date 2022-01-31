@@ -18,7 +18,7 @@ interface nativeDataType {
   message: MessageFormData;
   modal: ModalFormData;
 }
-type nativeResponseTypes = nativeResponseType[keyof nativeResponseType]
+type nativeResponseTypes = nativeResponseType[keyof nativeResponseType];
 
 export abstract class Form<formType extends keyof nativeResponseType> {
   /**
@@ -37,6 +37,10 @@ export abstract class Form<formType extends keyof nativeResponseType> {
     response: nativeResponseTypes,
     onCancel?: (plr: MBCPlayer) => void
   ): void;
+
+  protected setDef(curr: any, to: any) {
+    return curr === undefined ? to : curr;
+  }
 
   send(
     plr: MBCPlayer | MBCPlayer[],
