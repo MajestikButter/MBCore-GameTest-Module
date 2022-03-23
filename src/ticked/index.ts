@@ -1,1 +1,1 @@
-import './PlayerId.js';
+import 'mbcore-gametest/src/ticked/uid';

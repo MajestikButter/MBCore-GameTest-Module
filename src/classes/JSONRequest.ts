@@ -31,7 +31,7 @@ export const JSONRequest: JSONRequestEmitter = new EventEmitter();
 
 // Emitting
 world.events.beforeExplosion.subscribe((evd) => {
-  if (!evd.source.nameTag.startsWith("$JSONRequest:")) return;
+  if (!evd.source || !evd.source.nameTag.startsWith("$JSONRequest:")) return;
   evd.cancel = true;
   let entSelector = new Selector("e");
   entSelector.count = 1;

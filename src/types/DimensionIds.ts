@@ -1,1 +1,1 @@
-export type DimensionIds = "overworld" | "the end" | "nether";
+export type DimensionIds = "minecraft:overworld" | "minecraft:the_end" | "minecraft:nether";

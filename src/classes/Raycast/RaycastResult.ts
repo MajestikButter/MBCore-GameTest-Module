@@ -1,10 +1,11 @@
 import { Vector3 } from "gametest-maths";
-import { Block, Entity } from "mojang-minecraft";
+import { Block, Direction, Entity } from "mojang-minecraft";
 import { RaycastProperties } from "./RaycastProperties.js";
 
 export class RaycastResult {
   private entities: Entity[] = [];
   private block: Block;
+  private blockFace: Direction;
 
   private origin: Vector3;
   private direction: Vector3;
@@ -30,6 +31,10 @@ export class RaycastResult {
 
   getBlock() {
     return this.block;
+  }
+
+  getBlockFace() {
+    return this.blockFace;
   }
 
   getOrigin() {
@@ -58,7 +63,8 @@ export class RaycastResult {
     properties: RaycastProperties,
     entities: Entity[],
     pos?: Vector3,
-    block?: Block
+    block?: Block,
+    blockFace?: Direction
   ) {
     this.origin = origin;
     this.direction = direction;
@@ -66,5 +72,6 @@ export class RaycastResult {
     this.entities = entities;
     this.pos = pos;
     this.block = block;
+    this.blockFace = blockFace;
   }
 }

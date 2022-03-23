@@ -4,32 +4,53 @@ import {
   BlockRaycastOptions,
   EntityRaycastOptions,
   Player,
-  EntityQueryScoreOptions,
   EntityQueryOptions,
+  Vector,
+  EntityHealthComponent,
+  MinecraftEffectTypes,
+  ExplosionOptions,
 } from "mojang-minecraft";
 import { Vector3, Vector2 } from "gametest-maths";
 
 import { CommandHandler } from "./CommandHandler.js";
 import { Selector } from "./Selector.js";
-import { Scoreboard } from "./Scoreboard.js";
-import { DimensionIds } from "../types/DimensionIds.js";
 import { CommandResult } from "../types/CommandResult.js";
-
-let playerIdObj = Scoreboard.initialize("mbcPlayerId");
+import { UID } from "./UID.js";
+import { DimensionIds } from "../types/DimensionIds.js";
 
 export class MBCPlayer {
+  private static instances = new Map<string, MBCPlayer>();
+
   /**
-   * Gets the Player class for the specified player id
-   * @param mbcPlayerId A number or string representing the player's id or name
-   * @returns A Player class representing the specified player
+   * Gets the MBCPlayer class for the specified player uid
+   * @param uid A string representing the player's uid
+   * @returns An MBCPlayer class representing the specified player
    */
-  static get(mbcPlayerId: number | string | Player) {
-    if (typeof mbcPlayerId === "string") {
-      mbcPlayerId = playerIdObj.get(mbcPlayerId);
-    } else if (mbcPlayerId instanceof Player) {
-      mbcPlayerId = playerIdObj.get(`"${mbcPlayerId.nameTag}"`);
+  static getByUID(uid: string) {
+    if (this.instances.has(uid)) return this.instances.get(uid);
+    const plr = new this(uid);
+    this.instances.set(uid, plr);
+    return plr;
+  }
+  
+  /**
+   * Gets the MBCPlayer class for the specified player name
+   * @param name A string representing the player's name
+   * @returns An MBCPlayer class representing the specified player
+   */
+   static getByName(name: string) {
+    for (let inst of this.instances.values()) {
+      if (inst.name === name) return inst;
     }
-    return new this(mbcPlayerId);
+  }
+  
+  /**
+   * Gets the MBCPlayer class for the specified player name
+   * @param player A Player class representing the target player
+   * @returns An MBCPlayer class representing the specified player
+   */
+   static getByPlayer(player: Player) {
+    return this.getByUID(UID.getUID(player));
   }
 
   static getOnline(): MBCPlayer[] {
@@ -40,17 +61,29 @@ export class MBCPlayer {
     return res.result.players
       .split(", ")
       .map((v: string) => {
-        const p = this.get(v);
+        const p = this.getByName(v);
         return p.isOnline() ? p : undefined;
       })
       .filter((v: MBCPlayer) => v);
   }
 
+  private _uid: string;
+
   /**
-   * A number representing this Player's id
+   * A string representing this Player's uid
    * @readonly
    */
-  id: number;
+  get uid() {
+    return this._uid
+  }
+
+  /**
+   * A string representing this Player's name
+   * @readonly
+   */
+  get name() {
+    return this.player.name;
+  }
 
   /**
    * The player's minecraft instance
@@ -60,22 +93,11 @@ export class MBCPlayer {
       throw new Error(
         "Unable to grab this player's minecraft instance, the player is not alive or loaded"
       );
-
-    CommandHandler.run(
-      `effect ${this.toSelector().toString()} fatal_poison 1 124 true`
-    );
-    const query = new EntityQueryOptions();
-    const queryScore = new EntityQueryScoreOptions();
-    queryScore.objective = 'mbcPlayerId';
-    queryScore.exclude = false;
-    queryScore.maxScore = this.id;
-    queryScore.minScore = this.id;
-    query.scoreOptions = [ queryScore ];
-    let player = [...world.getPlayers(query)][0];
-    if (player)
-      CommandHandler.run(
-        `effect ${this.toSelector().toString()} fatal_poison 0 0 true`
-      );
+    
+    const o = new EntityQueryOptions();
+    o.tags = [UID.createTag(this.uid)];
+    let player = world.getPlayers(o)[Symbol.iterator]().next().value;
+    if (!player) return;
     return player as Player;
   }
 
@@ -89,28 +111,10 @@ export class MBCPlayer {
 
   /**
    * The name of the dimension the player is currently in
+   * @readonly
    */
   get dimensionId() {
-    if (!this.isOnline())
-      throw new Error(
-        "Unable to grab this player's dimension, the player is not online"
-      );
-
-    const dimensions: DimensionIds[] = ["overworld", "the end", "nether"];
-    for (let i = 0; i < 3; i++) {
-      let dimension = world.getDimension(dimensions[i]);
-
-      let selector = this.toSelector();
-      selector.range = new Vector2(0.01, 0);
-
-      let cmd = CommandHandler.run(`testfor ${selector.toString()}`, dimension);
-
-      if (!cmd.error) {
-        return dimensions[i];
-      }
-    }
-
-    throw new Error("Unable to gab this player's dimension");
+    return this.dimension.id as DimensionIds;
   }
 
   /**
@@ -131,9 +135,27 @@ export class MBCPlayer {
   }
 
   /**
+   * The player's velocity Vector3
+   * @readonly
+   */
+  get velocity() {
+    return new Vector3(this.player.velocity);
+  }
+  
+  private _prevVel = new Vector3();
+  /**
+   * The player's velocity Vector3 during the last tick
+   * @readonly
+   */
+   get prevVelocity() {
+    return this._prevVel;
+  }
+
+  /**
    * Gets a direction Vector3 based on the player's facing direction
    * @returns Normalized Direction Vector3
    * @throws If command fails to return position (may be due to unloaded chunks)
+   * @deprecated Use `player.viewVector` instead
    */
   getDirectionVectors() {
     const r = this.executeCommand(
@@ -154,7 +176,7 @@ export class MBCPlayer {
    * Fetches current direction vector if none is supplied.
    * @returns A Vector2 containing the rotation in degrees
    */
-  getRotation(dir = this.getDirectionVectors().direction) {
+  getRotation(dir = this.player.viewVector) {
     const conv = 180 / Math.PI;
     return new Vector2(
       Math.asin(-dir.y) * conv,
@@ -188,11 +210,12 @@ export class MBCPlayer {
    * @param tags An array of the player's tags
    */
   setTags(tags: string[]) {
-    this.getTags().forEach((v) => {
-      this.player.removeTag(v);
+    const eTags = this.getTags();
+    eTags.forEach((v) => {
+      if (!tags.includes(v)) this.player.removeTag(v);
     });
     tags.forEach((v) => {
-      this.player.addTag(v);
+      if (!eTags.includes(v)) this.player.addTag(v);
     });
   }
 
@@ -209,11 +232,9 @@ export class MBCPlayer {
    * @returns A boolean representing whether the player is alive or not
    */
   isAlive() {
-    let selector = new Selector("e");
+    let selector = this.toSelector();
+    selector.selectorType = 'e';
     selector.type = "player";
-    selector.scores = {
-      mbcPlayerId: this.id,
-    };
 
     return !CommandHandler.run(`testfor ${selector.toString()}`).error;
   }
@@ -277,7 +298,7 @@ export class MBCPlayer {
 
     if (rot instanceof Vector2)
       return this.executeCommand(
-        `tp @s ${pos.x} ${pos.y} ${pos.z} ${rot.x} ${rot.y}`
+        `tp @s ${pos.x} ${pos.y} ${pos.z} ${rot.y} ${rot.x}`
       );
     else
       return this.executeCommand(
@@ -285,18 +306,42 @@ export class MBCPlayer {
       );
   }
 
+  setVelocity(velocity: Vector) {
+    velocity = Vector.add(velocity, new Vector(0, -1, 0));
+
+    const p = this.player;
+    const h = p.getComponent("health") as EntityHealthComponent;
+    const hp = h.current;
+    p.addEffect(MinecraftEffectTypes.instantHealth, 1, 255);
+    h.resetToMaxValue();
+
+    const e = new ExplosionOptions();
+    e.breaksBlocks = false;
+
+    p.setVelocity(velocity);
+    p.dimension.createExplosion(p.location, 0.05, e);
+    // if (mute) p.runCommand("stopsound @s random.explode");
+    p.runCommand("stopsound @s random.explode");
+    p.runCommand("stopsound @s random.explode");
+
+    p.runCommand("effect @s instant_health 0 0 true");
+    if (h.current >= 0) h.setCurrent(hp);
+  }
+
   /**
-   * A basic selector that refers to the player via mbcPlayerId
+   * A basic selector that refers to the player via uid
    */
   toSelector() {
-    let selector = new Selector(`a`);
-    selector.scores = {
-      mbcPlayerId: this.id,
-    };
+    let selector = new Selector("p");
+    selector.tags = [UID.createTag(this.uid)]
     return selector;
   }
 
-  private constructor(id: number) {
-    this.id = id;
+  private constructor(uid: string) {
+    this._uid = uid;
+
+    world.events.tick.subscribe(() => {
+      this._prevVel = this.velocity;
+    });
   }
 }

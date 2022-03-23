@@ -1,13 +1,12 @@
 import { CommandHandler } from "./CommandHandler.js";
 import { Selector } from "./Selector.js";
 import { Target } from "../types/Target.js";
+import { Entity, Player } from "mojang-minecraft";
 
-function targetToSelectorStr(target: Target) {
+function targetToSelectorStr(target: string | Selector) {
   return typeof target === "string"
     ? target
-    : target instanceof Selector
-    ? target.toString()
-    : target.toSelector().toString();
+    : target.toString()
 }
 
 export class Scoreboard {
@@ -104,10 +103,38 @@ export class Scoreboard {
    * @param val The amount to add
    */
   add(target: Target, val: number) {
-    let selectorStr = targetToSelectorStr(target);
-    CommandHandler.run(
-      `scoreboard players add ${selectorStr} ${this.id} ${val}`
-    );
+    if (target instanceof Selector || typeof target === 'string') {
+      let selectorStr = targetToSelectorStr(target);
+      CommandHandler.run(
+        `scoreboard players add ${selectorStr} ${this.id} ${val}`
+      );
+      return;
+    }
+
+    if (!(target instanceof Entity) && !(target instanceof Player)) target = target.player
+    try {
+      target.runCommand(`scoreboard players add @s ${this.id} ${val}`);
+    } catch {}
+  }
+  
+  /**
+   * Subtracts the specified amount to the provided target on this Scoreboard
+   * @param target A Selector, Player, Entity or string representing the target
+   * @param val The amount to subtract
+   */
+   sub(target: Target, val: number) {
+    if (target instanceof Selector || typeof target === 'string') {
+      let selectorStr = targetToSelectorStr(target);
+      CommandHandler.run(
+        `scoreboard players remove ${selectorStr} ${this.id} ${val}`
+      );
+      return;
+    }
+
+    if (!(target instanceof Entity) && !(target instanceof Player)) target = target.player
+    try {
+      target.runCommand(`scoreboard players remove @s ${this.id} ${val}`);
+    } catch {}
   }
 
   /**
@@ -115,8 +142,16 @@ export class Scoreboard {
    * @param target A Selector, Player, Entity or string representing the target
    */
   reset(target: Target) {
-    let selectorStr = targetToSelectorStr(target);
-    CommandHandler.run(`scoreboard players reset ${selectorStr} ${this.id}`);
+    if (target instanceof Selector || typeof target === 'string') {
+      let selectorStr = targetToSelectorStr(target);
+      CommandHandler.run(`scoreboard players reset ${selectorStr} ${this.id}`);
+      return;
+    }
+
+    if (!(target instanceof Entity) && !(target instanceof Player)) target = target.player
+    try {
+      target.runCommand(`scoreboard players reset @s ${this.id}`);
+    } catch {}
   }
 
   /**
@@ -125,10 +160,18 @@ export class Scoreboard {
    * @param val The amount to set to
    */
   set(target: Target, val: number) {
-    let selectorStr = targetToSelectorStr(target);
-    CommandHandler.run(
-      `scoreboard players set ${selectorStr} ${this.id} ${val}`
-    );
+    if (target instanceof Selector || typeof target === 'string') {
+      let selectorStr = targetToSelectorStr(target);
+      CommandHandler.run(
+        `scoreboard players set ${selectorStr} ${this.id} ${val}`
+      );
+      return;
+    }
+
+    if (!(target instanceof Entity) && !(target instanceof Player)) target = target.player
+    try {
+      target.runCommand(`scoreboard players set @s ${this.id} ${val}`);
+    } catch {}
   }
 
   /**
@@ -136,15 +179,27 @@ export class Scoreboard {
    * @param target A Selector, Player, Entity or string representing the target
    */
   get(target: Target) {
-    let selectorStr = targetToSelectorStr(target);
-    let cmd = CommandHandler.run(
-      `scoreboard players test ${selectorStr} ${this.id} * *`
-    );
+    if (target instanceof Selector || typeof target === 'string') {
+      let selectorStr = targetToSelectorStr(target);
+      let cmd = CommandHandler.run(
+        `scoreboard players test ${selectorStr} ${this.id} * *`
+      );
+  
+      if (cmd.error) return 0;
+  
+      let result = cmd.result.statusMessage.match(/(?:\d...)/);
+      return result ? parseInt(result[0]) : 0;
+    }
 
-    if (cmd.error) return 0;
-
-    let result = cmd.result.statusMessage.match(/(?:\d...)/);
-    return result ? parseInt(result[0]) : 0;
+    if (!(target instanceof Entity) && !(target instanceof Player)) target = target.player
+    try {
+      try {
+        let result = target.runCommand(`scoreboard players test @s ${this.id} * *`).statusMessage.match(/(?:\d...)/);
+        return result ? parseInt(result[0]) : 0;
+      } catch {
+        return 0;
+      }
+    } catch {}
   }
 
   private constructor(id: string) {

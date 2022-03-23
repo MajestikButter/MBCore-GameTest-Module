@@ -24,7 +24,7 @@ export class CommandHandler {
    */
   static run(
     cmd: string,
-    dimension = world.getDimension("overworld")
+    dimension = world.getDimension("minecraft:overworld")
   ): CommandResult {
     return runCmd(cmd, dimension);
   }
@@ -35,7 +35,7 @@ export class CommandHandler {
    * @returns An array of objects with an error property and the result of the command
    */
   static runInAll(cmd: string): CommandResult[] {
-    const dimensions: DimensionIds[] = ["overworld", "the end", "nether"];
+    const dimensions: DimensionIds[] = ["minecraft:overworld", "minecraft:the_end", "minecraft:nether"];
     let resultArr: any[] = [];
     dimensions.forEach((v) => {
       resultArr.push(runCmd(cmd, world.getDimension(v)));

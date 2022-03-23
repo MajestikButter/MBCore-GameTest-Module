@@ -138,11 +138,11 @@ export class Selector {
     }
 
     if (this.families) {
-      this.families.forEach((v) => (str += `family=${v},`));
+      this.families.forEach((v) => (str += `family="${v}",`));
     }
 
     if (this.tags) {
-      this.tags.forEach((v) => (str += `tag=${v},`));
+      this.tags.forEach((v) => (str += `tag="${v}",`));
     }
 
     if (this.scores) {
