@@ -317,12 +317,10 @@ export class MBCPlayer {
 
     const e = new ExplosionOptions();
     e.breaksBlocks = false;
+    e.source = this.dimension.spawnEntity('mbc:cancel', this.player.location);
 
     p.setVelocity(velocity);
     p.dimension.createExplosion(p.location, 0.05, e);
-    // if (mute) p.runCommand("stopsound @s random.explode");
-    p.runCommand("stopsound @s random.explode");
-    p.runCommand("stopsound @s random.explode");
 
     p.runCommand("effect @s instant_health 0 0 true");
     if (h.current >= 0) h.setCurrent(hp);

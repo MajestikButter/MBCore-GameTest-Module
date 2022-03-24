@@ -1,0 +1,18 @@
+{
+  "random.explode": {
+    "category": "block",
+    "sounds": []
+  },
+  "mbc.random.explode": {
+    "category": "block",
+    "sounds": [
+      {
+        "name": "sounds/random/explode1",
+        "load_on_low_memory": true
+      },
+      "sounds/random/explode2",
+      "sounds/random/explode3",
+      "sounds/random/explode4"
+    ]
+  }
+}

@@ -34,6 +34,6 @@ export * from "./types/CommandResult.js";
 
 export * from "./classes/GUI/index.js";
 
-import "./ticked/index.js";
+import "./init/index.js";
 
 console.log("§l§aLoading §bMBCore Module v1.10.2");
