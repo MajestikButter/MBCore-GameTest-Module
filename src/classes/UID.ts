@@ -1,13 +1,23 @@
-import { Entity } from "mojang-minecraft";
+import { Entity, EntityQueryOptions, world } from "mojang-minecraft";
 
 export class UID {
   static UIDRegex = /<\$mbc;uid=(.*?);\/>/;
-  
+
   static getUID(entity: Entity) {
     for (let tag of entity.getTags()) {
       const m = this.matchTag(tag);
       if (m) return m[1];
     }
+  }
+
+  static getEntityByUID(uid: string) {
+    const o = new EntityQueryOptions();
+    o.tags = [this.createTag(uid)];
+    return world
+      .getDimension("minecraft:overworld")
+      .getEntities(o)
+      [Symbol.iterator]()
+      .next().value;
   }
 
   static matchTag(tag: string) {
