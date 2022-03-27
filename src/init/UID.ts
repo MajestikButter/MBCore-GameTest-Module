@@ -1,5 +1,6 @@
 import { EntityQueryOptions, world } from "mojang-minecraft";
-import { UID } from "../classes/UID";
+import { UID } from "../classes/UID.js";
+import { CustomEvents } from '../classes/CustomEvents.js';
 
 // let playerIdObj = Scoreboard.get("mbcPlayerId");
 
@@ -18,8 +19,10 @@ world.events.tick.subscribe((evd) => {
       ent.getTags().forEach((v) => {
         if (UID.matchTag(v)) ent.removeTag(v);
       });
-      ent.addTag(UID.createTag());
+      const uid = UID.createUID();
+      ent.addTag(UID.createTag(uid));
       ent.addTag(assignTag);
+      CustomEvents.emit('UIDAssigned', {entity: ent, uid})
     }
   }
 });
