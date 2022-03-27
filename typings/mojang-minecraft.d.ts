@@ -1,4 +1,7 @@
 declare module "mojang-minecraft" {
+  /**
+  An event that fires as players enter chat messages.
+  */
   export class BeforeChatEvent {
     /**
     If set to true in a beforeChat event handler, this message is not broadcast out.
@@ -21,10 +24,28 @@ declare module "mojang-minecraft" {
     */
     "targets": Player[];
   }
+  /**
+  Manages callbacks that are connected to an event that fires before chat messages are sent.
+  */
   export class BeforeChatEventSignal {
+    /**
+    Adds a callback that will be called before new chat messages are sent.
+    #### **Parameters**
+    - **callback**: (arg: *BeforeChatEvent* => *void*
+    
+    */
     subscribe(callback: (arg: BeforeChatEvent) => void): (arg: BeforeChatEvent) => void;
+    /**
+    Removes a callback from being called before new chat messages are sent.
+    #### **Parameters**
+    - **callback**: (arg: *BeforeChatEvent* => *void*
+    
+    */
     unsubscribe(callback: (arg: BeforeChatEvent) => void): void;
   }
+  /**
+  Contains information related to firing of a data driven entity event - for example, the minecraft:ageable_grow_up event on a chicken.
+  */
   export class BeforeDataDrivenEntityTriggerEvent {
     /**
     If set to true, this entity event is not triggered.
@@ -43,10 +64,29 @@ declare module "mojang-minecraft" {
     */
     "modifiers": DefinitionModifier[];
   }
+  /**
+  Contains information related to firing of a data driven entity event - for example, the minecraft:ageable_grow_up event on a chicken.
+  */
   export class BeforeDataDrivenEntityTriggerEventSignal {
+    /**
+    Adds a callback that will be called before a data driven entity event is triggered.
+    #### **Parameters**
+    - **callback**: (arg: *BeforeDataDrivenEntityTriggerEvent* => *void*
+    - **options**?: *EntityDataDrivenTriggerEventOptions* = `null`
+    
+    */
     subscribe(callback: (arg: BeforeDataDrivenEntityTriggerEvent) => void, options?: EntityDataDrivenTriggerEventOptions): (arg: BeforeDataDrivenEntityTriggerEvent) => void;
+    /**
+    Removes a callback that will be called before a data driven entity event is triggered.
+    #### **Parameters**
+    - **callback**: (arg: *BeforeDataDrivenEntityTriggerEvent* => *void*
+    
+    */
     unsubscribe(callback: (arg: BeforeDataDrivenEntityTriggerEvent) => void): void;
   }
+  /**
+  Contains information regarding an explosion that has happened.
+  */
   export class BeforeExplosionEvent {
     /**
     If set to true, cancels the explosion event.
@@ -65,14 +105,47 @@ declare module "mojang-minecraft" {
     */
     readonly "source": Entity;
   }
+  /**
+  Manages callbacks that are connected to before an explosion occurs.
+  */
   export class BeforeExplosionEventSignal {
+    /**
+    Adds a callback that will be called when before an explosion occurs. The callback can optionally change or cancel explosion behavior.
+    #### **Parameters**
+    - **callback**: (arg: *BeforeExplosionEvent* => *void*
+    
+    */
     subscribe(callback: (arg: BeforeExplosionEvent) => void): (arg: BeforeExplosionEvent) => void;
+    /**
+    Removes a callback from being called from before when an explosion would occur.
+    #### **Parameters**
+    - **callback**: (arg: *BeforeExplosionEvent* => *void*
+    
+    */
     unsubscribe(callback: (arg: BeforeExplosionEvent) => void): void;
   }
+  /**
+  Manages callbacks that are connected to an item's definition and components changing.
+  */
   export class BeforeItemDefinitionEventSignal {
+    /**
+    Adds a callback that will be called when an item's definition and components change.
+    #### **Parameters**
+    - **callback**: (arg: *BeforeItemDefinitionTriggeredEvent* => *void*
+    
+    */
     subscribe(callback: (arg: BeforeItemDefinitionTriggeredEvent) => void): (arg: BeforeItemDefinitionTriggeredEvent) => void;
+    /**
+    Removes a callback from being called when an item's definition and components change.
+    #### **Parameters**
+    - **callback**: (arg: *BeforeItemDefinitionTriggeredEvent* => *void*
+    
+    */
     unsubscribe(callback: (arg: BeforeItemDefinitionTriggeredEvent) => void): void;
   }
+  /**
+  Contains information related to a triggering of a custom item definition change.
+  */
   export class BeforeItemDefinitionTriggeredEvent {
     /**
     If set to true, will cancel the application of this item definition change.
@@ -91,6 +164,9 @@ declare module "mojang-minecraft" {
     */
     readonly "source": Entity;
   }
+  /**
+  Contains information related to an item being used.
+  */
   export class BeforeItemUseEvent {
     /**
     If set to true, this will cancel the item use behavior.
@@ -105,10 +181,28 @@ declare module "mojang-minecraft" {
     */
     readonly "source": Entity;
   }
+  /**
+  Manages callbacks that fire before an item is used.
+  */
   export class BeforeItemUseEventSignal {
+    /**
+    Adds a callback that will be called before an item is used.
+    #### **Parameters**
+    - **callback**: (arg: *BeforeItemUseEvent* => *void*
+    
+    */
     subscribe(callback: (arg: BeforeItemUseEvent) => void): (arg: BeforeItemUseEvent) => void;
+    /**
+    Removes a callback from being called before an item is used.
+    #### **Parameters**
+    - **callback**: (arg: *BeforeItemUseEvent* => *void*
+    
+    */
     unsubscribe(callback: (arg: BeforeItemUseEvent) => void): void;
   }
+  /**
+  Contains information related to an item being used on a block.
+  */
   export class BeforeItemUseOnEvent {
     /**
     The face of the block that an item is being used on.
@@ -139,11 +233,29 @@ declare module "mojang-minecraft" {
     */
     readonly "source": Entity;
   }
+  /**
+  Manages callbacks that fire before an item being used on a block event.
+  */
   export class BeforeItemUseOnEventSignal {
+    /**
+    Adds a callback that will be called before an item is used on a block.
+    #### **Parameters**
+    - **callback**: (arg: *BeforeItemUseOnEvent* => *void*
+    
+    */
     subscribe(callback: (arg: BeforeItemUseOnEvent) => void): (arg: BeforeItemUseOnEvent) => void;
+    /**
+    Removes a callback from being called before an item is used on a block.
+    #### **Parameters**
+    - **callback**: (arg: *BeforeItemUseOnEvent* => *void*
+    
+    */
     unsubscribe(callback: (arg: BeforeItemUseOnEvent) => void): void;
   }
-  export class BeforePistonActivateEvent {
+  /**
+  Contains information related to changes before a piston expands or retracts.
+  */
+  export class BeforePistonActivateEvent extends BlockEvent {
     /**
     Block impacted by this event.
     */
@@ -165,10 +277,28 @@ declare module "mojang-minecraft" {
     */
     readonly "piston": BlockPistonComponent;
   }
+  /**
+  Manages callbacks that are connected to an event that fires before a piston is activated.
+  */
   export class BeforePistonActivateEventSignal {
+    /**
+    Adds a callback that will be called before a piston expands or retracts.
+    #### **Parameters**
+    - **callback**: (arg: *BeforePistonActivateEvent* => *void*
+    
+    */
     subscribe(callback: (arg: BeforePistonActivateEvent) => void): (arg: BeforePistonActivateEvent) => void;
+    /**
+    Removes a callback from being called before a piston expands or retracts.
+    #### **Parameters**
+    - **callback**: (arg: *BeforePistonActivateEvent* => *void*
+    
+    */
     unsubscribe(callback: (arg: BeforePistonActivateEvent) => void): void;
   }
+  /**
+  Represents a block in a dimension. A block represents a unique X, Y, and Z within a dimension and get/sets the state of the block at that location. This type was significantly updated in version 1.17.10.21.
+  */
   export class Block {
     /**
     Returns the dimension that the block is within.
@@ -210,12 +340,50 @@ declare module "mojang-minecraft" {
     Z coordinate of the block.
     */
     readonly "z": number;
+    /**
+    Gets additional configuration properties (a component) for specific capabilities of particular blocks - for example, an inventory component of a chest block.
+    #### **Parameters**
+    - **componentName**: *string*
+    
+    Identifier of the component. If a namespace is not specified, minecraft: is assumed.
+    
+    */
     getComponent(componentName: string): any;
+    /**
+    
+    */
     getTags(): string[];
+    /**
+    Checks to see if the permutation of this block has a specific tag.
+    #### **Parameters**
+    - **tag**: *string*
+    
+    Tag to check for.
+    
+    */
     hasTag(tag: string): boolean;
+    /**
+    Sets the block in the dimension to the state of the permutation.
+    #### **Parameters**
+    - **permutation**: *BlockPermutation*
+    
+    Permutation that contains a set of property states for the Block.
+    
+    */
     setPermutation(permutation: BlockPermutation): void;
+    /**
+    Sets the type of block.
+    #### **Parameters**
+    - **blockType**: *BlockType*
+    
+    Identifier of the type of block to apply - for example, minecraft:powered_repeater.
+    
+    */
     setType(blockType: BlockType): void;
   }
+  /**
+  Holds information for expressing the net size of a volume of blocks.
+  */
   export class BlockAreaSize {
     /**
     X size (west to east) component of this block area.
@@ -229,10 +397,27 @@ declare module "mojang-minecraft" {
     Z size (south to north) of this block area size.
     */
     "z": number;
+    /**
+    Creates a new BlockAreaSize object.
+    #### **Parameters**
+    - **x**: *number*
+    - **y**: *number*
+    - **z**: *number*
+    
+    */
     constructor(x: number, y: number, z: number);
+    /**
+    Tests whether this block area size is equal to another BlockAreaSize object.
+    #### **Parameters**
+    - **other**: *BlockAreaSize*
+    
+    */
     equals(other: BlockAreaSize): boolean;
   }
-  export class BlockBreakEvent {
+  /**
+  Contains information regarding an event where a player breaks a block.
+  */
+  export class BlockBreakEvent extends BlockEvent {
     /**
     Block broken in this event. Note that because this event fires right after a block is broken, the block you will receive will likely be of type 'minecraft:air'. See the .brokenBlockPermutation property for information on this block before it was broken.
     */
@@ -250,12 +435,33 @@ declare module "mojang-minecraft" {
     */
     readonly "player": Player;
   }
+  /**
+  Manages callbacks that are connected to when a block is broken.
+  */
   export class BlockBreakEventSignal {
+    /**
+    Adds a callback that will be called when a block is broken by a player.
+    #### **Parameters**
+    - **callback**: (arg: *BlockBreakEvent* => *void*
+    
+    */
     subscribe(callback: (arg: BlockBreakEvent) => void): (arg: BlockBreakEvent) => void;
+    /**
+    Removes a callback from being called when an block is broken.
+    #### **Parameters**
+    - **callback**: (arg: *BlockBreakEvent* => *void*
+    
+    */
     unsubscribe(callback: (arg: BlockBreakEvent) => void): void;
   }
+  /**
+  Base type for components associated with blocks.
+  */
   export class BlockComponent {
   }
+  /**
+  Contains information regarding an event that impacts a specific block.
+  */
   export class BlockEvent {
     /**
     Block impacted by this event.
@@ -266,7 +472,10 @@ declare module "mojang-minecraft" {
     */
     readonly "dimension": Dimension;
   }
-  export class BlockExplodeEvent {
+  /**
+  Contains information regarding an explosion that has occurred for a specific block.
+  */
+  export class BlockExplodeEvent extends BlockEvent {
     /**
     Block impacted by this explosion event.
     */
@@ -280,13 +489,31 @@ declare module "mojang-minecraft" {
     */
     readonly "source": Entity;
   }
+  /**
+  Manages callbacks that are connected to when an explosion occurs, as it impacts individual blocks.
+  */
   export class BlockExplodeEventSignal {
+    /**
+    Adds a callback that will be called when an explosion occurs, as it impacts individual blocks.
+    #### **Parameters**
+    - **callback**: (arg: *BlockExplodeEvent* => *void*
+    
+    */
     subscribe(callback: (arg: BlockExplodeEvent) => void): (arg: BlockExplodeEvent) => void;
+    /**
+    Removes a callback from being called when an explosion occurs, as it impacts individual blocks.
+    #### **Parameters**
+    - **callback**: (arg: *BlockExplodeEvent* => *void*
+    
+    */
     unsubscribe(callback: (arg: BlockExplodeEvent) => void): void;
   }
+  /**
+  Represents the inventory of a block in the world. Used with blocks like chests.
+  */
   export class BlockInventoryComponent {
     /**
-    The container which holds an [*mojang-minecraft.ItemStack*](../mojang-minecraft/ItemStack.md).
+    The container which holds an *mojang-minecraft.ItemStack*.
     */
     readonly "container": BlockInventoryComponentContainer;
     /**
@@ -294,7 +521,10 @@ declare module "mojang-minecraft" {
     */
     readonly "location": BlockLocation;
   }
-  export class BlockInventoryComponentContainer {
+  /**
+  Represents the inventory of a [*mojang-minecraft.Block*](../mojang-minecraft/Block.md) in the world. Used with blocks like chests.
+  */
+  export class BlockInventoryComponentContainer extends Container {
     /**
     Contains a count of the slots in the container that are empty.
     */
@@ -303,12 +533,68 @@ declare module "mojang-minecraft" {
     Returns the size capacity of the inventory container on this block.
     */
     readonly "size": number;
+    /**
+    Adds an item to the specified container. Item will be placed in the first available empty slot. (use .setItem if you wish to set items in a particular slot.)
+    #### **Parameters**
+    - **itemStack**: *ItemStack*
+    
+    The stack of items to add.
+    
+    */
     addItem(itemStack: ItemStack): void;
+    /**
+    Gets the item stack for the set of items at the specified slot. If the slot is empty, returns undefined. This method does not change or clear the contents of the specified slot.
+    #### **Parameters**
+    - **slot**: *number*
+    
+    Zero-based index of the slot to retrieve items from.
+    
+    */
     getItem(slot: number): ItemStack;
+    /**
+    Sets an item stack within a particular slot.
+    #### **Parameters**
+    - **slot**: *number*
+    
+    Zero-based index of the slot to set an item at.
+    - **itemStack**: *ItemStack*
+    
+    Stack of items to place within the specified slot.
+    
+    */
     setItem(slot: number, itemStack: ItemStack): void;
+    /**
+    Swaps items between two different slots within containers.
+    #### **Parameters**
+    - **slot**: *number*
+    
+    Zero-based index of the slot to swap from this container.
+    - **otherSlot**: *number*
+    
+    Zero-based index of the slot to swap with.
+    - **otherContainer**: *Container*
+    
+    Target container to swap with. Note this can be the same container as this source.
+    
+    */
     swapItems(slot: number, otherSlot: number, otherContainer: Container): boolean;
+    /**
+    Moves an item from one slot to another, potentially across containers.
+    #### **Parameters**
+    - **fromSlot**: *number*
+    - **toSlot**: *number*
+    
+    Zero-based index of the slot to move to.
+    - **toContainer**: *Container*
+    
+    Target container to transfer to. Note this can be the same container as the source.
+    
+    */
     transferItem(fromSlot: number, toSlot: number, toContainer: Container): boolean;
   }
+  /**
+  Represents a fluid container block that currently contains lava.
+  */
   export class BlockLavaContainerComponent {
     /**
     Relative level of lava within this block. Valid values are between FluidContainer.minFillLevel (0) and FluidContainer.maxFillLevel (6).
@@ -319,6 +605,9 @@ declare module "mojang-minecraft" {
     */
     readonly "location": BlockLocation;
   }
+  /**
+  Contains the integer X, Y, Z coordinates for a block. For decimal locations useful for entities, items, and more, see [*mojang-minecraft.Location*](../mojang-minecraft/Location.md).
+  */
   export class BlockLocation {
     /**
     The X coordinate.
@@ -332,23 +621,109 @@ declare module "mojang-minecraft" {
     The integer-based Z position.
     */
     "z": number;
+    /**
+    Creates a new instance of an abstract block location.
+    #### **Parameters**
+    - **x**: *number*
+    
+    X position of the block location. This number should be an integer.
+    - **y**: *number*
+    
+    Y position of the block location. This number should be an integer.
+    - **z**: *number*
+    
+    Z position of the block location. This number should be an integer.
+    
+    */
     constructor(x: number, y: number, z: number);
+    /**
+    Returns a BlockLocation for a block above this BlockLocation (that is, y + 1).
+    */
     above(): BlockLocation;
+    /**
+    Returns an array of block locations representing all blocks in the volume (cuboid) between this location and another location.
+    #### **Parameters**
+    - **other**: *BlockLocation*
+    
+    Additional BlockLocation used to determine the set of locations in between this location and another point.
+    
+    #### **Returns** BlockLocation
+    - Array of block locations representing the volume between this location and another, inclusive of the start and end points.
+    
+    */
     blocksBetween(other: BlockLocation): BlockLocation[];
+    /**
+    Compares this BlockLocation and another BlockLocation to one another.
+    #### **Parameters**
+    - **other**: *BlockLocation*
+    
+    Other block location to compare this BlockLocation to.
+    
+    */
     equals(other: BlockLocation): boolean;
+    /**
+    Returns a block location using a position relative to this block location
+    #### **Parameters**
+    - **x**: *number*
+    
+    X offset relative to this BlockLocation.
+    - **y**: *number*
+    
+    Y offset relative to this BlockLocation.
+    - **z**: *number*
+    
+    Z offset relative to this BlockLocation.
+    
+    #### **Returns** BlockLocation
+    - BlockLocation that is positioned relative to this BlockLocation.
+    
+    */
     offset(x: number, y: number, z: number): BlockLocation;
   }
+  /**
+  Contains the combination of type [*mojang-minecraft.BlockType*](../mojang-minecraft/BlockType.md) and properties (also sometimes called block state) which describe a block (but does not belong to a specific [*mojang-minecraft.Block*](../mojang-minecraft/Block.md)). This type was introduced as of version 1.17.10.21.
+  */
   export class BlockPermutation {
     /**
-    The [*mojang-minecraft.BlockType*](../mojang-minecraft/BlockType.md) that the permutation has.
+    The *mojang-minecraft.BlockType* that the permutation has.
     */
     readonly "type": BlockType;
+    /**
+    Creates a copy of this permutation.
+    */
     clone(): BlockPermutation;
+    /**
+    
+    #### **Returns** IBlockProperty
+    - Returns the list of all of the properties that the permutation has.
+    
+    */
     getAllProperties(): IBlockProperty[];
+    /**
+    Gets a property for the permutation.
+    #### **Parameters**
+    - **propertyName**: *string*
+    
+    #### **Returns** IBlockProperty
+    - Returns the property if the permutation has it, else `null`.
+    
+    */
     getProperty(propertyName: string): IBlockProperty;
+    /**
+    Creates a copy of the permutation.
+    */
     getTags(): string[];
+    /**
+    Checks to see if the permutation has a specific tag.
+    #### **Parameters**
+    - **tag**: *string*
+    
+    */
     hasTag(tag: string): boolean;
   }
+  /**
+  Represents the inventory of a block in the world. Used with blocks like chests.
+  */
   export class BlockPistonComponent {
     /**
     A set of locations for blocks that are impacted by the activation of this piston.
@@ -379,7 +754,10 @@ declare module "mojang-minecraft" {
     */
     readonly "location": BlockLocation;
   }
-  export class BlockPlaceEvent {
+  /**
+  Contains information regarding an event where a player places a block.
+  */
+  export class BlockPlaceEvent extends BlockEvent {
     /**
     Block placed in this event.
     */
@@ -393,10 +771,28 @@ declare module "mojang-minecraft" {
     */
     readonly "player": Player;
   }
+  /**
+  Manages callbacks that are connected to when a block is broken.
+  */
   export class BlockPlaceEventSignal {
+    /**
+    Adds a callback that will be called when a block is placed by a player.
+    #### **Parameters**
+    - **callback**: (arg: *BlockPlaceEvent* => *void*
+    
+    */
     subscribe(callback: (arg: BlockPlaceEvent) => void): (arg: BlockPlaceEvent) => void;
+    /**
+    Removes a callback from being called when an block is placed.
+    #### **Parameters**
+    - **callback**: (arg: *BlockPlaceEvent* => *void*
+    
+    */
     unsubscribe(callback: (arg: BlockPlaceEvent) => void): void;
   }
+  /**
+  Represents a fluid container block that currently contains a potion.
+  */
   export class BlockPotionContainerComponent {
     /**
     Relative level of potion liquid within this block. Valid values are between FluidContainer.minFillLevel (0) and FluidContainer.maxFillLevel (6).
@@ -406,8 +802,19 @@ declare module "mojang-minecraft" {
     Source location of the block.
     */
     readonly "location": BlockLocation;
+    /**
+    Sets the potion type based on an item stack.
+    #### **Parameters**
+    - **item**: *ItemStack*
+    
+    Potion to use as the type of potion for this potion container.
+    
+    */
     setPotionType(item: ItemStack): void;
   }
+  /**
+  ## Constants
+  */
   export class BlockProperties {
     /**
     Type: *string*
@@ -906,6 +1313,9 @@ declare module "mojang-minecraft" {
     */
     static readonly "woodType" = "wood_type";
   }
+  /**
+  Contains additional options for configuring a block raycast query.
+  */
   export class BlockRaycastOptions {
     /**
     If true, liquid blocks will be considered as blocks that 'stop' the raycast.
@@ -919,13 +1329,34 @@ declare module "mojang-minecraft" {
     Maximum distance, in blocks, to process the raycast.
     */
     "maxDistance": number;
+    /**
+    Creates a new BlockRaycastOptions object, for use in a block vector query.
+    */
     constructor();
   }
+  /**
+  Represents a block that can play a record.
+  */
   export class BlockRecordPlayerComponent {
+    /**
+    Clears the currently playing record of this record-playing block.
+    */
     clearRecord(): void;
+    /**
+    Returns true if the record-playing block is currently playing a record.
+    */
     isPlaying(): boolean;
+    /**
+    Sets and plays a record based on an item type.
+    #### **Parameters**
+    - **recordItemType**: *ItemType*
+    
+    */
     setRecord(recordItemType: ItemType): void;
   }
+  /**
+  Represents a fluid container block that currently contains snow.
+  */
   export class BlockSnowContainerComponent {
     /**
     Relative level of snow within this block. Valid values are between FluidContainer.minFillLevel (0) and FluidContainer.maxFillLevel (6).
@@ -936,6 +1367,9 @@ declare module "mojang-minecraft" {
     */
     readonly "location": BlockLocation;
   }
+  /**
+  The type (or template) of a block. Does not contain permutation data (state) other than the type of block it represents. This type was introduced as of version 1.17.10.21.
+  */
   export class BlockType {
     /**
     Represents whether this type of block can be waterlogged.
@@ -945,8 +1379,14 @@ declare module "mojang-minecraft" {
     Block type name - for example, `minecraft:acacia_stairs`.
     */
     readonly "id": string;
+    /**
+    Creates the default *mojang-minecraft.BlockPermutation* for this type which uses the default values for all properties.
+    */
     createDefaultBlockPermutation(): BlockPermutation;
   }
+  /**
+  Represents a fluid container block that currently contains water.
+  */
   export class BlockWaterContainerComponent {
     /**
     Represents a color facet of the water.
@@ -960,9 +1400,18 @@ declare module "mojang-minecraft" {
     Source location of the block.
     */
     readonly "location": BlockLocation;
+    /**
+    Adds an item and colors the water based on a dye item type.
+    #### **Parameters**
+    - **itemType**: *ItemType*
+    
+    */
     addDye(itemType: ItemType): void;
   }
-  export class BoolBlockProperty {
+  /**
+  Contains the state of a boolean-based property for a [*mojang-minecraft.BlockPermutation*](../mojang-minecraft/BlockPermutation.md).
+  */
+  export class BoolBlockProperty extends IBlockProperty {
     /**
     The name of this property.
     */
@@ -976,6 +1425,9 @@ declare module "mojang-minecraft" {
     */
     "value": boolean;
   }
+  /**
+  An event that fires as players enter chat messages.
+  */
   export class ChatEvent {
     /**
     Message that is being broadcast. In a beforeChat event handler, _message_ can be updated with edits before the message is displayed to players.
@@ -994,10 +1446,28 @@ declare module "mojang-minecraft" {
     */
     "targets": Player[];
   }
+  /**
+  Manages callbacks that are connected to chat messages being sent.
+  */
   export class ChatEventSignal {
+    /**
+    Adds a callback that will be called when new chat messages are sent.
+    #### **Parameters**
+    - **callback**: (arg: *ChatEvent* => *void*
+    
+    */
     subscribe(callback: (arg: ChatEvent) => void): (arg: ChatEvent) => void;
+    /**
+    Removes a callback from being called when new chat messages are sent.
+    #### **Parameters**
+    - **callback**: (arg: *ChatEvent* => *void*
+    
+    */
     unsubscribe(callback: (arg: ChatEvent) => void): void;
   }
+  /**
+  Represents a fully customizable color within Minecraft.
+  */
   export class Color {
     /**
     Determines a color's alpha (opacity) component. Valid values are between 0 (transparent) and 1.0 (opaque).
@@ -1015,8 +1485,20 @@ declare module "mojang-minecraft" {
     Determines a color's red component. Valid values are between 0 and 1.0.
     */
     "red": number;
+    /**
+    Creates a new color using the specified color values.
+    #### **Parameters**
+    - **red**: *number*
+    - **green**: *number*
+    - **blue**: *number*
+    - **alpha**: *number*
+    
+    */
     constructor(red: number, green: number, blue: number, alpha: number);
   }
+  /**
+  Represents a container that can hold sets of items. Used with entities such as Players, Chest Minecarts, Llamas, and more.
+  */
   export class Container {
     /**
     Contains a count of the slots in the container that are empty.
@@ -1026,12 +1508,68 @@ declare module "mojang-minecraft" {
     Represents the size of the container. For example, a standard single-block chest has a size of 27, for the 27 slots in their inventory.
     */
     readonly "size": number;
+    /**
+    Adds an item to the specified container. Item will be placed in the first available empty slot. (use .setItem if you wish to set items in a particular slot.)
+    #### **Parameters**
+    - **itemStack**: *ItemStack*
+    
+    The stack of items to add.
+    
+    */
     addItem(itemStack: ItemStack): void;
+    /**
+    Gets the item stack for the set of items at the specified slot. If the slot is empty, returns undefined. This method does not change or clear the contents of the specified slot.
+    #### **Parameters**
+    - **slot**: *number*
+    
+    Zero-based index of the slot to retrieve items from.
+    
+    */
     getItem(slot: number): ItemStack;
+    /**
+    Sets an item stack within a particular slot.
+    #### **Parameters**
+    - **slot**: *number*
+    
+    Zero-based index of the slot to set an item at.
+    - **itemStack**: *ItemStack*
+    
+    Stack of items to place within the specified slot.
+    
+    */
     setItem(slot: number, itemStack: ItemStack): void;
+    /**
+    Swaps items between two different slots within containers.
+    #### **Parameters**
+    - **slot**: *number*
+    
+    Zero-based index of the slot to swap from this container.
+    - **otherSlot**: *number*
+    
+    Zero-based index of the slot to swap with.
+    - **otherContainer**: *Container*
+    
+    Target container to swap with. Note this can be the same container as this source.
+    
+    */
     swapItems(slot: number, otherSlot: number, otherContainer: Container): boolean;
+    /**
+    Moves an item from one slot to another, potentially across containers.
+    #### **Parameters**
+    - **fromSlot**: *number*
+    - **toSlot**: *number*
+    
+    Zero-based index of the slot to move to.
+    - **toContainer**: *Container*
+    
+    Target container to transfer to. Note this can be the same container as the source.
+    
+    */
     transferItem(fromSlot: number, toSlot: number, toContainer: Container): boolean;
   }
+  /**
+  Contains information related to firing of a data driven entity event - for example, the minecraft:ageable_grow_up event on a chicken.
+  */
   export class DataDrivenEntityTriggerEvent {
     /**
     Entity that the event triggered on.
@@ -1046,10 +1584,29 @@ declare module "mojang-minecraft" {
     */
     readonly "modifiers": DefinitionModifier[];
   }
+  /**
+  Contains event registration related to firing of a data driven entity event - for example, the minecraft:ageable_grow_up event on a chicken.
+  */
   export class DataDrivenEntityTriggerEventSignal {
+    /**
+    Adds a callback that will be called after a data driven entity event is triggered.
+    #### **Parameters**
+    - **callback**: (arg: *DataDrivenEntityTriggerEvent* => *void*
+    - **options**?: *EntityDataDrivenTriggerEventOptions* = `null`
+    
+    */
     subscribe(callback: (arg: DataDrivenEntityTriggerEvent) => void, options?: EntityDataDrivenTriggerEventOptions): (arg: DataDrivenEntityTriggerEvent) => void;
+    /**
+    Removes a callback that will be called after a data driven entity event is triggered.
+    #### **Parameters**
+    - **callback**: (arg: *DataDrivenEntityTriggerEvent* => *void*
+    
+    */
     unsubscribe(callback: (arg: DataDrivenEntityTriggerEvent) => void): void;
   }
+  /**
+  Contains a set of updates to the component definition state of an entity.
+  */
   export class DefinitionModifier {
     /**
     A list of components that will be added via this definition modification.
@@ -1063,24 +1620,160 @@ declare module "mojang-minecraft" {
     A list of entity definition events that will be fired via this update.
     */
     "triggers": Trigger[];
+    /**
+    
+    */
     constructor();
   }
+  /**
+  A class that represents a particular dimension (e.g., The End) within a world.
+  */
   export class Dimension {
     /**
     Identifier of the dimension.
     */
     readonly "id": string;
+    /**
+    Creates an explosion at the specified location.
+    #### **Parameters**
+    - **location**: *Location*
+    
+    The location of the explosion.
+    - **radius**: *number*
+    
+    Radius, in blocks, of the explosion to create.
+    - **explosionOptions**: *ExplosionOptions*
+    
+    Additional configurable options for the explosion.
+    
+    */
     createExplosion(location: Location, radius: number, explosionOptions: ExplosionOptions): void;
+    /**
+    Returns a block instance at the given location. This method was introduced as of version 1.17.10.21.
+    #### **Parameters**
+    - **location**: *BlockLocation*
+    
+    The location at which to return a block.
+    
+    #### **Returns** Block
+    - Block at the specified location.
+    
+    */
     getBlock(location: BlockLocation): Block;
+    /**
+    Gets the first block that intersects with a vector emanating from a location.
+    #### **Parameters**
+    - **location**: *Location*
+    - **direction**: *Vector*
+    - **options**?: *BlockRaycastOptions* = `null`
+    
+    Additional options for processing this raycast query.
+    
+    */
     getBlockFromRay(location: Location, direction: Vector, options?: BlockRaycastOptions): Block;
+    /**
+    Returns a set of entities based on a set of conditions defined via the EntityQueryOptions set of filter criteria.
+    #### **Parameters**
+    - **getEntities**?: *EntityQueryOptions* = `null`
+    
+    #### **Returns** EntityIterator
+    - An entity iterator that can be used to loop over the returned entities.
+    
+    */
     getEntities(getEntities?: EntityQueryOptions): EntityIterator;
+    /**
+    Returns a set of entities at a particular location.
+    #### **Parameters**
+    - **location**: *BlockLocation*
+    
+    The location at which to return entities.
+    
+    #### **Returns** Entity
+    - Zero or more entities at the specified location.
+    
+    */
     getEntitiesAtBlockLocation(location: BlockLocation): Entity[];
+    /**
+    Gets entities that intersect with a specified vector emanating from a location.
+    #### **Parameters**
+    - **location**: *Location*
+    - **direction**: *Vector*
+    - **options**?: *EntityRaycastOptions* = `null`
+    
+    Additional options for processing this raycast query.
+    
+    */
     getEntitiesFromRay(location: Location, direction: Vector, options?: EntityRaycastOptions): Entity[];
+    /**
+    Returns a set of players based on a set of conditions defined via the EntityQueryOptions set of filter criteria.
+    #### **Parameters**
+    - **getPlayers**?: *EntityQueryOptions* = `null`
+    
+    #### **Returns** PlayerIterator
+    - An entity iterator that can be used to loop over the returned players.
+    
+    */
     getPlayers(getPlayers?: EntityQueryOptions): PlayerIterator;
+    /**
+    Tests whether a particular location contains an Air (empty) block.
+    #### **Parameters**
+    - **location**: *BlockLocation*
+    
+    The location at which to check for emptiness
+    
+    */
     isEmpty(location: BlockLocation): boolean;
+    /**
+    Runs a particular command from the context of this entity.
+    #### **Parameters**
+    - **commandString**: *string*
+    
+    Command to run. Note that command strings should not start with slash.
+    
+    */
     runCommand(commandString: string): any;
+    /**
+    Creates a new entity (e.g., a mob) at the specified location.
+    #### **Parameters**
+    - **identifier**: *string*
+    
+    Identifier of the type of entity to spawn. If no namespace is specified, 'minecraft:' is assumed.
+    - **location**: *BlockLocation*](BlockLocation.md) | [*Location*
+    
+    The location at which to create the entity.
+    
+    #### **Returns** Entity
+    - Newly created entity at the specified location.
+    
+    */
     spawnEntity(identifier: string, location: BlockLocation | Location): Entity;
+    /**
+    Creates a new item stack as an entity at the specified location.
+    #### **Parameters**
+    - **item**: *ItemStack*
+    - **location**: *BlockLocation*](BlockLocation.md) | [*Location*
+    
+    The location at which to create the item stack.
+    
+    #### **Returns** Entity
+    - Newly created item stack entity at the specified location.
+    
+    */
     spawnItem(item: ItemStack, location: BlockLocation | Location): Entity;
+    /**
+    Creates a new particle emitter at a specified location in the world.
+    #### **Parameters**
+    - **effectName**: *string*
+    
+    Identifier of the particle to create.
+    - **location**: *Location*
+    
+    The location at which to create the particle emitter.
+    - **molangVariables**: *MolangVariableMap*
+    
+    A set of additional, customizable variables that can be adjusted for this particle emitter.
+    
+    */
     spawnParticle(effectName: string, location: Location, molangVariables: MolangVariableMap): void;
   }
   export enum Direction {
@@ -1109,6 +1802,9 @@ declare module "mojang-minecraft" {
     */
     "east" = 5,
   }
+  /**
+  Represents an effect - like poison - that has been added to an Entity.
+  */
   export class Effect {
     /**
     Gets an amplifier that may have been applied to this effect. Sample values range typically from 0 to 4. Example: The effect 'Jump Boost II' will have an amplifier value of 1.
@@ -1123,6 +1819,9 @@ declare module "mojang-minecraft" {
     */
     readonly "duration": number;
   }
+  /**
+  Contains information related to changes to an effect - like poison - being added to an entity.
+  */
   export class EffectAddEvent {
     /**
     Additional properties and details of the effect.
@@ -1137,13 +1836,38 @@ declare module "mojang-minecraft" {
     */
     "entity": Entity;
   }
+  /**
+  Manages callbacks that are connected to when an effect is added to an entity.
+  */
   export class EffectAddEventSignal {
+    /**
+    Adds a callback that will be called when an effect is added to an entity.
+    #### **Parameters**
+    - **callback**: (arg: *EffectAddEvent* => *void*
+    - **options**?: *EntityEventOptions* = `null`
+    
+    */
     subscribe(callback: (arg: EffectAddEvent) => void, options?: EntityEventOptions): (arg: EffectAddEvent) => void;
+    /**
+    Removes a callback from being called when an effect is added to an entity.
+    #### **Parameters**
+    - **callback**: (arg: *EffectAddEvent* => *void*
+    
+    */
     unsubscribe(callback: (arg: EffectAddEvent) => void): void;
   }
+  /**
+  Represents a type of effect - like poison - that can be applied to an entity.
+  */
   export class EffectType {
+    /**
+    Identifier name of this effect type.
+    */
     getName(): string;
   }
+  /**
+  This class represents a specific leveled enchantment that is applied to an item.
+  */
   export class Enchantment {
     /**
     The level of this enchantment instance.
@@ -1153,27 +1877,75 @@ declare module "mojang-minecraft" {
     The enchantment type of this instance.
     */
     readonly "type": EnchantmentType;
+    /**
+    #### **Parameters**
+    */
     constructor(enchantmentType: EnchantmentType, level?: number);
   }
+  /**
+  ## Implements
+  */
   export class EnchantmentList {
     /**
     The item slot/type that this collection is applied to.
     */
     readonly "slot": number;
+    /**
+    #### **Parameters**
+    */
     constructor(enchantmentSlot: number);
+    /**
+    
+    */
     [Symbol.iterator](): Iterator<Enchantment>;
+    /**
+    Attempts to add the enchantment to this collection. Returns true if successful.
+    #### **Parameters**
+    - **enchantment**: *Enchantment*
+    
+    */
     addEnchantment(enchantment: Enchantment): boolean;
+    /**
+    Returns whether or not the provided EnchantmentInstance can be added to this collection.
+    #### **Parameters**
+    - **enchantment**: *Enchantment*
+    
+    */
     canAddEnchantment(enchantment: Enchantment): boolean;
+    /**
+    Returns an enchantment associated with a type.
+    #### **Parameters**
+    - **enchantmentType**: *EnchantmentType*
+    
+    */
     getEnchantment(enchantmentType: EnchantmentType): Enchantment;
+    /**
+    If this collection has an EnchantmentInstance with type, returns the level of the enchantment. Returns 0 if not present.
+    #### **Parameters**
+    - **enchantmentType**: *EnchantmentType*
+    
+    */
     hasEnchantment(enchantmentType: EnchantmentType): number;
+    /**
+    
+    */
     next(): IteratorResult<Enchantment>;
+    /**
+    Removes an EnchantmentInstance with type from this collection if present.
+    #### **Parameters**
+    - **enchantmentType**: *EnchantmentType*
+    
+    */
     removeEnchantment(enchantmentType: EnchantmentType): void;
   }
+  /**
+  This enum represents the item slot or type that an enchantment can be applied to.
+  */
   export class EnchantmentSlot {
     /**
     Type: *number*
     */
-    static readonly "all" = 1;
+    static readonly "all" = -1;
     /**
     Type: *number*
     */
@@ -1267,6 +2039,9 @@ declare module "mojang-minecraft" {
     */
     static readonly "sword" = 16;
   }
+  /**
+  Contains information on a type of enchantment.
+  */
   export class EnchantmentType {
     /**
     The name of the enchantment type.
@@ -1277,6 +2052,9 @@ declare module "mojang-minecraft" {
     */
     readonly "maxLevel": number;
   }
+  /**
+  Represents the state of an entity (a mob, the player, or other moving objects like minecarts) in the world.
+  */
   export class Entity {
     /**
     Rotation of the body component of the entity.
@@ -1318,25 +2096,172 @@ declare module "mojang-minecraft" {
     Vector of the current view of the entity.
     */
     readonly "viewVector": Vector;
+    /**
+    Adds an effect, like poison, to the entity.
+    #### **Parameters**
+    - **effectType**: *EffectType*
+    
+    Type of effect to add to the entity.
+    - **duration**: *number*
+    
+    Amount of time, in seconds, for the effect to apply.
+    - **amplifier**?: *number* = `0`
+    
+    Optional amplification of the effect to apply.
+    - **showParticles**?: *boolean* = `true`
+    
+    */
     addEffect(effectType: EffectType, duration: number, amplifier?: number, showParticles?: boolean): void;
+    /**
+    Adds a specified tag to an entity.
+    #### **Parameters**
+    - **tag**: *string*
+    
+    Content of the tag to add.
+    
+    */
     addTag(tag: string): boolean;
+    /**
+    Gets the first block that intersects with the vector of the view of this entity.
+    #### **Parameters**
+    - **options**?: *BlockRaycastOptions* = `null`
+    
+    Additional options for processing this raycast query.
+    
+    */
     getBlockFromViewVector(options?: BlockRaycastOptions): Block;
+    /**
+    Gets a component (that represents additional capabilities) for an entity.
+    #### **Parameters**
+    - **componentId**: *string*
+    
+    The identifier of the component (e.g., 'minecraft:rideable') to retrieve. If no namespace prefix is specified, 'minecraft:' is assumed. If the component is not present on the entity, undefined is returned.
+    
+    */
     getComponent(componentId: string): IEntityComponent;
+    /**
+    Returns all components that are both present on this entity and supported by the API.
+    */
     getComponents(): IEntityComponent[];
+    /**
+    Returns the effect for the specified EffectType on the entity, or undefined if the effect is not present.
+    #### **Parameters**
+    - **effectType**: *EffectType*
+    
+    #### **Returns** Effect
+    - Effect object for the specified effect, or undefined if the effect is not present.
+    
+    */
     getEffect(effectType: EffectType): Effect;
+    /**
+    Gets the first entity that intersects with the vector of the view of this entity.
+    #### **Parameters**
+    - **options**?: *EntityRaycastOptions* = `null`
+    
+    Additional options for processing this raycast query.
+    
+    */
     getEntitiesFromViewVector(options?: EntityRaycastOptions): Entity[];
+    /**
+    Returns all tags associated with an entity.
+    */
     getTags(): string[];
+    /**
+    Returns true if the specified component is present on this entity.
+    #### **Parameters**
+    - **componentId**: *string*
+    
+    The identifier of the component (e.g., 'minecraft:rideable') to retrieve. If no namespace prefix is specified, 'minecraft:' is assumed.
+    
+    */
     hasComponent(componentId: string): boolean;
+    /**
+    Tests whether an entity has a particular tag.
+    #### **Parameters**
+    - **tag**: *string*
+    
+    Identifier of the tag to test for.
+    
+    */
     hasTag(tag: string): boolean;
+    /**
+    Kills this entity. The entity will drop loot as normal.
+    */
     kill(): void;
+    /**
+    Removes a specified tag from an entity.
+    #### **Parameters**
+    - **tag**: *string*
+    
+    Content of the tag to remove.
+    
+    */
     removeTag(tag: string): boolean;
+    /**
+    Runs a particular command from the context of this entity.
+    #### **Parameters**
+    - **commandString**: *string*
+    
+    Command to run. Note that command strings should not start with slash.
+    
+    */
     runCommand(commandString: string): any;
+    /**
+    Sets a velocity for the entity to move with.
+    #### **Parameters**
+    - **velocity**: *Vector*
+    
+    X/Y/Z components of the velocity.
+    
+    */
     setVelocity(velocity: Vector): void;
+    /**
+    Teleports the selected entity to a new location
+    #### **Parameters**
+    - **location**: *Location*
+    
+    New location for the entity.
+    - **dimension**: *Dimension*
+    
+    Dimension to move the selected entity to.
+    - **xRotation**: *number*
+    
+    X rotation of the entity after teleportation.
+    - **yRotation**: *number*
+    
+    Y rotation of the entity after teleportation.
+    
+    */
     teleport(location: Location, dimension: Dimension, xRotation: number, yRotation: number): void;
+    /**
+    Teleports the selected entity to a new location, and will have the entity facing a specified location.
+    #### **Parameters**
+    - **location**: *Location*
+    
+    New location for the entity.
+    - **dimension**: *Dimension*
+    
+    Dimension to move the selected entity to.
+    - **facingLocation**: *Location*
+    
+    Location that this entity will be facing.
+    
+    */
     teleportFacing(location: Location, dimension: Dimension, facingLocation: Location): void;
+    /**
+    Triggers an entity type event. For every entity, a number of events are defined in an entities' definition for key entity behaviors; for example, creepers have a minecraft:start_exploding type event.
+    #### **Parameters**
+    - **eventName**: *string*
+    
+    Name of the entity type event to trigger. If a namespace is not specified, minecraft: is assumed.
+    
+    */
     triggerEvent(eventName: string): void;
   }
-  export class EntityAddRiderComponent {
+  /**
+  When added, this component makes the entity spawn with a rider of the specified entityType.
+  */
+  export class EntityAddRiderComponent extends IEntityComponent {
     /**
     The type of entity that is added as a rider for this entity when spawned under certain conditions.
     */
@@ -1350,7 +2275,10 @@ declare module "mojang-minecraft" {
     */
     readonly "spawnEvent": string;
   }
-  export class EntityAgeableComponent {
+  /**
+  Adds a timer for the entity to grow up. It can be accelerated by giving the entity the items it likes as defined by feedItems.
+  */
+  export class EntityAgeableComponent extends IEntityComponent {
     /**
     List of items that the entity drops when it grows up.
     */
@@ -1372,7 +2300,10 @@ declare module "mojang-minecraft" {
     */
     readonly "id": string;
   }
-  export class EntityBreathableComponent {
+  /**
+  Defines what blocks this entity can breathe in and gives them the ability to suffocate.
+  */
+  export class EntityBreathableComponent extends IEntityComponent {
     /**
     List of blocks this entity can breathe in, in addition to the separate properties for classes of blocks.
     */
@@ -1417,27 +2348,47 @@ declare module "mojang-minecraft" {
     Time in seconds the entity can hold its breath.
     */
     readonly "totalSupply": number;
+    /**
+    Sets the current air supply of the entity.
+    #### **Parameters**
+    - **value**: *number*
+    
+    New air supply for the entity.
+    
+    */
     setAirSupply(value: number): void;
   }
-  export class EntityCanClimbComponent {
+  /**
+  When added, this component signifies that the entity can climb up ladders.
+  */
+  export class EntityCanClimbComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:can_climb.
     */
     readonly "id": string;
   }
-  export class EntityCanFlyComponent {
+  /**
+  When added, this component signifies that the entity can fly, and the pathfinder won't be restricted to paths where a solid block is required underneath it.
+  */
+  export class EntityCanFlyComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:can_fly.
     */
     readonly "id": string;
   }
-  export class EntityCanPowerJumpComponent {
+  /**
+  When added, this component signifies that the entity can power jump like the horse does within Minecraft.
+  */
+  export class EntityCanPowerJumpComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:can_power_jump.
     */
     readonly "id": string;
   }
-  export class EntityColorComponent {
+  /**
+  Defines the entity's color. Only works on certain entities that have predefined color values (sheep, llama, shulker).
+  */
+  export class EntityColorComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:color.
     */
@@ -1447,16 +2398,37 @@ declare module "mojang-minecraft" {
     */
     "value": number;
   }
+  /**
+  Contains information related to the creation of a new entity.
+  */
   export class EntityCreateEvent {
     /**
     New entity that was created.
     */
     "entity": Entity;
   }
+  /**
+  Manages callbacks that are connected to when a new entity is created.
+  */
   export class EntityCreateEventSignal {
+    /**
+    Adds a callback that will be called when a new entity is created.
+    #### **Parameters**
+    - **callback**: (arg: *EntityCreateEvent* => *void*
+    
+    */
     subscribe(callback: (arg: EntityCreateEvent) => void): (arg: EntityCreateEvent) => void;
+    /**
+    Removes a callback from being called when a new entity is created.
+    #### **Parameters**
+    - **callback**: (arg: *EntityCreateEvent* => *void*
+    
+    */
     unsubscribe(callback: (arg: EntityCreateEvent) => void): void;
   }
+  /**
+  Specifies additional filters that are used in registering a data driven trigger event for entities.
+  */
   export class EntityDataDrivenTriggerEventOptions {
     /**
     If this value is set, this event will only fire for entities that match the entities within this collection.
@@ -1470,8 +2442,14 @@ declare module "mojang-minecraft" {
     If this value is set, this event will only fire if the impacted triggered event matches one of the events listed in this parameter.
     */
     "eventTypes": string[];
+    /**
+    
+    */
     constructor();
   }
+  /**
+  As part of the Ageable component, represents a set of items that can be fed to an entity and the rate at which that causes them to grow.
+  */
   export class EntityDefinitionFeedItem {
     /**
     The amount by which an entity's age will increase when fed this item. Values usually range between 0 and 1.
@@ -1482,6 +2460,9 @@ declare module "mojang-minecraft" {
     */
     readonly "item": string;
   }
+  /**
+  Contains optional parameters for registering an entity event.
+  */
   export class EntityEventOptions {
     /**
     If this value is set, this event will only fire for entities that match the entities within this collection.
@@ -1491,21 +2472,33 @@ declare module "mojang-minecraft" {
     If this value is set, this event will only fire if the impacted entities' type matches this parameter.
     */
     "entityTypes": string[];
+    /**
+    
+    */
     constructor();
   }
-  export class EntityFireImmuneComponent {
+  /**
+  When added, this component signifies that this entity doesn't take damage from fire.
+  */
+  export class EntityFireImmuneComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:fire_immune.
     */
     readonly "id": string;
   }
-  export class EntityFloatsInLiquidComponent {
+  /**
+  When added, this component signifies that this entity can float in liquid blocks.
+  */
+  export class EntityFloatsInLiquidComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:floats_in_liquid.
     */
     readonly "id": string;
   }
-  export class EntityFlyingSpeedComponent {
+  /**
+  Represents the flying speed of an entity.
+  */
+  export class EntityFlyingSpeedComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:flying_speed.
     */
@@ -1515,7 +2508,10 @@ declare module "mojang-minecraft" {
     */
     "value": number;
   }
-  export class EntityFrictionModifierComponent {
+  /**
+  Defines how much friction affects this entity.
+  */
+  export class EntityFrictionModifierComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:friction_modifier.
     */
@@ -1525,7 +2521,10 @@ declare module "mojang-minecraft" {
     */
     "value": number;
   }
-  export class EntityGroundOffsetComponent {
+  /**
+  Sets the offset from the ground that the entity is actually at.
+  */
+  export class EntityGroundOffsetComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:ground_offset.
     */
@@ -1535,7 +2534,10 @@ declare module "mojang-minecraft" {
     */
     "value": number;
   }
-  export class EntityHealableComponent {
+  /**
+  Defines the interactions with this entity for healing it.
+  */
+  export class EntityHealableComponent extends IEntityComponent {
     /**
     A set of filters for when these Healable items would apply.
     */
@@ -1553,7 +2555,10 @@ declare module "mojang-minecraft" {
     */
     readonly "items": FeedItem[];
   }
-  export class EntityHealthComponent {
+  /**
+  Defines the health properties of an entity.
+  */
+  export class EntityHealthComponent extends IEntityComponent {
     /**
     Read-only. Returns the current value of health for the entity.
     */
@@ -1566,11 +2571,29 @@ declare module "mojang-minecraft" {
     Value for health as defined through entity components.
     */
     readonly "value": number;
+    /**
+    Resets the current health value of the entity to its default value.
+    */
     resetToDefaultValue(): void;
+    /**
+    Resets the current health of the entity to its maximum value.
+    */
     resetToMaxValue(): void;
+    /**
+    Resets the current health to the minimum value.
+    */
     resetToMinValue(): void;
+    /**
+    Sets the current health of the entity.
+    #### **Parameters**
+    - **value**: *number*
+    
+    */
     setCurrent(value: number): void;
   }
+  /**
+  Contains information related to an entity hitting (melee attacking) another entity.
+  */
   export class EntityHitEvent {
     /**
     Entity that made a hit/melee attack.
@@ -1585,10 +2608,29 @@ declare module "mojang-minecraft" {
     */
     readonly "hitEntity": Entity;
   }
+  /**
+  Manages callbacks that are connected to when an entity makes a melee attack on another entity.
+  */
   export class EntityHitEventSignal {
+    /**
+    Adds a callback that will be called when an entity hits another entity.
+    #### **Parameters**
+    - **callback**: (arg: *EntityHitEvent* => *void*
+    - **options**?: *EntityEventOptions* = `null`
+    
+    */
     subscribe(callback: (arg: EntityHitEvent) => void, options?: EntityEventOptions): (arg: EntityHitEvent) => void;
+    /**
+    Removes a callback from being called when an entity makes a melee attack on another entity.
+    #### **Parameters**
+    - **callback**: (arg: *EntityHitEvent* => *void*
+    
+    */
     unsubscribe(callback: (arg: EntityHitEvent) => void): void;
   }
+  /**
+  Contains information related to an entity hitting (melee attacking) another entity.
+  */
   export class EntityHurtEvent {
     /**
     A summary of the reason that damage was caused.
@@ -1611,11 +2653,30 @@ declare module "mojang-minecraft" {
     */
     readonly "projectile": Entity;
   }
+  /**
+  Manages callbacks that are connected to when an entity is hurt.
+  */
   export class EntityHurtEventSignal {
+    /**
+    Adds a callback that will be called when an entity is hurt.
+    #### **Parameters**
+    - **callback**: (arg: *EntityHurtEvent* => *void*
+    - **options**?: *EntityEventOptions* = `null`
+    
+    */
     subscribe(callback: (arg: EntityHurtEvent) => void, options?: EntityEventOptions): (arg: EntityHurtEvent) => void;
+    /**
+    Removes a callback from being called when an entity is hurt.
+    #### **Parameters**
+    - **callback**: (arg: *EntityHurtEvent* => *void*
+    
+    */
     unsubscribe(callback: (arg: EntityHurtEvent) => void): void;
   }
-  export class EntityInventoryComponent {
+  /**
+  Defines this entity's inventory properties.
+  */
+  export class EntityInventoryComponent extends IEntityComponent {
     /**
     Number of slots that this entity can gain per extra strength.
     */
@@ -1649,95 +2710,149 @@ declare module "mojang-minecraft" {
     */
     readonly "restrictToOwner": boolean;
   }
-  export class EntityIsBabyComponent {
+  /**
+  When added, this component signifies that this entity is a baby.
+  */
+  export class EntityIsBabyComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:is_baby.
     */
     readonly "id": string;
   }
-  export class EntityIsChargedComponent {
+  /**
+  When added, this component signifies that this entity is charged.
+  */
+  export class EntityIsChargedComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:is_charged.
     */
     readonly "id": string;
   }
-  export class EntityIsChestedComponent {
+  /**
+  When added, this component signifies that this entity is currently carrying a chest.
+  */
+  export class EntityIsChestedComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:is_chested.
     */
     readonly "id": string;
   }
-  export class EntityIsDyableComponent {
+  /**
+  When added, this component signifies that dyes can be used on this entity to change its color.
+  */
+  export class EntityIsDyableComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:is_dyeable.
     */
     readonly "id": string;
   }
-  export class EntityIsHiddenWhenInvisibleComponent {
+  /**
+  When added, this component signifies that this entity can hide from hostile mobs while invisible.
+  */
+  export class EntityIsHiddenWhenInvisibleComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:is_hidden_when_invisible.
     */
     readonly "id": string;
   }
-  export class EntityIsIgnitedComponent {
+  /**
+  When added, this component signifies that this entity this currently on fire.
+  */
+  export class EntityIsIgnitedComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:is_ignited.
     */
     readonly "id": string;
   }
-  export class EntityIsIllagerCaptainComponent {
+  /**
+  When added, this component signifies that this entity is an illager captain.
+  */
+  export class EntityIsIllagerCaptainComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:is_illager_captain.
     */
     readonly "id": string;
   }
-  export class EntityIsSaddledComponent {
+  /**
+  When added, this component signifies that this entity is currently saddled.
+  */
+  export class EntityIsSaddledComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:is_saddled.
     */
     readonly "id": string;
   }
-  export class EntityIsShakingComponent {
+  /**
+  When added, this component signifies that this entity is currently shaking.
+  */
+  export class EntityIsShakingComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:is_shaking.
     */
     readonly "id": string;
   }
-  export class EntityIsShearedComponent {
+  /**
+  When added, this component signifies that this entity is currently sheared.
+  */
+  export class EntityIsShearedComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:is_sheared.
     */
     readonly "id": string;
   }
-  export class EntityIsStackableComponent {
+  /**
+  When added, this component signifies that this entity can be stacked.
+  */
+  export class EntityIsStackableComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:is_stackable.
     */
     readonly "id": string;
   }
-  export class EntityIsStunnedComponent {
+  /**
+  When added, this component signifies that this entity is currently stunned.
+  */
+  export class EntityIsStunnedComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:is_stunned.
     */
     readonly "id": string;
   }
-  export class EntityIsTamedComponent {
+  /**
+  When added, this component signifies that this entity is currently tamed.
+  */
+  export class EntityIsTamedComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:is_tamed.
     */
     readonly "id": string;
   }
+  /**
+  If added onto the entity, this indicates that the entity represents a free-floating item in the world. Lets you retrieve the actual item stack contents via the itemStack property.
+  */
   export class EntityItemComponent {
     /**
     Item stack represented by this entity in the world.
     */
     readonly "itemStack": ItemStack;
   }
+  /**
+  ## Implements
+  */
   export class EntityIterator {
+    /**
+    
+    */
     [Symbol.iterator](): Iterator<Entity>;
+    /**
+    Retrieves the next item in this iteration. The resulting IteratorResult contains .done and .value properties which can be used to see the next Entity in the iteration.
+    */
     next(): IteratorResult<Entity>;
   }
-  export class EntityLavaMovementComponent {
+  /**
+  Defines the base movement speed in lava of this entity.
+  */
+  export class EntityLavaMovementComponent extends IEntityComponent {
     /**
     Read-only. Returns the current value of movement speed on lava for the entity.
     */
@@ -1750,12 +2865,30 @@ declare module "mojang-minecraft" {
     Value for movement speed on lava as defined through entity components.
     */
     readonly "value": number;
+    /**
+    Resets the current movement speed on lava for the entity to its default value.
+    */
     resetToDefaultValue(): void;
+    /**
+    Resets the movement speed on lava to the maximum value for the entity.
+    */
     resetToMaxValue(): void;
+    /**
+    Resets the movement speed on lava speed to the minimum value.
+    */
     resetToMinValue(): void;
+    /**
+    Sets the current value of movement speed on lava for the entity.
+    #### **Parameters**
+    - **value**: *number*
+    
+    */
     setCurrent(value: number): void;
   }
-  export class EntityLeashableComponent {
+  /**
+  Allows this entity to be leashed and defines the conditions and events for this entity when is leashed.
+  */
+  export class EntityLeashableComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:leashable.
     */
@@ -1764,10 +2897,24 @@ declare module "mojang-minecraft" {
     Distance in blocks at which the 'spring' effect starts acting to keep this entity close to the entity that leashed it.
     */
     readonly "softDistance": number;
+    /**
+    Leashes this entity to another entity.
+    #### **Parameters**
+    - **leashHolder**: *Entity*
+    
+    The entity to leash this entity to.
+    
+    */
     leash(leashHolder: Entity): void;
+    /**
+    Unleashes this entity if it is leashed to another entity.
+    */
     unleash(): void;
   }
-  export class EntityMarkVariantComponent {
+  /**
+  Additional variant value. Can be used to further differentiate variants.
+  */
+  export class EntityMarkVariantComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:mark_variant.
     */
@@ -1777,14 +2924,28 @@ declare module "mojang-minecraft" {
     */
     "value": number;
   }
-  export class EntityMountTamingComponent {
+  /**
+  Contains options for taming a rideable entity based on the entity that mounts it.
+  */
+  export class EntityMountTamingComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:mount_taming.
     */
     readonly "id": string;
+    /**
+    Sets this rideable entity as tamed.
+    #### **Parameters**
+    - **showParticles**: *boolean*
+    
+    Whether to show effect particles when this entity is tamed.
+    
+    */
     setTamed(showParticles: boolean): void;
   }
-  export class EntityMovementAmphibiousComponent {
+  /**
+  When added, this movement control allows the mob to swim in water and walk on land.
+  */
+  export class EntityMovementAmphibiousComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:movement.amphibious.
     */
@@ -1794,7 +2955,10 @@ declare module "mojang-minecraft" {
     */
     readonly "maxTurn": number;
   }
-  export class EntityMovementBasicComponent {
+  /**
+  This component accents the movement of an entity.
+  */
+  export class EntityMovementBasicComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:movement.basic.
     */
@@ -1804,7 +2968,10 @@ declare module "mojang-minecraft" {
     */
     readonly "maxTurn": number;
   }
-  export class EntityMovementComponent {
+  /**
+  Defines the general movement speed of this entity.
+  */
+  export class EntityMovementComponent extends IEntityComponent {
     /**
     Read-only. Returns the current value of default movement speed for the entity.
     */
@@ -1817,12 +2984,30 @@ declare module "mojang-minecraft" {
     Value for default movement speed as defined through entity components.
     */
     readonly "value": number;
+    /**
+    Resets the current default movement speed value for the entity to the default value.
+    */
     resetToDefaultValue(): void;
+    /**
+    Resets the default movement speed to the maximum value for the entity.
+    */
     resetToMaxValue(): void;
+    /**
+    Resets the default movement speed to the minimum value.
+    */
     resetToMinValue(): void;
+    /**
+    Sets the current value of default movement speed for the entity.
+    #### **Parameters**
+    - **value**: *number*
+    
+    */
     setCurrent(value: number): void;
   }
-  export class EntityMovementFlyComponent {
+  /**
+  When added, this move control causes the mob to fly.
+  */
+  export class EntityMovementFlyComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:movement.fly.
     */
@@ -1832,7 +3017,10 @@ declare module "mojang-minecraft" {
     */
     readonly "maxTurn": number;
   }
-  export class EntityMovementGenericComponent {
+  /**
+  When added, this move control allows a mob to fly, swim, climb, etc.
+  */
+  export class EntityMovementGenericComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:movement.generic.
     */
@@ -1842,7 +3030,10 @@ declare module "mojang-minecraft" {
     */
     readonly "maxTurn": number;
   }
-  export class EntityMovementGlideComponent {
+  /**
+  When added, this movement control allows the mob to glide.
+  */
+  export class EntityMovementGlideComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:movement.glide.
     */
@@ -1860,7 +3051,10 @@ declare module "mojang-minecraft" {
     */
     readonly "startSpeed": number;
   }
-  export class EntityMovementHoverComponent {
+  /**
+  When added, this move control causes the mob to hover.
+  */
+  export class EntityMovementHoverComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:movement.hover.
     */
@@ -1870,7 +3064,10 @@ declare module "mojang-minecraft" {
     */
     readonly "maxTurn": number;
   }
-  export class EntityMovementJumpComponent {
+  /**
+  Move control that causes the mob to jump as it moves with a specified delay between jumps.
+  */
+  export class EntityMovementJumpComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:movement.jump.
     */
@@ -1880,7 +3077,10 @@ declare module "mojang-minecraft" {
     */
     readonly "maxTurn": number;
   }
-  export class EntityMovementSkipComponent {
+  /**
+  When added, this move control causes the mob to hop as it moves.
+  */
+  export class EntityMovementSkipComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:movement.skip.
     */
@@ -1890,7 +3090,10 @@ declare module "mojang-minecraft" {
     */
     readonly "maxTurn": number;
   }
-  export class EntityMovementSwayComponent {
+  /**
+  When added, this move control causes the mob to sway side to side giving the impression it is swimming.
+  */
+  export class EntityMovementSwayComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:movement.sway.
     */
@@ -1908,7 +3111,10 @@ declare module "mojang-minecraft" {
     */
     readonly "swayFrequency": number;
   }
-  export class EntityNavigationClimbComponent {
+  /**
+  Allows this entity to generate paths that include vertical walls (for example, like Minecraft spiders do.)
+  */
+  export class EntityNavigationClimbComponent extends IEntityComponent {
     /**
     Tells the pathfinder to avoid blocks that cause damage when finding a path.
     */
@@ -1990,7 +3196,10 @@ declare module "mojang-minecraft" {
     */
     readonly "isAmphibious": boolean;
   }
-  export class EntityNavigationFloatComponent {
+  /**
+  Allows this entity to generate paths by flying around the air like the regular Ghast.
+  */
+  export class EntityNavigationFloatComponent extends IEntityComponent {
     /**
     Tells the pathfinder to avoid blocks that cause damage when finding a path.
     */
@@ -2072,7 +3281,10 @@ declare module "mojang-minecraft" {
     */
     readonly "isAmphibious": boolean;
   }
-  export class EntityNavigationFlyComponent {
+  /**
+  Allows this entity to generate paths in the air (for example, like Minecraft parrots do.)
+  */
+  export class EntityNavigationFlyComponent extends IEntityComponent {
     /**
     Tells the pathfinder to avoid blocks that cause damage when finding a path.
     */
@@ -2154,7 +3366,10 @@ declare module "mojang-minecraft" {
     */
     readonly "isAmphibious": boolean;
   }
-  export class EntityNavigationGenericComponent {
+  /**
+  Allows this entity to generate paths by walking, swimming, flying and/or climbing around and jumping up and down a block.
+  */
+  export class EntityNavigationGenericComponent extends IEntityComponent {
     /**
     Tells the pathfinder to avoid blocks that cause damage when finding a path.
     */
@@ -2236,7 +3451,10 @@ declare module "mojang-minecraft" {
     */
     readonly "isAmphibious": boolean;
   }
-  export class EntityNavigationHoverComponent {
+  /**
+  Allows this entity to generate paths in the air (for example, like the Minecraft Bees do.) Keeps them from falling out of the skies and doing predictive movement.
+  */
+  export class EntityNavigationHoverComponent extends IEntityComponent {
     /**
     Tells the pathfinder to avoid blocks that cause damage when finding a path.
     */
@@ -2318,7 +3536,10 @@ declare module "mojang-minecraft" {
     */
     readonly "isAmphibious": boolean;
   }
-  export class EntityNavigationWalkComponent {
+  /**
+  Allows this entity to generate paths by walking around and jumping up and down a block like regular mobs.
+  */
+  export class EntityNavigationWalkComponent extends IEntityComponent {
     /**
     Tells the pathfinder to avoid blocks that cause damage when finding a path.
     */
@@ -2400,7 +3621,10 @@ declare module "mojang-minecraft" {
     */
     readonly "isAmphibious": boolean;
   }
-  export class EntityPushThroughComponent {
+  /**
+  Sets the distance through which the entity can push through.
+  */
+  export class EntityPushThroughComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:push_through.
     */
@@ -2410,6 +3634,9 @@ declare module "mojang-minecraft" {
     */
     "value": number;
   }
+  /**
+  Contains options for selecting entities within an area.
+  */
   export class EntityQueryOptions {
     /**
     Limits the number of entities to return, opting for the closest N entities as specified by this property. The location value must also be specified on the query options object.
@@ -2503,8 +3730,14 @@ declare module "mojang-minecraft" {
     In conjunction with location, specified a cuboid volume of entities to include.
     */
     "volume": BlockAreaSize;
+    /**
+    Creates a new EntityQueryOptions query object, for use in getEntities/getPlayers methods.
+    */
     constructor();
   }
+  /**
+  Contains additional options for filtering players based on their score for an objective.
+  */
   export class EntityQueryScoreOptions {
     /**
     If set to true, entities and players within this score range are excluded from query results.
@@ -2522,16 +3755,28 @@ declare module "mojang-minecraft" {
     Identifier of the scoreboard objective to filter on.
     */
     "objective": string;
+    /**
+    Creates a new EntityQueryScoreOptions query object, for use in an entity query.
+    */
     constructor();
   }
+  /**
+  Contains additional options for an entity raycast operation.
+  */
   export class EntityRaycastOptions {
     /**
     Maximum distance, in blocks, to process the raycast.
     */
     "maxDistance": number;
+    /**
+    Creates a new EntityRaycastOptions object, for use in an entity vector query.
+    */
     constructor();
   }
-  export class EntityRideableComponent {
+  /**
+  When added, this component adds the capability that an entity can be ridden by another entity.
+  */
+  export class EntityRideableComponent extends IEntityComponent {
     /**
     Zero-based index of the seat that can used to control this entity.
     */
@@ -2568,11 +3813,33 @@ declare module "mojang-minecraft" {
     The list of positions and number of riders for each position for entities riding this entity.
     */
     readonly "seats": Seat[];
+    /**
+    Adds an entity to this entity as a rider.
+    #### **Parameters**
+    - **rider**: *Entity*
+    
+    Entity that will become the rider of this entity.
+    
+    */
     addRider(rider: Entity): boolean;
+    /**
+    Ejects the specified rider of this entity.
+    #### **Parameters**
+    - **rider**: *Entity*
+    
+    Entity that should be ejected from this entity.
+    
+    */
     ejectRider(rider: Entity): void;
+    /**
+    Ejects all riders of this entity.
+    */
     ejectRiders(): void;
   }
-  export class EntityScaleComponent {
+  /**
+  Sets the entity's visual size.
+  */
+  export class EntityScaleComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:scale.
     */
@@ -2582,7 +3849,10 @@ declare module "mojang-minecraft" {
     */
     "value": number;
   }
-  export class EntitySkinIdComponent {
+  /**
+  Skin Id value. Can be used to differentiate skins, such as base skins for villagers.
+  */
+  export class EntitySkinIdComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:skin_id.
     */
@@ -2592,7 +3862,10 @@ declare module "mojang-minecraft" {
     */
     "value": number;
   }
-  export class EntityStrengthComponent {
+  /**
+  Defines the entity's strength to carry items.
+  */
+  export class EntityStrengthComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:strength.
     */
@@ -2606,7 +3879,10 @@ declare module "mojang-minecraft" {
     */
     readonly "value": number;
   }
-  export class EntityTameableComponent {
+  /**
+  Defines the rules for a mob to be tamed by the player.
+  */
+  export class EntityTameableComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:tameable.
     */
@@ -2623,23 +3899,50 @@ declare module "mojang-minecraft" {
     The list of items that can be used to tame this entity.
     */
     readonly "tameItems": string[];
+    /**
+    Tames this entity.
+    */
     tame(): boolean;
   }
+  /**
+  ## Properties
+  */
   export class EntityType {
     /**
     Type: *string*
     */
     readonly "id": string;
   }
+  /**
+  ## Implements
+  */
   export class EntityTypeIterator {
+    /**
+    
+    */
     [Symbol.iterator](): Iterator<EntityType>;
+    /**
+    
+    */
     next(): IteratorResult<EntityType>;
   }
+  /**
+  ## Methods
+  */
   export class EntityTypes {
+    /**
+    #### **Parameters**
+    */
     get(identifier: string): EntityType;
+    /**
+    
+    */
     getAll(): EntityTypeIterator;
   }
-  export class EntityUnderwaterMovementComponent {
+  /**
+  Defines the general movement speed underwater of this entity.
+  */
+  export class EntityUnderwaterMovementComponent extends IEntityComponent {
     /**
     Read-only. Returns the current value of movement speed underwater for the entity.
     */
@@ -2652,12 +3955,30 @@ declare module "mojang-minecraft" {
     Value for movement speed underwater as defined through entity components.
     */
     readonly "value": number;
+    /**
+    Resets the current movement speed underwater for the entity to the default value implied by the current component state of the entity.
+    */
     resetToDefaultValue(): void;
+    /**
+    Resets the movement speed underwater to the maximum value for the entity, as determined by the set of components that are on the entity.
+    */
     resetToMaxValue(): void;
+    /**
+    Resets the movement speed underwater to the minimum value as defined by the component state of this entity.
+    */
     resetToMinValue(): void;
+    /**
+    Sets the current value of movement speed underwater for the entity.
+    #### **Parameters**
+    - **value**: *number*
+    
+    */
     setCurrent(value: number): void;
   }
-  export class EntityVariantComponent {
+  /**
+  Used to differentiate the component group of a variant of an entity from others. (e.g. ocelot, villager).
+  */
+  export class EntityVariantComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:variant.
     */
@@ -2667,12 +3988,18 @@ declare module "mojang-minecraft" {
     */
     readonly "value": number;
   }
-  export class EntityWantsJockeyComponent {
+  /**
+  When added, this component signifies that this entity wants to become a jockey.
+  */
+  export class EntityWantsJockeyComponent extends IEntityComponent {
     /**
     Identifier of this component. Should always be minecraft:wants_jockey.
     */
     readonly "id": string;
   }
+  /**
+  Contains a set of events that are available across the scope of the World.
+  */
   export class Events {
     /**
     This event fires before a chat message is broadcast or delivered. The event can be canceled, and the message can also be updated.
@@ -2779,6 +4106,9 @@ declare module "mojang-minecraft" {
     */
     readonly "weatherChange": WeatherChangeEventSignal;
   }
+  /**
+  Contains information regarding an explosion that has happened.
+  */
   export class ExplosionEvent {
     /**
     Dimension where the explosion has occurred.
@@ -2793,10 +4123,28 @@ declare module "mojang-minecraft" {
     */
     readonly "source": Entity;
   }
+  /**
+  Manages callbacks that are connected to when an explosion occurs.
+  */
   export class ExplosionEventSignal {
+    /**
+    Adds a callback that will be called when an explosion occurs.
+    #### **Parameters**
+    - **callback**: (arg: *ExplosionEvent* => *void*
+    
+    */
     subscribe(callback: (arg: ExplosionEvent) => void): (arg: ExplosionEvent) => void;
+    /**
+    Removes a callback from being called when an explosion occurs.
+    #### **Parameters**
+    - **callback**: (arg: *ExplosionEvent* => *void*
+    
+    */
     unsubscribe(callback: (arg: ExplosionEvent) => void): void;
   }
+  /**
+  Additional configuration options for the [*mojang-minecraft.Dimension.createExplosion*](../mojang-minecraft/Dimension.md#createexplosion) method.
+  */
   export class ExplosionOptions {
     /**
     Whether parts of the explosion also impact underwater.
@@ -2814,8 +4162,14 @@ declare module "mojang-minecraft" {
     Optional source of the explosion.
     */
     "source": Entity;
+    /**
+    Creates a new instance of the ExplosionOptions object, for use in the *mojang-minecraft.Dimension.createExplosion* method.
+    */
     constructor();
   }
+  /**
+  As part of the Healable component, represents a specific item that can be fed to an entity to cause health effects.
+  */
   export class FeedItem {
     /**
     As part of the Healable component, an optional collection of side effects that can occur from being fed an item.
@@ -2830,6 +4184,9 @@ declare module "mojang-minecraft" {
     */
     readonly "item": string;
   }
+  /**
+  Represents an effect that is applied as a result of a food item being fed to an entity.
+  */
   export class FeedItemEffect {
     /**
     Gets an amplifier that may have been applied to this effect. Valid values are integers starting at 0 and up - but usually ranging between 0 and 4.
@@ -2848,8 +4205,14 @@ declare module "mojang-minecraft" {
     */
     readonly "name": string;
   }
+  /**
+  Represents a set of filters for when an event should occur.
+  */
   export class FilterGroup {
   }
+  /**
+  Represents constants related to fluid containers.
+  */
   export class FluidContainer {
     /**
     Constant that represents the maximum fill level of a fluid container.
@@ -2874,19 +4237,28 @@ declare module "mojang-minecraft" {
     */
     "adventure" = 2,
   }
+  /**
+  Contains an interface for defining the state of a property for a [*mojang-minecraft.BlockPermutation*](../mojang-minecraft/BlockPermutation.md).
+  */
   export class IBlockProperty {
     /**
     The name of this property.
     */
     readonly "name": string;
   }
+  /**
+  Base interface that defines components associated with an entity.
+  */
   export class IEntityComponent {
     /**
     Identifier of this component.
     */
     readonly "id": string;
   }
-  export class IntBlockProperty {
+  /**
+  Contains the state of an integer-based property for a [*mojang-minecraft.BlockPermutation*](../mojang-minecraft/BlockPermutation.md).
+  */
+  export class IntBlockProperty extends IBlockProperty {
     /**
     The name of this property.
     */
@@ -2900,7 +4272,10 @@ declare module "mojang-minecraft" {
     */
     "value": number;
   }
-  export class InventoryComponentContainer {
+  /**
+  Represents a container that can hold stacks of items. Used for entities like players, chest minecarts, llamas, and more.
+  */
+  export class InventoryComponentContainer extends Container {
     /**
     The number of empty slots in the container.
     */
@@ -2909,12 +4284,68 @@ declare module "mojang-minecraft" {
     Represents the size of the container. For example, a standard single-block chest has a size of 27, for the 27 slots in their inventory.
     */
     readonly "size": number;
+    /**
+    Adds an item to the specified container. Items will be placed in the first available empty slot. (Use *mojang-minecraft.InventoryComponentContainer.setItem*
+    #### **Parameters**
+    - **itemStack**: *ItemStack*
+    
+    The stack of items to add.
+    
+    */
     addItem(itemStack: ItemStack): void;
+    /**
+    Gets the item stack for the set of items at the specified slot. If the slot is empty, returns undefined. This method does not change or clear the contents of the specified slot.
+    #### **Parameters**
+    - **slot**: *number*
+    
+    Zero-based index of the slot to retrieve items from.
+    
+    */
     getItem(slot: number): ItemStack;
+    /**
+    Sets an item stack within a particular slot.
+    #### **Parameters**
+    - **slot**: *number*
+    
+    Zero-based index of the slot to set an item at.
+    - **itemStack**: *ItemStack*
+    
+    Stack of items to place within the specified slot.
+    
+    */
     setItem(slot: number, itemStack: ItemStack): void;
+    /**
+    Swaps items between two different slots within containers.
+    #### **Parameters**
+    - **slot**: *number*
+    
+    Zero-based index of the slot to swap from this container.
+    - **otherSlot**: *number*
+    
+    Zero-based index of the slot to swap with.
+    - **otherContainer**: *Container*
+    
+    Target container to swap with. Note this can be the same container as this source.
+    
+    */
     swapItems(slot: number, otherSlot: number, otherContainer: Container): boolean;
+    /**
+    Moves an item from one slot to another, potentially across containers.
+    #### **Parameters**
+    - **fromSlot**: *number*
+    - **toSlot**: *number*
+    
+    Zero-based index of the slot to move to.
+    - **toContainer**: *Container*
+    
+    Target container to transfer to. Note this can be the same container as the source.
+    
+    */
     transferItem(fromSlot: number, toSlot: number, toContainer: Container): boolean;
   }
+  /**
+  When present on an item, this item has a cooldown effect when used by entities.
+  */
   export class ItemCooldownComponent {
     /**
     Represents the cooldown category that this item is associated with.
@@ -2928,12 +4359,36 @@ declare module "mojang-minecraft" {
     Identifier of this component. Should always be 'minecraft:cooldown'.
     */
     readonly "id": string;
+    /**
+    Starts a new cooldown period for this item.
+    #### **Parameters**
+    - **player**: *Player*
+    
+    */
     startCooldown(player: Player): void;
   }
+  /**
+  Manages callbacks that are connected to an item's definition and components changing.
+  */
   export class ItemDefinitionEventSignal {
+    /**
+    Adds a callback that will be called when an item's definition and components change.
+    #### **Parameters**
+    - **callback**: (arg: *ItemDefinitionTriggeredEvent* => *void*
+    
+    */
     subscribe(callback: (arg: ItemDefinitionTriggeredEvent) => void): (arg: ItemDefinitionTriggeredEvent) => void;
+    /**
+    Removes a callback from being called when an item's definition and components change.
+    #### **Parameters**
+    - **callback**: (arg: *ItemDefinitionTriggeredEvent* => *void*
+    
+    */
     unsubscribe(callback: (arg: ItemDefinitionTriggeredEvent) => void): void;
   }
+  /**
+  Contains information related to a custom item having a data definition change being triggered.
+  */
   export class ItemDefinitionTriggeredEvent {
     /**
     Name of the data-driven item event that is triggering this change.
@@ -2948,6 +4403,9 @@ declare module "mojang-minecraft" {
     */
     readonly "source": Entity;
   }
+  /**
+  When present on an item, this item can take damage in the process of being used.
+  */
   export class ItemDurabilityComponent {
     /**
     Returns the current damage level of this particular item.
@@ -2965,8 +4423,19 @@ declare module "mojang-minecraft" {
     Represents the amount of damage that this item can take before breaking.
     */
     readonly "maxDurability": number;
+    /**
+    Returns the maximum chance that this item would be damaged using the damageRange property, given an unbreaking level.
+    #### **Parameters**
+    - **unbreaking**?: *number* = `0`
+    
+    Unbreaking factor to consider in factoring the damage chance. Incoming unbreaking parameter must be greater than 0.
+    
+    */
     getDamageChance(unbreaking?: number): number;
   }
+  /**
+  When present on an item, this item has applied enchantment effects.
+  */
   export class ItemEnchantsComponent {
     /**
     Returns a collection of the enchantments applied to this item stack.
@@ -2976,8 +4445,14 @@ declare module "mojang-minecraft" {
     Identifier of this component.
     */
     readonly "id": string;
+    /**
+    Removes all enchantments applied to this item stack.
+    */
     removeAllEnchantments(): void;
   }
+  /**
+  When present on an item, this item is consumable by entities.
+  */
   export class ItemFoodComponent {
     /**
     If true, the player can always eat this item (even when not hungry).
@@ -3000,6 +4475,9 @@ declare module "mojang-minecraft" {
     */
     readonly "usingConvertsTo": string;
   }
+  /**
+  Defines a collection of items.
+  */
   export class ItemStack {
     /**
     Number of the items in the stack. Valid values range between 0 and 64.
@@ -3017,20 +4495,76 @@ declare module "mojang-minecraft" {
     Given name of this stack of items.
     */
     "nameTag": string;
+    /**
+    Creates a new instance of a stack of items for use in the world.
+    #### **Parameters**
+    - **itemType**: *ItemType*
+    
+    Type of item to create. See the *mojang-minecraft.MinecraftItemTypes* enumeration for a list of standard item types in Minecraft experiences.
+    - **amount**?: *number* = `1`
+    
+    Number of items to place in the stack, between 1 and 64. Note that certain items can only have one item in the stack.
+    - **data**?: *number* = `0`
+    
+    Optional data value used for creating the item, or 0 if no data value is specified.
+    
+    */
     constructor(itemType: ItemType, amount?: number, data?: number);
+    /**
+    Gets a component (that represents additional capabilities) for an item stack.
+    #### **Parameters**
+    - **componentId**: *string*
+    
+    The identifier of the component (e.g., 'minecraft:food') to retrieve. If no namespace prefix is specified, 'minecraft:' is assumed. If the component is not present on the item stack, undefined is returned.
+    
+    */
     getComponent(componentId: string): any;
+    /**
+    Returns all components that are both present on this item stack and supported by the API.
+    */
     getComponents(): any[];
+    /**
+    Returns the lore value - a secondary display string - for an ItemStack.
+    */
     getLore(): string[];
+    /**
+    Returns true if the specified component is present on this item stack.
+    #### **Parameters**
+    - **componentId**: *string*
+    
+    The identifier of the component (e.g., 'minecraft:food') to retrieve. If no namespace prefix is specified, 'minecraft:' is assumed.
+    
+    */
     hasComponent(componentId: string): boolean;
+    /**
+    Sets the lore value - a secondary display string - for an ItemStack.
+    #### **Parameters**
+    - **loreList**: *string*[]
+    
+    */
     setLore(loreList: string[]): void;
+    /**
+    Triggers an item type event. For custom items, a number of events are defined in an items' definition for key item behaviors.
+    #### **Parameters**
+    - **eventName**: *string*
+    
+    Name of the item type event to trigger. If a namespace is not specified, minecraft: is assumed.
+    
+    */
     triggerEvent(eventName: string): void;
   }
+  /**
+  Represents the type of an item - for example, Wool.
+  */
   export class ItemType {
     /**
     Returns the identifier of the item type - for example, 'minecraft:apple'.
     */
     readonly "id": string;
   }
+  /**
+  Contains information related to an item being used.
+  */
   export class ItemUseEvent {
     /**
     The impacted item stack that is being used.
@@ -3041,10 +4575,28 @@ declare module "mojang-minecraft" {
     */
     readonly "source": Entity;
   }
+  /**
+  Manages callbacks that are connected to an item use event.
+  */
   export class ItemUseEventSignal {
+    /**
+    Adds a callback that will be called when an item is used.
+    #### **Parameters**
+    - **callback**: (arg: *ItemUseEvent* => *void*
+    
+    */
     subscribe(callback: (arg: ItemUseEvent) => void): (arg: ItemUseEvent) => void;
+    /**
+    Removes a callback from being called when an item is used.
+    #### **Parameters**
+    - **callback**: (arg: *ItemUseEvent* => *void*
+    
+    */
     unsubscribe(callback: (arg: ItemUseEvent) => void): void;
   }
+  /**
+  Contains information related to an item being used on a block.
+  */
   export class ItemUseOnEvent {
     /**
     The face of the block that an item is being used on.
@@ -3071,14 +4623,43 @@ declare module "mojang-minecraft" {
     */
     readonly "source": Entity;
   }
+  /**
+  Manages callbacks that are connected to an item being used on a block event.
+  */
   export class ItemUseOnEventSignal {
+    /**
+    Adds a callback that will be called when an item is used on a block.
+    #### **Parameters**
+    - **callback**: (arg: *ItemUseOnEvent* => *void*
+    
+    */
     subscribe(callback: (arg: ItemUseOnEvent) => void): (arg: ItemUseOnEvent) => void;
+    /**
+    Removes a callback from being called when an item is used on a block.
+    #### **Parameters**
+    - **callback**: (arg: *ItemUseOnEvent* => *void*
+    
+    */
     unsubscribe(callback: (arg: ItemUseOnEvent) => void): void;
   }
+  /**
+  Represents a collection of all of the available item types in Minecraft.
+  */
   export class Items {
+    /**
+    Returns an item type given an item type identifier.
+    #### **Parameters**
+    - **itemId**: *string*
+    
+    Type of the item to return.
+    
+    */
     get(itemId: string): ItemType;
   }
-  export class LeverActionEvent {
+  /**
+  Contains information related to changes to a lever activating or deactivating.
+  */
+  export class LeverActionEvent extends BlockEvent {
     /**
     Block impacted by this event.
     */
@@ -3092,10 +4673,28 @@ declare module "mojang-minecraft" {
     */
     readonly "isPowered": boolean;
   }
+  /**
+  Manages callbacks that are connected to lever moves (activates or deactivates).
+  */
   export class LeverActivateEventSignal {
+    /**
+    Adds a callback that will be called when a lever is moved (activates or deactivates).
+    #### **Parameters**
+    - **callback**: (arg: *LeverActionEvent* => *void*
+    
+    */
     subscribe(callback: (arg: LeverActionEvent) => void): (arg: LeverActionEvent) => void;
+    /**
+    Removes a callback from being called when a lever is moved (activates or deactivates).
+    #### **Parameters**
+    - **callback**: (arg: *LeverActionEvent* => *void*
+    
+    */
     unsubscribe(callback: (arg: LeverActionEvent) => void): void;
   }
+  /**
+  Contains a location description that is useful for entities and other items. X, Y, and Z can contain decimal fractions. For integer-based locations useful for blocks, see [*mojang-minecraft.BlockLocation*](../mojang-minecraft/BlockLocation.md).
+  */
   export class Location {
     /**
     X component of this location.
@@ -3109,10 +4708,46 @@ declare module "mojang-minecraft" {
     Z component of this location.
     */
     "z": number;
+    /**
+    Creates a new instance of an abstract location.
+    #### **Parameters**
+    - **x**: *number*
+    
+    X position of the location.
+    - **y**: *number*
+    
+    Y position of the location.
+    - **z**: *number*
+    
+    Z position of the location.
+    
+    */
     constructor(x: number, y: number, z: number);
+    /**
+    Compares this Location and another Location to one another.
+    #### **Parameters**
+    - **other**: *Location*
+    
+    Other location to compare this Location to.
+    
+    */
     equals(other: Location): boolean;
+    /**
+    Determines whether or not two Locations are considered to be near each other.
+    #### **Parameters**
+    - **other**: *Location*
+    
+    Other Location to compare this Location to.
+    - **epsilon**: *number*
+    
+    Maximum distance that the Locations can be from each other to be considered nearby.
+    
+    */
     isNear(other: Location, epsilon: number): boolean;
   }
+  /**
+  Contains definitions of standard Minecraft and Minecraft Education Edition block types.
+  */
   export class MinecraftBlockTypes {
     /**
     Represents an acacia button within Minecraft.
@@ -3483,7 +5118,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "clay": BlockType;
     /**
-    Type: [*BlockType*](BlockType.md)
+    Type: *BlockType*
     */
     static readonly "clientRequestPlaceholderBlock": BlockType;
     /**
@@ -4487,7 +6122,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "frame": BlockType;
     /**
-    Type: [*BlockType*](BlockType.md)
+    Type: *BlockType*
     */
     static readonly "frogSpawn": BlockType;
     /**
@@ -4859,15 +6494,15 @@ declare module "mojang-minecraft" {
     */
     static readonly "magma": BlockType;
     /**
-    Type: [*BlockType*](BlockType.md)
+    Type: *BlockType*
     */
     static readonly "mangroveLeaves": BlockType;
     /**
-    Type: [*BlockType*](BlockType.md)
+    Type: *BlockType*
     */
     static readonly "mangrovePropagule": BlockType;
     /**
-    Type: [*BlockType*](BlockType.md)
+    Type: *BlockType*
     */
     static readonly "mangrovePropaguleHanging": BlockType;
     /**
@@ -4915,27 +6550,27 @@ declare module "mojang-minecraft" {
     */
     static readonly "movingBlock": BlockType;
     /**
-    Type: [*BlockType*](BlockType.md)
+    Type: *BlockType*
     */
     static readonly "mud": BlockType;
     /**
-    Type: [*BlockType*](BlockType.md)
+    Type: *BlockType*
     */
     static readonly "mudBrickDoubleSlab": BlockType;
     /**
-    Type: [*BlockType*](BlockType.md)
+    Type: *BlockType*
     */
     static readonly "mudBricks": BlockType;
     /**
-    Type: [*BlockType*](BlockType.md)
+    Type: *BlockType*
     */
     static readonly "mudBrickSlab": BlockType;
     /**
-    Type: [*BlockType*](BlockType.md)
+    Type: *BlockType*
     */
     static readonly "mudBrickStairs": BlockType;
     /**
-    Type: [*BlockType*](BlockType.md)
+    Type: *BlockType*
     */
     static readonly "mudBrickWall": BlockType;
     /**
@@ -4943,11 +6578,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "mycelium": BlockType;
     /**
-    Type: [*BlockType*](BlockType.md)
+    Type: *BlockType*
     */
     static readonly "mysteriousFrame": BlockType;
     /**
-    Type: [*BlockType*](BlockType.md)
+    Type: *BlockType*
     */
     static readonly "mysteriousFrameSlot": BlockType;
     /**
@@ -5011,7 +6646,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "obsidian": BlockType;
     /**
-    Type: [*BlockType*](BlockType.md)
+    Type: *BlockType*
     */
     static readonly "ochreFroglight": BlockType;
     /**
@@ -5051,11 +6686,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "packedIce": BlockType;
     /**
-    Type: [*BlockType*](BlockType.md)
+    Type: *BlockType*
     */
     static readonly "packedMud": BlockType;
     /**
-    Type: [*BlockType*](BlockType.md)
+    Type: *BlockType*
     */
     static readonly "pearlescentFroglight": BlockType;
     /**
@@ -5363,11 +6998,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "scaffolding": BlockType;
     /**
-    Type: [*BlockType*](BlockType.md)
+    Type: *BlockType*
     */
     static readonly "sculk": BlockType;
     /**
-    Type: [*BlockType*](BlockType.md)
+    Type: *BlockType*
     */
     static readonly "sculkCatalyst": BlockType;
     /**
@@ -5375,11 +7010,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "sculkSensor": BlockType;
     /**
-    Type: [*BlockType*](BlockType.md)
+    Type: *BlockType*
     */
     static readonly "sculkShrieker": BlockType;
     /**
-    Type: [*BlockType*](BlockType.md)
+    Type: *BlockType*
     */
     static readonly "sculkVein": BlockType;
     /**
@@ -5723,7 +7358,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "unpoweredRepeater": BlockType;
     /**
-    Type: [*BlockType*](BlockType.md)
+    Type: *BlockType*
     */
     static readonly "verdantFroglight": BlockType;
     /**
@@ -5986,9 +7621,18 @@ declare module "mojang-minecraft" {
     Represents a yellow block of glazed terracotta within Minecraft.
     */
     static readonly "yellowGlazedTerracotta": BlockType;
+    /**
+    #### **Parameters**
+    */
     get(typeName: string): BlockType;
+    /**
+    Returns an array of all block types within Minecraft.
+    */
     getAllBlockTypes(): BlockType[];
   }
+  /**
+  A collection of default Minecraft dimension types.
+  */
   export class MinecraftDimensionTypes {
     /**
     The Nether is a collection of biomes separate from the Overworld, including Soul Sand Valleys and Crimson forests. Nether fortresses contain exclusive resources. Mobs such as Blaze, Hoglins, Piglins, and Ghasts congregate here.
@@ -6003,707 +7647,719 @@ declare module "mojang-minecraft" {
     */
     static readonly "theEnd" = "minecraft:the_end";
   }
+  /**
+  ## Constants
+  */
   export class MinecraftEffectTypes {
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "absorption": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "badOmen": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "blindness": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "conduitPower": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "empty": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "fatalPoison": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "fireResistance": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "haste": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "healthBoost": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "hunger": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "instantDamage": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "instantHealth": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "invisibility": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "jumpBoost": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "levitation": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "miningFatigue": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "nausea": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "nightVision": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "poison": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "regeneration": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "resistance": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "saturation": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "slowFalling": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "slowness": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "speed": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "strength": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "villageHero": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "waterBreathing": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "weakness": EffectType;
     /**
-    Type: [*EffectType*](EffectType.md)
+    Type: *EffectType*
     */
     static readonly "wither": EffectType;
   }
+  /**
+  ## Constants
+  */
   export class MinecraftEnchantmentTypes {
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "aquaAffinity": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "baneOfArthropods": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "binding": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "blastProtection": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "channeling": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "depthStrider": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "efficiency": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "featherFalling": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "fireAspect": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "fireProtection": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "flame": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "fortune": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "frostWalker": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "impaling": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "infinity": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "knockback": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "looting": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "loyalty": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "luckOfTheSea": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "lure": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "mending": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "multishot": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "piercing": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "power": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "projectileProtection": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "protection": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "punch": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "quickCharge": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "respiration": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "riptide": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "sharpness": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "silkTouch": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "smite": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "soulSpeed": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "thorns": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "unbreaking": EnchantmentType;
     /**
-    Type: [*EnchantmentType*](EnchantmentType.md)
+    Type: *EnchantmentType*
     */
     static readonly "vanishing": EnchantmentType;
   }
+  /**
+  ## Constants
+  */
   export class MinecraftEntityTypes {
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "agent": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "areaEffectCloud": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "armorStand": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "arrow": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "axolotl": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "bat": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "bee": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "blaze": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "boat": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "cat": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "caveSpider": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "chestMinecart": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "chicken": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "cod": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "commandBlockMinecart": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "cow": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "creeper": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "dolphin": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "donkey": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "dragonFireball": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "drowned": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "egg": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "elderGuardian": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "enderCrystal": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "enderDragon": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "enderman": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "endermite": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "enderPearl": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "evocationIllager": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "eyeOfEnderSignal": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "fireball": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "fireworksRocket": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "fishingHook": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "fox": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "ghast": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "glowSquid": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "goat": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "guardian": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "hoglin": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "hopperMinecart": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "horse": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "husk": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "ironGolem": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "lightningBolt": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "lingeringPotion": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "llama": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "llamaSpit": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "magmaCube": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "minecart": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "mooshroom": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "mule": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "npc": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "ocelot": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "panda": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "parrot": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "phantom": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "pig": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "piglin": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "piglinBrute": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "pillager": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "player": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "polarBear": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "pufferfish": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "rabbit": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "ravager": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "salmon": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "sheep": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "shulker": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "shulkerBullet": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "silverfish": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "skeleton": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "skeletonHorse": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "slime": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "smallFireball": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "snowball": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "snowGolem": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "spider": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "splashPotion": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "squid": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "stray": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "strider": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "thrownTrident": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "tnt": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "tntMinecart": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "tripodCamera": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "tropicalfish": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "turtle": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "vex": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "villager": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "villagerV2": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "vindicator": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "wanderingTrader": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "witch": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "wither": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "witherSkeleton": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "witherSkull": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "witherSkullDangerous": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "wolf": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "xpBottle": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "xpOrb": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "zoglin": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "zombie": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "zombieHorse": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "zombiePigman": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "zombieVillager": EntityType;
     /**
-    Type: [*EntityType*](EntityType.md)
+    Type: *EntityType*
     */
     static readonly "zombieVillagerV2": EntityType;
   }
+  /**
+  Contains definitions of standard Minecraft and Minecraft Education Edition block types.
+  */
   export class MinecraftItemTypes {
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "acaciaBoat": ItemType;
     /**
@@ -6711,7 +8367,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "acaciaButton": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "acaciaChestBoat": ItemType;
     /**
@@ -6751,7 +8407,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "activatorRail": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "agentSpawnEgg": ItemType;
     /**
@@ -6759,7 +8415,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "air": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "allaySpawnEgg": ItemType;
     /**
@@ -6775,7 +8431,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "amethystCluster": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "amethystShard": ItemType;
     /**
@@ -6791,23 +8447,23 @@ declare module "mojang-minecraft" {
     */
     static readonly "anvil": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "apple": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "armorStand": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "arrow": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "axolotlBucket": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "axolotlSpawnEgg": ItemType;
     /**
@@ -6823,11 +8479,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "azaleaLeavesFlowered": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "bakedPotato": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "balloon": ItemType;
     /**
@@ -6839,11 +8495,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "bambooSapling": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "banner": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "bannerPattern": ItemType;
     /**
@@ -6859,7 +8515,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "basalt": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "batSpawnEgg": ItemType;
     /**
@@ -6875,7 +8531,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "bedrock": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "beef": ItemType;
     /**
@@ -6887,7 +8543,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "beeNest": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "beeSpawnEgg": ItemType;
     /**
@@ -6895,11 +8551,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "beetroot": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "beetrootSeeds": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "beetrootSoup": ItemType;
     /**
@@ -6911,7 +8567,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "bigDripleaf": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "birchBoat": ItemType;
     /**
@@ -6919,7 +8575,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "birchButton": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "birchChestBoat": ItemType;
     /**
@@ -6963,7 +8619,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "blackCandleCake": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "blackDye": ItemType;
     /**
@@ -6995,19 +8651,19 @@ declare module "mojang-minecraft" {
     */
     static readonly "blastFurnace": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "blazePowder": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "blazeRod": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "blazeSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "bleach": ItemType;
     /**
@@ -7019,7 +8675,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "blueCandleCake": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "blueDye": ItemType;
     /**
@@ -7031,11 +8687,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "blueIce": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "boat": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "bone": ItemType;
     /**
@@ -7043,11 +8699,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "boneBlock": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "boneMeal": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "book": ItemType;
     /**
@@ -7059,19 +8715,19 @@ declare module "mojang-minecraft" {
     */
     static readonly "borderBlock": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "bordureIndentedBannerPattern": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "bow": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "bowl": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "bread": ItemType;
     /**
@@ -7079,7 +8735,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "brewingStand": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "brick": ItemType;
     /**
@@ -7099,7 +8755,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "brownCandleCake": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "brownDye": ItemType;
     /**
@@ -7119,7 +8775,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "bubbleColumn": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "bucket": ItemType;
     /**
@@ -7159,11 +8815,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "carpet": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "carrot": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "carrotOnAStick": ItemType;
     /**
@@ -7179,7 +8835,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "carvedPumpkin": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "catSpawnEgg": ItemType;
     /**
@@ -7187,7 +8843,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "cauldron": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "caveSpiderSpawnEgg": ItemType;
     /**
@@ -7211,23 +8867,23 @@ declare module "mojang-minecraft" {
     */
     static readonly "chainCommandBlock": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "chainmailBoots": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "chainmailChestplate": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "chainmailHelmet": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "chainmailLeggings": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "charcoal": ItemType;
     /**
@@ -7243,19 +8899,19 @@ declare module "mojang-minecraft" {
     */
     static readonly "chest": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "chestBoat": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "chestMinecart": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "chicken": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "chickenSpawnEgg": ItemType;
     /**
@@ -7275,7 +8931,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "chorusFlower": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "chorusFruit": ItemType;
     /**
@@ -7287,19 +8943,19 @@ declare module "mojang-minecraft" {
     */
     static readonly "clay": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "clayBall": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "clientRequestPlaceholderBlock": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "clock": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "coal": ItemType;
     /**
@@ -7343,19 +8999,19 @@ declare module "mojang-minecraft" {
     */
     static readonly "cocoa": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "cocoaBeans": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "cod": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "codBucket": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "codSpawnEgg": ItemType;
     /**
@@ -7371,15 +9027,15 @@ declare module "mojang-minecraft" {
     */
     static readonly "commandBlock": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "commandBlockMinecart": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "comparator": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "compass": ItemType;
     /**
@@ -7387,7 +9043,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "composter": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "compound": ItemType;
     /**
@@ -7395,7 +9051,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "concrete": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "concretePowder": ItemType;
     /**
@@ -7403,35 +9059,35 @@ declare module "mojang-minecraft" {
     */
     static readonly "conduit": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "cookedBeef": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "cookedChicken": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "cookedCod": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "cookedMutton": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "cookedPorkchop": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "cookedRabbit": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "cookedSalmon": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "cookie": ItemType;
     /**
@@ -7439,7 +9095,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "copperBlock": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "copperIngot": ItemType;
     /**
@@ -7475,7 +9131,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "coralFanHang3": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "cowSpawnEgg": ItemType;
     /**
@@ -7499,11 +9155,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "craftingTable": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "creeperBannerPattern": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "creeperSpawnEgg": ItemType;
     /**
@@ -7551,7 +9207,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "crimsonRoots": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "crimsonSign": ItemType;
     /**
@@ -7579,7 +9235,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "crimsonWallSign": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "crossbow": ItemType;
     /**
@@ -7607,7 +9263,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "cyanCandleCake": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "cyanDye": ItemType;
     /**
@@ -7615,7 +9271,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "cyanGlazedTerracotta": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "darkOakBoat": ItemType;
     /**
@@ -7623,7 +9279,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "darkOakButton": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "darkOakChestBoat": ItemType;
     /**
@@ -7675,7 +9331,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "deadbush": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "debugStick": ItemType;
     /**
@@ -7763,11 +9419,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "detectorRail": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "diamond": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "diamondAxe": ItemType;
     /**
@@ -7775,27 +9431,27 @@ declare module "mojang-minecraft" {
     */
     static readonly "diamondBlock": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "diamondBoots": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "diamondChestplate": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "diamondHelmet": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "diamondHoe": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "diamondHorseArmor": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "diamondLeggings": ItemType;
     /**
@@ -7803,15 +9459,15 @@ declare module "mojang-minecraft" {
     */
     static readonly "diamondOre": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "diamondPickaxe": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "diamondShovel": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "diamondSword": ItemType;
     /**
@@ -7831,11 +9487,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "dispenser": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "dolphinSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "donkeySpawnEgg": ItemType;
     /**
@@ -7867,7 +9523,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "doubleWoodenSlab": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "dragonBreath": ItemType;
     /**
@@ -7875,7 +9531,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "dragonEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "driedKelp": ItemType;
     /**
@@ -7891,19 +9547,19 @@ declare module "mojang-minecraft" {
     */
     static readonly "dropper": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "drownedSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "dye": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "egg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "elderGuardianSpawnEgg": ItemType;
     /**
@@ -8383,11 +10039,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "element99": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "elytra": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "emerald": ItemType;
     /**
@@ -8399,15 +10055,15 @@ declare module "mojang-minecraft" {
     */
     static readonly "emeraldOre": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "emptyMap": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "enchantedBook": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "enchantedGoldenApple": ItemType;
     /**
@@ -8423,7 +10079,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "endBrickStairs": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "endCrystal": ItemType;
     /**
@@ -8431,19 +10087,19 @@ declare module "mojang-minecraft" {
     */
     static readonly "enderChest": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "enderEye": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "endermanSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "endermiteSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "enderPearl": ItemType;
     /**
@@ -8467,11 +10123,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "endStone": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "evokerSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "experienceBottle": ItemType;
     /**
@@ -8499,7 +10155,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "farmland": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "feather": ItemType;
     /**
@@ -8511,15 +10167,15 @@ declare module "mojang-minecraft" {
     */
     static readonly "fenceGate": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "fermentedSpiderEye": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "fieldMasonedBannerPattern": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "filledMap": ItemType;
     /**
@@ -8527,23 +10183,23 @@ declare module "mojang-minecraft" {
     */
     static readonly "fire": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "fireCharge": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "fireflySpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "fireworkRocket": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "fireworkStar": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "fishingRod": ItemType;
     /**
@@ -8551,15 +10207,15 @@ declare module "mojang-minecraft" {
     */
     static readonly "fletchingTable": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "flint": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "flintAndSteel": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "flowerBannerPattern": ItemType;
     /**
@@ -8579,7 +10235,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "flowingWater": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "foxSpawnEgg": ItemType;
     /**
@@ -8587,11 +10243,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "frame": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "frogSpawn": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "frogSpawnEgg": ItemType;
     /**
@@ -8603,11 +10259,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "furnace": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "ghastSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "ghastTear": ItemType;
     /**
@@ -8619,7 +10275,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "glass": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "glassBottle": ItemType;
     /**
@@ -8627,15 +10283,15 @@ declare module "mojang-minecraft" {
     */
     static readonly "glassPane": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "glisteringMelonSlice": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "globeBannerPattern": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "glowBerries": ItemType;
     /**
@@ -8647,7 +10303,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "glowingobsidian": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "glowInkSac": ItemType;
     /**
@@ -8655,11 +10311,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "glowLichen": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "glowSquidSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "glowStick": ItemType;
     /**
@@ -8667,11 +10323,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "glowstone": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "glowstoneDust": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "goatSpawnEgg": ItemType;
     /**
@@ -8679,43 +10335,43 @@ declare module "mojang-minecraft" {
     */
     static readonly "goldBlock": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "goldenApple": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "goldenAxe": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "goldenBoots": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "goldenCarrot": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "goldenChestplate": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "goldenHelmet": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "goldenHoe": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "goldenHorseArmor": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "goldenLeggings": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "goldenPickaxe": ItemType;
     /**
@@ -8723,19 +10379,19 @@ declare module "mojang-minecraft" {
     */
     static readonly "goldenRail": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "goldenShovel": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "goldenSword": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "goldIngot": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "goldNugget": ItemType;
     /**
@@ -8767,7 +10423,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "grayCandleCake": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "grayDye": ItemType;
     /**
@@ -8783,7 +10439,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "greenCandleCake": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "greenDye": ItemType;
     /**
@@ -8795,11 +10451,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "grindstone": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "guardianSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "gunpowder": ItemType;
     /**
@@ -8831,7 +10487,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "hayBlock": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "heartOfTheSea": ItemType;
     /**
@@ -8839,7 +10495,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "heavyWeightedPressurePlate": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "hoglinSpawnEgg": ItemType;
     /**
@@ -8847,11 +10503,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "honeyBlock": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "honeyBottle": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "honeycomb": ItemType;
     /**
@@ -8863,15 +10519,15 @@ declare module "mojang-minecraft" {
     */
     static readonly "hopper": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "hopperMinecart": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "horseSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "huskSpawnEgg": ItemType;
     /**
@@ -8879,7 +10535,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "ice": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "iceBomb": ItemType;
     /**
@@ -8895,7 +10551,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "infoUpdate2": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "inkSac": ItemType;
     /**
@@ -8903,7 +10559,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "invisibleBedrock": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "ironAxe": ItemType;
     /**
@@ -8915,11 +10571,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "ironBlock": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "ironBoots": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "ironChestplate": ItemType;
     /**
@@ -8927,27 +10583,27 @@ declare module "mojang-minecraft" {
     */
     static readonly "ironDoor": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "ironHelmet": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "ironHoe": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "ironHorseArmor": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "ironIngot": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "ironLeggings": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "ironNugget": ItemType;
     /**
@@ -8955,15 +10611,15 @@ declare module "mojang-minecraft" {
     */
     static readonly "ironOre": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "ironPickaxe": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "ironShovel": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "ironSword": ItemType;
     /**
@@ -8971,115 +10627,115 @@ declare module "mojang-minecraft" {
     */
     static readonly "ironTrapdoor": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.acaciaDoor": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.bed": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.beetroot": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.birchDoor": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.brewingStand": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.cake": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.camera": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.campfire": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.cauldron": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.chain": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.crimsonDoor": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.darkOakDoor": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.flowerPot": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.frame": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.glowFrame": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.hopper": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.ironDoor": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.jungleDoor": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.kelp": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.netherSprouts": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.netherWart": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.reeds": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.skull": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.soulCampfire": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.spruceDoor": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.warpedDoor": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.wheat": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "item.woodenDoor": ItemType;
     /**
@@ -9091,7 +10747,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "jukebox": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "jungleBoat": ItemType;
     /**
@@ -9099,7 +10755,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "jungleButton": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "jungleChestBoat": ItemType;
     /**
@@ -9151,7 +10807,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "lapisBlock": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "lapisLazuli": ItemType;
     /**
@@ -9167,7 +10823,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "lava": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "lavaBucket": ItemType;
     /**
@@ -9175,31 +10831,31 @@ declare module "mojang-minecraft" {
     */
     static readonly "lavaCauldron": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "lead": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "leather": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "leatherBoots": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "leatherChestplate": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "leatherHelmet": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "leatherHorseArmor": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "leatherLeggings": ItemType;
     /**
@@ -9231,7 +10887,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "lightBlueCandleCake": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "lightBlueDye": ItemType;
     /**
@@ -9247,7 +10903,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "lightGrayCandleCake": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "lightGrayDye": ItemType;
     /**
@@ -9267,7 +10923,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "limeCandleCake": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "limeDye": ItemType;
     /**
@@ -9275,7 +10931,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "limeGlazedTerracotta": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "lingeringPotion": ItemType;
     /**
@@ -9307,7 +10963,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "litSmoker": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "llamaSpawnEgg": ItemType;
     /**
@@ -9315,7 +10971,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "lodestone": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "lodestoneCompass": ItemType;
     /**
@@ -9339,7 +10995,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "magentaCandleCake": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "magentaDye": ItemType;
     /**
@@ -9351,27 +11007,27 @@ declare module "mojang-minecraft" {
     */
     static readonly "magma": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "magmaCream": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "magmaCubeSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "mangroveLeaves": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "mangrovePropagule": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "mangrovePropaguleHanging": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "medicine": ItemType;
     /**
@@ -9383,11 +11039,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "melonBlock": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "melonSeeds": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "melonSlice": ItemType;
     /**
@@ -9395,11 +11051,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "melonStem": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "milkBucket": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "minecart": ItemType;
     /**
@@ -9407,7 +11063,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "mobSpawner": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "mojangBannerPattern": ItemType;
     /**
@@ -9415,7 +11071,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "monsterEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "mooshroomSpawnEgg": ItemType;
     /**
@@ -9443,95 +11099,95 @@ declare module "mojang-minecraft" {
     */
     static readonly "movingBlock": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "mud": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "mudBrickDoubleSlab": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "mudBricks": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "mudBrickSlab": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "mudBrickStairs": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "mudBrickWall": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "muleSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "mushroomStew": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "musicDisc11": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "musicDisc13": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "musicDiscBlocks": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "musicDiscCat": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "musicDiscChirp": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "musicDiscFar": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "musicDiscMall": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "musicDiscMellohi": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "musicDiscOtherside": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "musicDiscPigstep": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "musicDiscStal": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "musicDiscStrad": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "musicDiscWait": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "musicDiscWard": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "mutton": ItemType;
     /**
@@ -9539,19 +11195,19 @@ declare module "mojang-minecraft" {
     */
     static readonly "mycelium": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "mysteriousFrame": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "mysteriousFrameSlot": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "nameTag": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "nautilusShell": ItemType;
     /**
@@ -9575,7 +11231,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "netherGoldOre": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "netheriteAxe": ItemType;
     /**
@@ -9583,43 +11239,43 @@ declare module "mojang-minecraft" {
     */
     static readonly "netheriteBlock": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "netheriteBoots": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "netheriteChestplate": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "netheriteHelmet": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "netheriteHoe": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "netheriteIngot": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "netheriteLeggings": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "netheritePickaxe": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "netheriteScrap": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "netheriteShovel": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "netheriteSword": ItemType;
     /**
@@ -9635,7 +11291,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "netherSprouts": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "netherStar": ItemType;
     /**
@@ -9655,19 +11311,19 @@ declare module "mojang-minecraft" {
     */
     static readonly "noteblock": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "npcSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "oakBoat": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "oakChestBoat": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "oakSign": ItemType;
     /**
@@ -9683,11 +11339,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "obsidian": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "ocelotSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "ochreFroglight": ItemType;
     /**
@@ -9699,7 +11355,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "orangeCandleCake": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "orangeDye": ItemType;
     /**
@@ -9731,55 +11387,55 @@ declare module "mojang-minecraft" {
     */
     static readonly "packedIce": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "packedMud": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "painting": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "pandaSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "paper": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "parrotSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "pearlescentFroglight": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "phantomMembrane": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "phantomSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "piglinBannerPattern": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "piglinBruteSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "piglinSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "pigSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "pillagerSpawnEgg": ItemType;
     /**
@@ -9791,7 +11447,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "pinkCandleCake": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "pinkDye": ItemType;
     /**
@@ -9819,11 +11475,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "pointedDripstone": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "poisonousPotato": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "polarBearSpawnEgg": ItemType;
     /**
@@ -9911,11 +11567,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "polishedGraniteStairs": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "poppedChorusFruit": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "porkchop": ItemType;
     /**
@@ -9923,7 +11579,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "portal": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "potato": ItemType;
     /**
@@ -9931,7 +11587,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "potatoes": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "potion": ItemType;
     /**
@@ -9939,7 +11595,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "powderSnow": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "powderSnowBucket": ItemType;
     /**
@@ -9959,11 +11615,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "prismarineBricksStairs": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "prismarineCrystals": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "prismarineShard": ItemType;
     /**
@@ -9971,15 +11627,15 @@ declare module "mojang-minecraft" {
     */
     static readonly "prismarineStairs": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "pufferfish": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "pufferfishBucket": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "pufferfishSpawnEgg": ItemType;
     /**
@@ -9987,11 +11643,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "pumpkin": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "pumpkinPie": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "pumpkinSeeds": ItemType;
     /**
@@ -10007,7 +11663,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "purpleCandleCake": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "purpleDye": ItemType;
     /**
@@ -10023,7 +11679,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "purpurStairs": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "quartz": ItemType;
     /**
@@ -10043,23 +11699,23 @@ declare module "mojang-minecraft" {
     */
     static readonly "quartzStairs": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "rabbit": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "rabbitFoot": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "rabbitHide": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "rabbitSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "rabbitStew": ItemType;
     /**
@@ -10067,15 +11723,15 @@ declare module "mojang-minecraft" {
     */
     static readonly "rail": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "rapidFertilizer": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "ravagerSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "rawCopper": ItemType;
     /**
@@ -10083,7 +11739,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "rawCopperBlock": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "rawGold": ItemType;
     /**
@@ -10091,7 +11747,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "rawGoldBlock": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "rawIron": ItemType;
     /**
@@ -10099,19 +11755,19 @@ declare module "mojang-minecraft" {
     */
     static readonly "rawIronBlock": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "realDoubleStoneSlab": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "realDoubleStoneSlab2": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "realDoubleStoneSlab3": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "realDoubleStoneSlab4": ItemType;
     /**
@@ -10123,7 +11779,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "redCandleCake": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "redDye": ItemType;
     /**
@@ -10159,7 +11815,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "redSandstoneStairs": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "redstone": ItemType;
     /**
@@ -10183,7 +11839,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "redstoneWire": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "repeater": ItemType;
     /**
@@ -10199,23 +11855,23 @@ declare module "mojang-minecraft" {
     */
     static readonly "respawnAnchor": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "rottenFlesh": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "saddle": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "salmon": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "salmonBucket": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "salmonSpawnEgg": ItemType;
     /**
@@ -10239,11 +11895,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "scaffolding": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "sculk": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "sculkCatalyst": ItemType;
     /**
@@ -10251,15 +11907,15 @@ declare module "mojang-minecraft" {
     */
     static readonly "sculkSensor": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "sculkShrieker": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "sculkVein": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "scute": ItemType;
     /**
@@ -10275,15 +11931,15 @@ declare module "mojang-minecraft" {
     */
     static readonly "seaPickle": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "shears": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "sheepSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "shield": ItemType;
     /**
@@ -10295,15 +11951,15 @@ declare module "mojang-minecraft" {
     */
     static readonly "shulkerBox": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "shulkerShell": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "shulkerSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "silverfishSpawnEgg": ItemType;
     /**
@@ -10311,11 +11967,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "silverGlazedTerracotta": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "skeletonHorseSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "skeletonSpawnEgg": ItemType;
     /**
@@ -10323,7 +11979,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "skull": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "skullBannerPattern": ItemType;
     /**
@@ -10331,11 +11987,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "slime": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "slimeBall": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "slimeSpawnEgg": ItemType;
     /**
@@ -10379,7 +12035,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "snow": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "snowball": ItemType;
     /**
@@ -10411,23 +12067,23 @@ declare module "mojang-minecraft" {
     */
     static readonly "soulTorch": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "sparkler": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "spawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "spiderEye": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "spiderSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "splashPotion": ItemType;
     /**
@@ -10439,7 +12095,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "sporeBlossom": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "spruceBoat": ItemType;
     /**
@@ -10447,7 +12103,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "spruceButton": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "spruceChestBoat": ItemType;
     /**
@@ -10483,11 +12139,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "spruceWallSign": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "spyglass": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "squidSpawnEgg": ItemType;
     /**
@@ -10511,7 +12167,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "standingSign": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "stick": ItemType;
     /**
@@ -10527,7 +12183,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "stone": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "stoneAxe": ItemType;
     /**
@@ -10551,11 +12207,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "stonecutterBlock": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "stoneHoe": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "stonePickaxe": ItemType;
     /**
@@ -10563,7 +12219,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "stonePressurePlate": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "stoneShovel": ItemType;
     /**
@@ -10571,19 +12227,19 @@ declare module "mojang-minecraft" {
     */
     static readonly "stoneStairs": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "stoneSword": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "straySpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "striderSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "string": ItemType;
     /**
@@ -10635,19 +12291,19 @@ declare module "mojang-minecraft" {
     */
     static readonly "structureVoid": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "sugar": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "sugarCane": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "suspiciousStew": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "sweetBerries": ItemType;
     /**
@@ -10655,11 +12311,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "sweetBerryBush": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "tadpoleBucket": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "tadpoleSpawnEgg": ItemType;
     /**
@@ -10679,7 +12335,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "tnt": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "tntMinecart": ItemType;
     /**
@@ -10687,7 +12343,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "torch": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "totemOfUndying": ItemType;
     /**
@@ -10699,7 +12355,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "trappedChest": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "trident": ItemType;
     /**
@@ -10711,15 +12367,15 @@ declare module "mojang-minecraft" {
     */
     static readonly "tripwireHook": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "tropicalFish": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "tropicalFishBucket": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "tropicalFishSpawnEgg": ItemType;
     /**
@@ -10731,11 +12387,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "turtleEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "turtleHelmet": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "turtleSpawnEgg": ItemType;
     /**
@@ -10767,19 +12423,19 @@ declare module "mojang-minecraft" {
     */
     static readonly "unpoweredRepeater": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "verdantFroglight": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "vexSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "villagerSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "vindicatorSpawnEgg": ItemType;
     /**
@@ -10795,11 +12451,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "wallSign": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "wanderingTraderSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "wardenSpawnEgg": ItemType;
     /**
@@ -10827,7 +12483,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "warpedFungus": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "warpedFungusOnAStick": ItemType;
     /**
@@ -10851,7 +12507,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "warpedRoots": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "warpedSign": ItemType;
     /**
@@ -10887,7 +12543,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "water": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "waterBucket": ItemType;
     /**
@@ -11007,7 +12663,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "wheat": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "wheatSeeds": ItemType;
     /**
@@ -11019,7 +12675,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "whiteCandleCake": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "whiteDye": ItemType;
     /**
@@ -11027,7 +12683,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "whiteGlazedTerracotta": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "witchSpawnEgg": ItemType;
     /**
@@ -11035,11 +12691,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "witherRose": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "witherSkeletonSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "wolfSpawnEgg": ItemType;
     /**
@@ -11047,7 +12703,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "wood": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "woodenAxe": ItemType;
     /**
@@ -11059,11 +12715,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "woodenDoor": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "woodenHoe": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "woodenPickaxe": ItemType;
     /**
@@ -11071,7 +12727,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "woodenPressurePlate": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "woodenShovel": ItemType;
     /**
@@ -11079,7 +12735,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "woodenSlab": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "woodenSword": ItemType;
     /**
@@ -11087,11 +12743,11 @@ declare module "mojang-minecraft" {
     */
     static readonly "wool": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "writableBook": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "writtenBook": ItemType;
     /**
@@ -11103,7 +12759,7 @@ declare module "mojang-minecraft" {
     */
     static readonly "yellowCandleCake": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "yellowDye": ItemType;
     /**
@@ -11115,33 +12771,71 @@ declare module "mojang-minecraft" {
     */
     static readonly "yellowGlazedTerracotta": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "zoglinSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "zombieHorseSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "zombiePigmanSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "zombieSpawnEgg": ItemType;
     /**
-    Type: [*ItemType*](ItemType.md)
+    Type: *ItemType*
     */
     static readonly "zombieVillagerSpawnEgg": ItemType;
   }
+  /**
+  Contains a set of additional variable values for further defining how rendering and animations function.
+  */
   export class MolangVariableMap {
+    /**
+    
+    */
     constructor();
+    /**
+    Sets a Molang rendering/animation variable with the value of a Red/Green/Blue color.
+    #### **Parameters**
+    - **variableName**: *string*
+    - **color**: *Color*
+    
+    */
     setColorRGB(variableName: string, color: Color): MolangVariableMap;
+    /**
+    Sets a Molang rendering/animation variable with the value of a Red/Green/Blue color + Alpha (transparency) value.
+    #### **Parameters**
+    - **variableName**: *string*
+    - **color**: *Color*
+    
+    */
     setColorRGBA(variableName: string, color: Color): MolangVariableMap;
+    /**
+    Sets the speed and direction for a Molang (rendering and animation) variable.
+    #### **Parameters**
+    - **variableName**: *string*
+    - **speed**: *number*
+    - **direction**: *Vector*
+    
+    */
     setSpeedAndDirection(variableName: string, speed: number, direction: Vector): MolangVariableMap;
+    /**
+    Sets a vector value for a Molang (rendering and animation) variable.
+    #### **Parameters**
+    - **variableName**: *string*
+    - **vector**: *Vector*
+    
+    */
     setVector3(variableName: string, vector: Vector): MolangVariableMap;
   }
+  /**
+  Additional configuration options for [*mojang-minecraft.Player*](../mojang-minecraft/Player.md).playMusic/[*mojang-minecraft*](../mojang-minecraft/mojang-minecraft.md).Player.queueMusic methods.
+  */
   export class MusicOptions {
     /**
     Specifies a fade overlap for music at the end of play.
@@ -11159,8 +12853,14 @@ declare module "mojang-minecraft" {
     Relative volume level of the music.
     */
     "volume": number;
+    /**
+    Creates a new instance of the SoundOptions object.
+    */
     constructor();
   }
+  /**
+  Contains data resulting from a navigation operation, including whether the navigation is possible and the path of navigation.
+  */
   export class NavigationResult {
     /**
     Whether the navigation result contains a full path, including to the requested destination.
@@ -11171,6 +12871,9 @@ declare module "mojang-minecraft" {
     */
     readonly "path": BlockLocation[];
   }
+  /**
+  Represents a min/max structure for expressing a potential range of numbers.
+  */
   export class NumberRange {
     /**
     Maximum value within a range.
@@ -11180,9 +12883,15 @@ declare module "mojang-minecraft" {
     Minimum value within a range.
     */
     "min": number;
+    /**
+    Returns a random number between the minimum and maximum of the range.
+    */
     next(): number;
   }
-  export class PistonActivateEvent {
+  /**
+  Contains information related to changes to a piston expanding or retracting.
+  */
+  export class PistonActivateEvent extends BlockEvent {
     /**
     Block impacted by this event.
     */
@@ -11200,10 +12909,28 @@ declare module "mojang-minecraft" {
     */
     readonly "piston": BlockPistonComponent;
   }
+  /**
+  Manages callbacks that are connected to piston activations.
+  */
   export class PistonActivateEventSignal {
+    /**
+    Adds a callback that will be called when a piston expands or retracts.
+    #### **Parameters**
+    - **callback**: (arg: *PistonActivateEvent* => *void*
+    
+    */
     subscribe(callback: (arg: PistonActivateEvent) => void): (arg: PistonActivateEvent) => void;
+    /**
+    Removes a callback from being called when a piston expands or retracts.
+    #### **Parameters**
+    - **callback**: (arg: *PistonActivateEvent* => *void*
+    
+    */
     unsubscribe(callback: (arg: PistonActivateEvent) => void): void;
   }
+  /**
+  Represents a rotation structure with pitch and yaw components.
+  */
   export class PitchYawRotation {
     /**
     Pitch (up-and-down) element of this rotation.
@@ -11214,7 +12941,10 @@ declare module "mojang-minecraft" {
     */
     "yaw": number;
   }
-  export class Player {
+  /**
+  Represents a player within the world.
+  */
+  export class Player extends Entity {
     /**
     Rotation of the body component of the player.
     */
@@ -11263,28 +12993,205 @@ declare module "mojang-minecraft" {
     Vector of the current view of the player.
     */
     readonly "viewVector": Vector;
+    /**
+    Adds an effect, like poison, to the entity.
+    #### **Parameters**
+    - **effectType**: *EffectType*
+    
+    Type of effect to add to the entity.
+    - **duration**: *number*
+    
+    Amount of time, in ticks, for the effect to apply.
+    - **amplifier**?: *number* = `0`
+    
+    Optional amplification of the effect to apply.
+    - **showParticles**?: *boolean* = `true`
+    
+    */
     addEffect(effectType: EffectType, duration: number, amplifier?: number, showParticles?: boolean): void;
+    /**
+    Adds a specified tag to an entity.
+    #### **Parameters**
+    - **tag**: *string*
+    
+    Content of the tag to add.
+    
+    */
     addTag(tag: string): boolean;
+    /**
+    Gets the first block that intersects with the vector of the view of this entity.
+    #### **Parameters**
+    - **options**?: *BlockRaycastOptions* = `null`
+    
+    Additional options for processing this raycast query.
+    
+    */
     getBlockFromViewVector(options?: BlockRaycastOptions): Block;
+    /**
+    Gets a component (that represents additional capabilities) for an entity.
+    #### **Parameters**
+    - **componentId**: *string*
+    
+    The identifier of the component (e.g., 'minecraft:rideable') to retrieve. If no namespace prefix is specified, 'minecraft:' is assumed. If the component is not present on the entity, undefined is returned.
+    
+    */
     getComponent(componentId: string): IEntityComponent;
+    /**
+    Returns all components that are both present on this entity and supported by the API.
+    */
     getComponents(): IEntityComponent[];
+    /**
+    Returns the effect for the specified EffectType on the entity, or undefined if the effect is not present.
+    #### **Parameters**
+    - **effectType**: *EffectType*
+    
+    #### **Returns** Effect
+    - Effect object for the specified effect, or undefined if the effect is not present.
+    
+    */
     getEffect(effectType: EffectType): Effect;
+    /**
+    Gets the first entity that intersects with the vector of the view of this entity.
+    #### **Parameters**
+    - **options**?: *EntityRaycastOptions* = `null`
+    
+    Additional options for processing this raycast query.
+    
+    */
     getEntitiesFromViewVector(options?: EntityRaycastOptions): Entity[];
+    /**
+    Gets the current item cooldown time for a particular cooldown category.
+    #### **Parameters**
+    - **itemCategory**: *string*
+    
+    Specifies the cooldown category to retrieve the current cooldown for.
+    
+    */
     getItemCooldown(itemCategory: string): number;
+    /**
+    Returns all tags associated with an entity.
+    */
     getTags(): string[];
+    /**
+    Returns true if the specified component is present on this entity.
+    #### **Parameters**
+    - **componentId**: *string*
+    
+    The identifier of the component (e.g., 'minecraft:rideable') to retrieve. If no namespace prefix is specified, 'minecraft:' is assumed.
+    
+    */
     hasComponent(componentId: string): boolean;
+    /**
+    Tests whether an entity has a particular tag.
+    #### **Parameters**
+    - **tag**: *string*
+    
+    Identifier of the tag to test for.
+    
+    */
     hasTag(tag: string): boolean;
+    /**
+    Kills this entity. The entity will drop loot as normal.
+    */
     kill(): void;
+    /**
+    Plays a sound that only this particular player can hear.
+    #### **Parameters**
+    - **soundID**: *string*
+    
+    Identifier of the sound to play.
+    - **soundOptions**?: *SoundOptions* = `null`
+    
+    Additional optional options for the sound.
+    
+    */
     playSound(soundID: string, soundOptions?: SoundOptions): void;
+    /**
+    Removes a specified tag from an entity.
+    #### **Parameters**
+    - **tag**: *string*
+    
+    Content of the tag to remove.
+    
+    */
     removeTag(tag: string): boolean;
+    /**
+    Runs a particular command from the context of this player.
+    #### **Parameters**
+    - **commandString**: *string*
+    
+    Command to run. Note that command strings should not start with slash.
+    
+    */
     runCommand(commandString: string): any;
+    /**
+    Sets a velocity for the entity to move with.
+    #### **Parameters**
+    - **velocity**: *Vector*
+    
+    X/Y/Z components of the velocity.
+    
+    */
     setVelocity(velocity: Vector): void;
+    /**
+    Sets the item cooldown time for a particular cooldown category.
+    #### **Parameters**
+    - **itemCategory**: *string*
+    
+    Specifies the cooldown category to retrieve the current cooldown for.
+    - **tickDuration**: *number*
+    
+    Duration in ticks of the item cooldown.
+    
+    */
     startItemCooldown(itemCategory: string, tickDuration: number): void;
+    /**
+    Teleports the selected player to a new location
+    #### **Parameters**
+    - **location**: *Location*
+    
+    New location for the player.
+    - **dimension**: *Dimension*
+    
+    Dimension to move the selected player to.
+    - **xRotation**: *number*
+    
+    X rotation of the player after teleportation.
+    - **yRotation**: *number*
+    
+    Y rotation of the player after teleportation.
+    
+    */
     teleport(location: Location, dimension: Dimension, xRotation: number, yRotation: number): void;
+    /**
+    Teleports the selected player to a new location, and will have the player facing a specified location.
+    #### **Parameters**
+    - **location**: *Location*
+    
+    New location for the player.
+    - **dimension**: *Dimension*
+    
+    Dimension to move the selected player to.
+    - **facingLocation**: *Location*
+    
+    Location that this player will be facing.
+    
+    */
     teleportFacing(location: Location, dimension: Dimension, facingLocation: Location): void;
+    /**
+    Triggers an entity type event. For every entity, a number of events are defined in an entities' definition for key entity behaviors; for example, creepers have a minecraft:start_exploding type event.
+    #### **Parameters**
+    - **eventName**: *string*
+    
+    Name of the entity type event to trigger. If a namespace is not specified, minecraft: is assumed.
+    
+    */
     triggerEvent(eventName: string): void;
   }
-  export class PlayerInventoryComponentContainer {
+  /**
+  Represents the inventory of a [*mojang-minecraft.Player*](../mojang-minecraft/Player.md) in the world.
+  */
+  export class PlayerInventoryComponentContainer extends InventoryComponentContainer {
     /**
     Contains a count of the slots in the container that are empty.
     */
@@ -11293,43 +13200,169 @@ declare module "mojang-minecraft" {
     Returns the size capacity of the inventory container on this block.
     */
     readonly "size": number;
+    /**
+    Adds an item to the specified container. Item will be placed in the first available empty slot. (use .setItem if you wish to set items in a particular slot.)
+    #### **Parameters**
+    - **itemStack**: *ItemStack*
+    
+    The stack of items to add.
+    
+    */
     addItem(itemStack: ItemStack): void;
+    /**
+    Gets the item stack for the set of items at the specified slot. If the slot is empty, returns undefined. This method does not change or clear the contents of the specified slot.
+    #### **Parameters**
+    - **slot**: *number*
+    
+    Zero-based index of the slot to retrieve items from.
+    
+    */
     getItem(slot: number): ItemStack;
+    /**
+    Sets an item stack within a particular slot.
+    #### **Parameters**
+    - **slot**: *number*
+    
+    Zero-based index of the slot to set an item at.
+    - **itemStack**: *ItemStack*
+    
+    Stack of items to place within the specified slot.
+    
+    */
     setItem(slot: number, itemStack: ItemStack): void;
+    /**
+    Swaps items between two different slots within containers.
+    #### **Parameters**
+    - **slot**: *number*
+    
+    Zero-based index of the slot to swap from this container.
+    - **otherSlot**: *number*
+    
+    Zero-based index of the slot to swap with.
+    - **otherContainer**: *Container*
+    
+    Target container to swap with. Note this can be the same container as this source.
+    
+    */
     swapItems(slot: number, otherSlot: number, otherContainer: Container): boolean;
+    /**
+    Moves an item from one slot to another, potentially across containers.
+    #### **Parameters**
+    - **fromSlot**: *number*
+    - **toSlot**: *number*
+    
+    Zero-based index of the slot to move to.
+    - **toContainer**: *Container*
+    
+    Target container to transfer to. Note this can be the same container as the source.
+    
+    */
     transferItem(fromSlot: number, toSlot: number, toContainer: Container): boolean;
   }
+  /**
+  ## Implements
+  */
   export class PlayerIterator {
+    /**
+    
+    */
     [Symbol.iterator](): Iterator<Player>;
+    /**
+    Retrieves the next item in this iteration. The resulting IteratorResult contains .done and .value properties which can be used to see the next Player in the iteration.
+    */
     next(): IteratorResult<Player>;
   }
+  /**
+  Contains information regarding a player that has joined.
+  */
   export class PlayerJoinEvent {
     /**
     Player that has joined the world.
     */
     "player": Player;
   }
+  /**
+  Manages callbacks that are connected to a player joining the world.
+  */
   export class PlayerJoinEventSignal {
+    /**
+    Adds a callback that will be called when a player joins the world.
+    #### **Parameters**
+    - **callback**: (arg: *PlayerJoinEvent* => *void*
+    
+    */
     subscribe(callback: (arg: PlayerJoinEvent) => void): (arg: PlayerJoinEvent) => void;
+    /**
+    Removes a callback from being called when a player joins the world.
+    #### **Parameters**
+    - **callback**: (arg: *PlayerJoinEvent* => *void*
+    
+    */
     unsubscribe(callback: (arg: PlayerJoinEvent) => void): void;
   }
+  /**
+  Contains information regarding a player that has left the world.
+  */
   export class PlayerLeaveEvent {
     /**
     Player that has left the world.
     */
     readonly "playerName": string;
   }
+  /**
+  Manages callbacks that are connected to a player leaving the world.
+  */
   export class PlayerLeaveEventSignal {
+    /**
+    Adds a callback that will be called when a player leaves the world.
+    #### **Parameters**
+    - **callback**: (arg: *PlayerLeaveEvent* => *void*
+    
+    */
     subscribe(callback: (arg: PlayerLeaveEvent) => void): (arg: PlayerLeaveEvent) => void;
+    /**
+    Removes a callback from being called when a player leaves the world.
+    #### **Parameters**
+    - **callback**: (arg: *PlayerLeaveEvent* => *void*
+    
+    */
     unsubscribe(callback: (arg: PlayerLeaveEvent) => void): void;
   }
+  /**
+  Implements a class that can be used for testing sculk spreading behaviors. This sculk spreader class can drive the growth of sculk around a particular block.
+  */
   export class SculkSpreader {
+    /**
+    Adds a cursor - which is a notional waypoint that the sculk will spread in the direction of.
+    #### **Parameters**
+    - **offset**: *BlockLocation*
+    - **charge**: *number*
+    
+    */
     addCursorsWithOffset(offset: BlockLocation, charge: number): void;
+    /**
+    Retrieves the current position of the specified cursor.
+    #### **Parameters**
+    - **index**: *number*
+    
+    */
     getCursorPosition(index: number): BlockLocation;
+    /**
+    Gets the maximum charge of a sculk spreader.
+    */
     getMaxCharge(): number;
+    /**
+    Returns a number of overall cursors for this sculk spreader.
+    */
     getNumberOfCursors(): number;
+    /**
+    Gets the total current charge of the sculk spreader.
+    */
     getTotalCharge(): number;
   }
+  /**
+  Describes a particular seating position on this rideable entity.
+  */
   export class Seat {
     /**
     If specified, contains a forced rotation that the riders in this seat are facing.
@@ -11348,6 +13381,9 @@ declare module "mojang-minecraft" {
     */
     "position": Location;
   }
+  /**
+  Additional configuration options for the [*mojang-minecraft.Player.playSound*](../mojang-minecraft/Player.md#playsound)/[*mojang-minecraft.World.playSound*](../mojang-minecraft/World.md#playsound) method.
+  */
   export class SoundOptions {
     /**
     Specifies a location of where to play a particular sound.
@@ -11361,9 +13397,15 @@ declare module "mojang-minecraft" {
     Relative volume level of the sound.
     */
     "volume": number;
+    /**
+    Creates a new instance of the SoundOptions object.
+    */
     constructor();
   }
-  export class StringBlockProperty {
+  /**
+  Contains the state of a string-based property for a [*mojang-minecraft.BlockPermutation*](../mojang-minecraft/BlockPermutation.md).
+  */
+  export class StringBlockProperty extends IBlockProperty {
     /**
     Name of this property.
     */
@@ -11377,6 +13419,9 @@ declare module "mojang-minecraft" {
     */
     "value": string;
   }
+  /**
+  An event for handling updates, that fires 20 times every second.
+  */
   export class TickEvent {
     /**
     Current tick at the time this event was fired.
@@ -11387,17 +13432,41 @@ declare module "mojang-minecraft" {
     */
     readonly "deltaTime": number;
   }
+  /**
+  Manages callbacks that are connected to a tick event.
+  */
   export class TickEventSignal {
+    /**
+    Adds a callback that will be called on every tick.
+    #### **Parameters**
+    - **callback**: (arg: *TickEvent* => *void*
+    
+    */
     subscribe(callback: (arg: TickEvent) => void): (arg: TickEvent) => void;
+    /**
+    Removes a callback from being called every tick.
+    #### **Parameters**
+    - **callback**: (arg: *TickEvent* => *void*
+    
+    */
     unsubscribe(callback: (arg: TickEvent) => void): void;
   }
+  /**
+  Represents a trigger for firing an event.
+  */
   export class Trigger {
     /**
     Event name of the trigger.
     */
     "eventName": string;
+    /**
+    #### **Parameters**
+    */
     constructor(eventName: string);
   }
+  /**
+  Contains a description of a vector.
+  */
   export class Vector {
     /**
     X component of this vector.
@@ -11443,21 +13512,124 @@ declare module "mojang-minecraft" {
     A constant vector that represents (0, 0, 0).
     */
     static readonly "zero": Vector;
+    /**
+    Creates a new instance of an abstract vector.
+    #### **Parameters**
+    - **x**: *number*
+    
+    X component of the vector.
+    - **y**: *number*
+    
+    Y component of the vector.
+    - **z**: *number*
+    
+    Z component of the vector.
+    
+    */
     constructor(x: number, y: number, z: number);
+    /**
+    Compares this vector and another vector to one another.
+    #### **Parameters**
+    - **other**: *Vector*
+    
+    Other vector to compare this vector to.
+    
+    */
     equals(other: Vector): boolean;
+    /**
+    Returns the length of this vector.
+    */
     length(): number;
+    /**
+    Returns this vector as a normalized vector.
+    */
     normalized(): Vector;
-    add(a: Vector, b: Vector): Vector;
-    cross(a: Vector, b: Vector): Vector;
-    distance(a: Vector, b: Vector): number;
-    divide(a: Vector, b: number | Vector): Vector;
-    lerp(a: Vector, b: Vector, t: number): Vector;
-    max(a: Vector, b: Vector): Vector;
-    min(a: Vector, b: Vector): Vector;
-    multiply(a: Vector, b: number | Vector): Vector;
-    slerp(a: Vector, b: Vector, s: number): Vector;
-    subtract(a: Vector, b: Vector): Vector;
+    /**
+    Returns the addition of these vectors.
+    #### **Parameters**
+    - **a**: *Vector*
+    - **b**: *Vector*
+    
+    */
+    static add(a: Vector, b: Vector): Vector;
+    /**
+    Returns the cross product of these two vectors.
+    #### **Parameters**
+    - **a**: *Vector*
+    - **b**: *Vector*
+    
+    */
+    static cross(a: Vector, b: Vector): Vector;
+    /**
+    Returns the distance between two vectors.
+    #### **Parameters**
+    - **a**: *Vector*
+    - **b**: *Vector*
+    
+    */
+    static distance(a: Vector, b: Vector): number;
+    /**
+    Returns the component-wise division of these vectors.
+    #### **Parameters**
+    - **a**: *Vector*
+    - **b**: *number* | *Vector*
+    
+    */
+    static divide(a: Vector, b: number | Vector): Vector;
+    /**
+    Returns the linear interpolation between a and b using t as the control.
+    #### **Parameters**
+    - **a**: *Vector*
+    - **b**: *Vector*
+    - **t**: *number*
+    
+    */
+    static lerp(a: Vector, b: Vector, t: number): Vector;
+    /**
+    Returns a vector that is made from the largest components of two vectors.
+    #### **Parameters**
+    - **a**: *Vector*
+    - **b**: *Vector*
+    
+    */
+    static max(a: Vector, b: Vector): Vector;
+    /**
+    Returns a vector that is made from the smallest components of two vectors.
+    #### **Parameters**
+    - **a**: *Vector*
+    - **b**: *Vector*
+    
+    */
+    static min(a: Vector, b: Vector): Vector;
+    /**
+    Returns the component-wise product of these vectors.
+    #### **Parameters**
+    - **a**: *Vector*
+    - **b**: *number* | *Vector*
+    
+    */
+    static multiply(a: Vector, b: number | Vector): Vector;
+    /**
+    Returns the spherical linear interpolation between a and b using s as the control.
+    #### **Parameters**
+    - **a**: *Vector*
+    - **b**: *Vector*
+    - **s**: *number*
+    
+    */
+    static slerp(a: Vector, b: Vector, s: number): Vector;
+    /**
+    Returns the subtraction of these vectors.
+    #### **Parameters**
+    - **a**: *Vector*
+    - **b**: *Vector*
+    
+    */
+    static subtract(a: Vector, b: Vector): Vector;
   }
+  /**
+  Contains information related to changes in weather in the environment.
+  */
   export class WeatherChangeEvent {
     /**
     Dimension in which the weather has changed.
@@ -11472,23 +13644,76 @@ declare module "mojang-minecraft" {
     */
     readonly "raining": boolean;
   }
+  /**
+  Manages callbacks that are connected to weather changing.
+  */
   export class WeatherChangeEventSignal {
+    /**
+    Adds a callback that will be called when weather changes.
+    #### **Parameters**
+    - **callback**: (arg: *WeatherChangeEvent* => *void*
+    
+    */
     subscribe(callback: (arg: WeatherChangeEvent) => void): (arg: WeatherChangeEvent) => void;
+    /**
+    Removes a callback from being called when weather changes.
+    #### **Parameters**
+    - **callback**: (arg: *WeatherChangeEvent* => *void*
+    
+    */
     unsubscribe(callback: (arg: WeatherChangeEvent) => void): void;
   }
+  /**
+  A class that wraps the state of a world - a set of dimensions and the environment of Minecraft.
+  */
   export class World {
     /**
     Contains a set of events that are applicable to the entirety of the world.
     */
     readonly "events": Events;
+    /**
+    #### **Parameters**
+    */
     getDimension(dimensionId: string): Dimension;
+    /**
+    Returns all players currently in the world.
+    #### **Parameters**
+    - **options**?: *EntityQueryOptions* = `null`
+    
+    #### **Returns** PlayerIterator
+    - All players currently in the world.
+    
+    */
     getPlayers(options?: EntityQueryOptions): PlayerIterator;
+    /**
+    Plays a particular music track for all players.
+    #### **Parameters**
+    - **trackID**: *string*
+    - **musicOptions**?: *MusicOptions* = `null`
+    
+    */
     playMusic(trackID: string, musicOptions?: MusicOptions): void;
+    /**
+    Plays a sound for all players.
+    #### **Parameters**
+    - **soundID**: *string*
+    - **soundOptions**?: *SoundOptions* = `null`
+    
+    */
     playSound(soundID: string, soundOptions?: SoundOptions): void;
+    /**
+    Queues an additional music track for players. If a track is not playing, a music track will play.
+    #### **Parameters**
+    - **trackID**: *string*
+    - **musicOptions**?: *MusicOptions* = `null`
+    
+    */
     queueMusic(trackID: string, musicOptions?: MusicOptions): void;
+    /**
+    Stops any music tracks from playing.
+    */
     stopMusic(): void;
   }
-
   /**
   How many times the server ticks per second of real time.
   */
