@@ -1,4 +1,8 @@
-import { FieldTypes } from "../enums/FieldTypes";
+import { BooleanField } from "../classes/DataBase";
+import { NumberField } from "../classes/DataBase";
+import { MapField } from "../classes/DataBase";
+import { StringField } from "../classes/DataBase";
 
-export type FieldType = typeof FieldTypes[keyof typeof FieldTypes];
+export type StaticFieldType = typeof BooleanField | typeof NumberField | typeof MapField | typeof StringField;
+export type FieldType = StaticFieldType['prototype'];
 export type FieldTypeIds = FieldType['type'];

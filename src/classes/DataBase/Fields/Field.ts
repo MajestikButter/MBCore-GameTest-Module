@@ -1,8 +1,4 @@
 export abstract class Field <type extends string = string, data extends any = any> {
-  private _id: string;
-  get id() {
-    return this._id;
-  }
   private _type: type;
   get type() {
     return this._type;
@@ -14,14 +10,25 @@ export abstract class Field <type extends string = string, data extends any = an
   }
 
   set value(v: data) {
+    if (typeof v !== this.type) throw new Error(`typeof ${typeof v} does not match type ${this.type}`)
     this._data = v;
+  }
+
+  static fromSave?(data: {type: string; data: any}): any
+
+  static toSave?(): {
+    type: string,
   }
 
   toSave() {
     return {
-      id: this.id,
       type: this.type,
-      value: this.value,
+      data: this._data,
     }
+  }
+
+  constructor(type: type, data: data) {
+    this._type = type;
+    this._data = data;
   }
 }

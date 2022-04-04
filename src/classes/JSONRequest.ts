@@ -4,7 +4,7 @@ import { EventEmitter } from "./EventEmitter.js";
 import { Scoreboard } from "./Scoreboard.js";
 import { Selector } from "./Selector.js";
 
-let JSONIdObj = Scoreboard.initialize("mbcJSONId");
+let JSONIdObj = new Scoreboard("mbcJSONId");
 
 // Response Interface
 export interface JSONRequestEvd {

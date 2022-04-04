@@ -11,62 +11,6 @@ function targetToSelectorStr(target: string | Selector) {
 
 export class Scoreboard {
   /**
-   * Property containing all initialized Scoreboards
-   */
-  static scoreboards: { [id: string]: Scoreboard } = {};
-
-  /**
-   * Initializes a Scoreboard to be able to be used in scripts
-   * @param id An id used as the name of the objective
-   * @param displayName An optional display name used while creating the objective, ignored if the objective already exists
-   * @returns A Scoreboard with the provided id
-   */
-  static initialize(id: string, displayName?: string) {
-    if (this.initialized(id))
-      throw new Error(`Scoreboard with id ${id} is already initialized`);
-
-    if (!this.exists(id)) this.create(id);
-
-    this.scoreboards[id] = new Scoreboard(id);
-    return this.scoreboards[id];
-  }
-
-  /**
-   * Creates an Objective
-   * @param id An id used as the name of the objective
-   * @param displayName An optional display name used while creating the objective
-   */
-  private static create(id: string, displayName?: string) {
-    if (this.exists(id))
-      return new Error(`Scoreboard with id ${id} already exists`);
-
-    CommandHandler.run(
-      `scoreboard objectives add ${id} dummy ${displayName ?? ""}`
-    );
-  }
-
-  /**
-   * Gets the Scoreboard for the provided id
-   * @param id An id used as the name of the objective
-   * @returns A Scoreboard with the provided id
-   */
-  static get(id: string) {
-    if (!this.initialized(id)) {
-      throw new Error(`No Scoreboard with the id ${id} is initialized`);
-    }
-    return this.scoreboards[id];
-  }
-
-  /**
-   * Checks if a Scoreboard has already been initialized
-   * @param id An id used as the name of the objective
-   * @returns A boolean representing whether the Scoreboard is initialized or not
-   */
-  static initialized(id: string) {
-    return this.scoreboards[id] ? true : false;
-  }
-
-  /**
    * Checks if a Scoreboard has already been created
    * @param id An id used as the name of the objective
    * @returns A boolean representing whether the Scoreboard is created or not
@@ -105,73 +49,84 @@ export class Scoreboard {
   add(target: Target, val: number) {
     if (target instanceof Selector || typeof target === 'string') {
       let selectorStr = targetToSelectorStr(target);
-      CommandHandler.run(
+      return !CommandHandler.run(
         `scoreboard players add ${selectorStr} ${this.id} ${val}`
-      );
-      return;
+      ).error;
     }
 
     if (!(target instanceof Entity) && !(target instanceof Player)) target = target.player
     try {
       target.runCommand(`scoreboard players add @s ${this.id} ${val}`);
-    } catch {}
+      return true;
+    } catch {
+      return false;
+    }
   }
   
   /**
    * Subtracts the specified amount to the provided target on this Scoreboard
    * @param target A Selector, Player, Entity or string representing the target
    * @param val The amount to subtract
+   * @returns A boolean representing whether the operation was successful
    */
    sub(target: Target, val: number) {
     if (target instanceof Selector || typeof target === 'string') {
       let selectorStr = targetToSelectorStr(target);
-      CommandHandler.run(
+      return !CommandHandler.run(
         `scoreboard players remove ${selectorStr} ${this.id} ${val}`
-      );
-      return;
+      ).error;
     }
 
     if (!(target instanceof Entity) && !(target instanceof Player)) target = target.player
     try {
       target.runCommand(`scoreboard players remove @s ${this.id} ${val}`);
-    } catch {}
+      return true;
+    } catch {
+      return false;
+    }
   }
 
   /**
    * Resets the score for the provided target on this Scoreboard
    * @param target A Selector, Player, Entity or string representing the target
+   * @returns A boolean representing whether the operation was successful
    */
   reset(target: Target) {
     if (target instanceof Selector || typeof target === 'string') {
       let selectorStr = targetToSelectorStr(target);
-      CommandHandler.run(`scoreboard players reset ${selectorStr} ${this.id}`);
-      return;
+      return !CommandHandler.run(`scoreboard players reset ${selectorStr} ${this.id}`).error;
     }
 
     if (!(target instanceof Entity) && !(target instanceof Player)) target = target.player
     try {
       target.runCommand(`scoreboard players reset @s ${this.id}`);
-    } catch {}
+      return true;
+    } catch {
+      return false;
+    }
   }
 
   /**
    * Sets the provided target to the specified amount on this Scoreboard
    * @param target A Selector, Player, Entity or string representing the target
    * @param val The amount to set to
+   * @returns A boolean representing whether the operation was successful
    */
   set(target: Target, val: number) {
     if (target instanceof Selector || typeof target === 'string') {
       let selectorStr = targetToSelectorStr(target);
-      CommandHandler.run(
+      return !CommandHandler.run(
         `scoreboard players set ${selectorStr} ${this.id} ${val}`
-      );
-      return;
+      ).error;
     }
 
     if (!(target instanceof Entity) && !(target instanceof Player)) target = target.player
     try {
       target.runCommand(`scoreboard players set @s ${this.id} ${val}`);
-    } catch {}
+      return true;
+    } catch {
+      return false;
+    }
   }
 
   /**
@@ -199,10 +154,21 @@ export class Scoreboard {
       } catch {
         return 0;
       }
-    } catch {}
+    } catch {
+      return 0;
+    }
   }
 
-  private constructor(id: string) {
+  /**
+   * Creates a new Scoreboard class
+   * @param id Identifier of the Objective
+   * @param displayName String to be used as the display name of the objective. Note: This will only be applied if the objective does not already exist
+   */
+  constructor(id: string, displayName = "") {
     this._id = id;
+
+    CommandHandler.run(
+      `scoreboard objectives add ${id} dummy ${displayName}`
+    );
   }
 }

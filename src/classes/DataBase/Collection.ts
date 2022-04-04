@@ -1,9 +1,14 @@
-import { FieldType } from "../../types/DataBase";
+import { FieldTypes } from "../../enums/FieldTypes";
+import { FieldTypeIds, StaticFieldType } from "../../types/DataBase";
 import { Document } from "./Document.js";
 
-export class Collection<docSchema extends { [key: string]: FieldType } = {}> {
+export class Collection<docSchema extends { [key: string]: StaticFieldType } = {}> {
   static fromSave(data: any) {
-    const c = new Collection(data.id, data.schema);
+    const schema: {[key: string]: StaticFieldType} = {};
+    for (let k in data.schema) {
+      schema[k] = FieldTypes[data.schema[k].type as FieldTypeIds];
+    };
+    const c = new Collection(data.id, schema);
     for (let d of data.documents) {
       d = Document.fromSave(d, c);
       c._documents.set(d.id, d);
@@ -37,10 +42,14 @@ export class Collection<docSchema extends { [key: string]: FieldType } = {}> {
     return this._docSchema;
   }
 
-  private _documents = new Map<string, Document>();
+  private _documents = new Map<string, Document<string, this>>();
 
   hasDocument(id: string) {
     return this._documents.has(id);
+  }
+
+  writeDocument(document: Document<string, this>) {
+    return this._documents.set(document.id, document);
   }
 
   getDocument(id: string) {
@@ -49,11 +58,16 @@ export class Collection<docSchema extends { [key: string]: FieldType } = {}> {
     return this._documents.get(id);
   }
 
-  createDocument(id: string) {
-    if (this.hasDocument(id))
-      throw new Error("Document with this id already exists");
-    const doc = new Document(id, this);
-    return doc;
+  getAllDocuments() {
+    return Array.from(this._documents.values());
+  }
+
+  deleteDocument(document: Document<string, this> | string) {
+    this._documents.delete(typeof document === 'string' ? document : document.id);
+  }
+
+  deleteAllDocuments() {
+    this._documents.clear();
   }
 
   constructor(id: string, docSchema: docSchema) {

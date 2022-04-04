@@ -12,8 +12,11 @@ interface Obj {
   [key: string]: any;
 }
 
-const DataSaves = Scoreboard.initialize("mbcDataSaves");
+const DataSaves = new Scoreboard("mbcDataSaves");
 
+/**
+ * @deprecated Use DataBase class instead
+ */
 export class DataSave {
   /**
    * Property containing all initialized DataSaves

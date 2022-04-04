@@ -2,18 +2,19 @@ import { CommandHandler } from "../CommandHandler";
 import { Scoreboard } from "../Scoreboard";
 import { Collection } from './Collection';
 
-const score = Scoreboard.initialize('mbcDataBases');
+const score = new Scoreboard('mbcDataBases');
 export class DataBase {
-  static regex = /<\$mbc;id=(.*?);data=(.*?);\/>/g
-  static maxStoreLength = 5;
-  static stored = this.fetch();
+  static regex = /<\$mbc;id=(.*?);seg=(\d*?);data=(.*?);\/>/g
+  static maxStoreLength = 256;
+  static segmentDigitCount = 6;
+  static stored = this.fetchAll();
 
   static match() {
     const str: string = CommandHandler.run('scoreboard players list').result.statusMessage.split('\n')[1];
     if (!str) return [];
     return Array.from(str.matchAll(this.regex));
   }
-  static fetch() {
+  static fetchAll() {
     const res: {
       [id: string]: {[key: string]: any};
     } = {};
@@ -21,28 +22,44 @@ export class DataBase {
       [id: string]: string
     } = {}
     const match = this.match();
-    match.sort((a, b) => score.get(`"${a[0]}"`) - score.get(`"${b[0]}"`));
+    match.sort((a, b) => parseInt(a[2]) - parseInt(b[2]));
     for (let m of match) {
-      if (!builder[m[1]]) builder[m[1]] = m[2];
-      else builder[m[1]] += m[2];
+      if (!builder[m[1]]) builder[m[1]] = m[3];
+      else builder[m[1]] += m[3];
     }
     for (let id in builder) {
       res[id] = JSON.parse(JSON.parse(`"${builder[id]}"`));
     }
     return res;
   }
-  static store() {
-    for (let m of this.match()) {
-      score.reset(`"${m[0]}"`);
-    }
+  static storeAll() {
     for (let id in this.stored) {
-      const data = this.stored[id];
-      let str = JSON.stringify(data);
-      const chunks = (str.length / this.maxStoreLength);
-      for (let i = 0; i < chunks; i++) {
-        score.set(`"<$mbc;id=${id};data=${JSON.stringify(str.slice(0, this.maxStoreLength)).slice(1, -1)};/>"`, i);
-        str = str.slice(this.maxStoreLength);
-      }
+      this.store(id);
+    }
+  }
+  static fetch(id: string) {
+    let builder = '';
+    const match = this.match();
+    match.filter(v => v[1] === id);
+    match.sort((a, b) => parseInt(a[2]) - parseInt(b[2]));
+    for (let m of match) {
+      builder += m[3];
+    }
+    return JSON.parse(JSON.parse(`"${builder}"`));
+  }
+  static store(id: string) {
+    for (let m of this.match()) {
+      if (m[1] === id) score.reset(`"${m[0]}"`);
+    }
+
+    let str = JSON.stringify(this.stored[id]);
+    const chunks = (str.length / this.maxStoreLength);
+    for (let i = 0; i < chunks; i++) {
+      const seg = i.toString().padStart(this.segmentDigitCount, "0");
+      const data = JSON.stringify(str.slice(0, this.maxStoreLength)).slice(1, -1);
+      const target = `"<$mbc;id=${id};seg=${seg};data=${data};/>"`;
+      score.set(target, i);
+      str = str.slice(this.maxStoreLength);
     }
   }
 
@@ -56,17 +73,21 @@ export class DataBase {
   hasCollection(id: string | Collection) {
     return this._collections.has(id instanceof Collection ? id.id : id);
   }
+  setCollection(collection: Collection) {
+    this._collections.set(collection.id, collection);
+  }
   getCollection(id: string) {
     return this._collections.get(id);
   }
-  addCollection(collection: Collection) {
-    return this._collections.set(collection.id, collection);
+  getAllCollections() {
+    return Array.from(this._collections.values());
   }
 
   save() {
     if (!DataBase.stored[this.id]) DataBase.stored[this.id] = {}
     const d = DataBase.stored[this.id];
     d.collections = Array.from(this._collections.values()).map(v => v.toSave());
+    DataBase.store(this.id);
   }
   load() {
     if (!DataBase.stored[this.id]) return;
@@ -77,6 +98,7 @@ export class DataBase {
         this._collections.set(c.id, c);
       }
     }
+    DataBase.stored[this.id] = DataBase.fetch(this.id);
   }
 
   constructor(id: string) {
