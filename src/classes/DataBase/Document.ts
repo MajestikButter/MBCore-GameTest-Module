@@ -1,6 +1,7 @@
 import { Collection } from "./Collection";
-import { FieldType, FieldTypeIds } from "../../types/DataBase.js";
+import { FieldTypeIds } from "../../types/DataBase.js";
 import { FieldTypes } from "../../enums/FieldTypes";
+import { MapField } from "./Fields";
 
 export class Document<id extends string = string, parent extends Collection<any> = Collection> {
   static fromSave(data: any, parent: Collection) {
@@ -35,7 +36,7 @@ export class Document<id extends string = string, parent extends Collection<any>
   }
 
   _data: {
-    [prop in keyof this['parent']['docSchema']]: this['parent']['docSchema'][prop]['prototype']
+    [prop in keyof this['parent']['docSchema']]: this['parent']['docSchema'][prop] extends any[] ? MapField<this['parent']['docSchema'][prop][1]> : this['parent']['docSchema'][prop]['prototype']
   };
   get<k extends keyof this['_data']>(field: k): this['_data'][k]['value'] {
     return this._data[field].value;
@@ -64,7 +65,10 @@ export class Document<id extends string = string, parent extends Collection<any>
     this._parent = parent;
     this._data = Object.assign({}, this._parent.docSchema);
     for (let field in this._data) {
-      this._data[field] = new this._data[field](field);
+      const d = this._data[field];
+      if (Array.isArray(d)) {
+        this._data[field] = new d[0](d[1]);
+      } else this._data[field] = new d();
     }
   }
 }

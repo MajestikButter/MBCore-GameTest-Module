@@ -17,7 +17,7 @@ export class UID {
       .getDimension("minecraft:overworld")
       .getEntities(o)
       [Symbol.iterator]()
-      .next().value;
+      .next().value as Entity;
   }
 
   static matchTag(tag: string) {
