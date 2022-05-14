@@ -52,21 +52,23 @@ export class Collection<docSchema extends schema = {}> {
     schema: { [k: string]: any };
   } {
     const schema: { [k: string]: any } = {};
-    for (let k in this.docSchema) {
-      if (Array.isArray(this.docSchema[k])) {
+    const handleField = (schema: this['docSchema'][string]) => {
+      if (Array.isArray(schema)) {
         const mSchema: any = {};
-        // @ts-expect-error
-        for (let k2 in this.docSchema[k][1]) {
+        for (let k2 in schema[1]) {
+          const nested = schema[1][k2]
           // @ts-expect-error
-          mSchema[k2] = this._docSchema[k][1][k2].toSave();
+          mSchema[k2] = Array.isArray(nested) ? handleField(nested) : nested.toSave();
         }
-        // @ts-expect-error
-        schema[k] = [this.docSchema[k][0].toSave(), mSchema]
-        // @ts-expect-error
-      } else schema[k] = this.docSchema[k].toSave();
+        return [schema[0].toSave(), mSchema];
+      } else return schema.toSave();
+    }
+    for (let k in this.docSchema) {
+      schema[k] = handleField(this.docSchema[k]);
     }
     return {
       id: this.id,
+      // @ts-ignore
       documents: Array.from(this._documents.values()).map((v) => v.toSave()),
       schema,
     };
@@ -82,7 +84,7 @@ export class Collection<docSchema extends schema = {}> {
     return this._docSchema;
   }
 
-  private _documents = new Map<string, Document<string, this>>();
+  _documents: Map<string, Document<string, this>> = new Map<string, Document<string, this>>();
 
   hasDocument(id: string) {
     return this._documents.has(id);

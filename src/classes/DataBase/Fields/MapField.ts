@@ -12,6 +12,7 @@ type instancify<o extends schema> = {
 type toObject<o extends schema> = {
   [k in keyof o]: o[k] extends any[] ? toObject<o[k][1]> : o[k]['prototype']['value']
 }
+
 type data = {[k: string]:{type:'string',data:string}|{type:'number',data:number}|{type:'boolean',data:boolean}|{type:'map',data:data}}
 
 export class MapField<mapData extends schema = {}> extends Field<"map", MapField<mapData>> {
@@ -32,6 +33,10 @@ export class MapField<mapData extends schema = {}> extends Field<"map", MapField
   set<key extends keyof this['_mapData']>(key: key, value: this['_mapData'][key]['value']) {
     // @ts-expect-error
     this._mapData[key].value = value;
+  }
+
+  keys() {
+    return Object.keys(this._mapData) as (keyof this['_mapData'])[];
   }
 
   toObject(): toObject<mapData> {

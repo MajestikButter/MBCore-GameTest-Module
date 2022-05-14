@@ -84,7 +84,7 @@ export class MessageForm extends Form<"message"> {
    * });
    * ```
    */
-  send(plr: MBCPlayer | MBCPlayer[], onTimeout: (plr: MBCPlayer) => void) {
+  send(plr: MBCPlayer | MBCPlayer[], onTimeout: (plr: MBCPlayer) => void = () => {}) {
     super.send(plr, () => {}, onTimeout);
   }
 }

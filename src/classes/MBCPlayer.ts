@@ -61,8 +61,10 @@ export class MBCPlayer {
     return res.result.players
       .split(", ")
       .map((v: string) => {
-        const p = this.getByName(v);
-        return p.isOnline() ? p : undefined;
+        try {
+          const p = this.getByName(v);
+          return p?.isOnline() ? p : undefined;
+        } catch {}
       })
       .filter((v: MBCPlayer) => v);
   }
@@ -339,6 +341,7 @@ export class MBCPlayer {
     this._uid = uid;
 
     world.events.tick.subscribe(() => {
+      if (!this.isAlive()) return
       this._prevVel = this.velocity;
     });
   }

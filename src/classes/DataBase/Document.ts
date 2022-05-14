@@ -10,6 +10,10 @@ export class Document<id extends string = string, parent extends Collection<any>
       // @ts-ignore
       d._data[k] = FieldTypes[data.data[k].type as FieldTypeIds].fromSave(data.data[k]);
     }
+    for (let k in data.collections) {
+      const collection = Collection.fromSave(data.collections[k]);
+      d.setCollection(collection);
+    }
     return d;
   }
 
@@ -18,9 +22,10 @@ export class Document<id extends string = string, parent extends Collection<any>
     for (let k in this._data) {
       data[k] = this._data[k].toSave();
     }
+    const collections = Array.from(this._collections.values()).map(v => v.toSave());
     return {
       id: this.id,
-      collections: Array.from(this._collections.values()).map(v => v.toSave()),
+      collections,
       data,
     }
   }
