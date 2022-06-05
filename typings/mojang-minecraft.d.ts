@@ -4654,7 +4654,7 @@ declare module "mojang-minecraft" {
     Type of the item to return.
     
     */
-    get(itemId: string): ItemType;
+    static get(itemId: string): ItemType;
   }
   /**
   Contains information related to changes to a lever activating or deactivating.
@@ -7624,11 +7624,11 @@ declare module "mojang-minecraft" {
     /**
     #### **Parameters**
     */
-    get(typeName: string): BlockType;
+    static get(typeName: string): BlockType;
     /**
     Returns an array of all block types within Minecraft.
     */
-    getAllBlockTypes(): BlockType[];
+    static getAllBlockTypes(): BlockType[];
   }
   /**
   A collection of default Minecraft dimension types.
