@@ -142,14 +142,14 @@ export class Scoreboard {
   
       if (cmd.error) return 0;
   
-      let result = cmd.result.statusMessage.match(/(?:\d...)/);
+      let result = cmd.result.statusMessage.match(/(?:\d+)/);
       return result ? parseInt(result[0]) : 0;
     }
 
     if (!(target instanceof Entity) && !(target instanceof Player)) target = target.player
     try {
       try {
-        let result = target.runCommand(`scoreboard players test @s ${this.id} * *`).statusMessage.match(/(?:\d...)/);
+        let result = target.runCommand(`scoreboard players test @s ${this.id} * *`).statusMessage.match(/(?:\d+)/);
         return result ? parseInt(result[0]) : 0;
       } catch {
         return 0;

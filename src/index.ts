@@ -18,8 +18,8 @@ export * from "./classes/Raycast/Raycast.js";
 export * from "./classes/Raycast/RaycastProperties.js";
 export * from "./classes/Raycast/RaycastPropertiesBuilder.js";
 export * from "./classes/Raycast/RaycastResult.js";
-export * from './classes/UID.js';
-export * from './classes/CustomEvents.js';
+export * from "./classes/UID.js";
+export * from "./classes/CustomEvents.js";
 
 export * from "./enums/MinecraftParticles.js";
 export * from "./enums/FieldTypes.js";
@@ -37,5 +37,3 @@ export * from "./types/CommandResult.js";
 export * from "./classes/GUI/index.js";
 
 import "./init/index.js";
-
-console.log("§l§aLoading §bMBCore Module v1.10.2");
