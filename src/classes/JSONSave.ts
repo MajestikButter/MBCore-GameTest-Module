@@ -47,7 +47,13 @@ export class JSONSave {
     for (let i = 0; i < chunks; i++) {
       const data = str.slice(0, this.maxStoreLength);
 
-      const target = `"${data}"`;
+      let target = '"';
+      if (data.startsWith('"')) target += "\\"
+      target += data;
+      if (data.endsWith("\\")) target += "\\"
+      target += '"'
+      console.log(JSONSaveSB.set(target, i))
+      str = str.slice(this.maxStoreLength);
       JSONSaveSB.set(target, i);
       str = str.slice(this.maxStoreLength);
     }
