@@ -1,13 +1,5 @@
 import { ScoreboardIdentityType } from "mojang-minecraft";
-import { CommandHandler } from "./CommandHandler.js";
 import { Scoreboard } from "./Scoreboard.js";
-
-function createRegex(id: string) {
-  return new RegExp(
-    `₧{DataSave}\\[\\/id:\\(${id}\\)\\/\\]\\[\\/data:\\([^º]+º\\)\\/]`,
-    "g"
-  );
-}
 
 type ObjVal = Obj | string | number | boolean;
 interface Obj {

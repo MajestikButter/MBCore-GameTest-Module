@@ -9,6 +9,7 @@ export * from "./classes/DataBase/index.js";
 export * from "./classes/Debug.js";
 export * from "./classes/CommandHandler.js";
 export * from "./classes/DataSave.js";
+export * from "./classes/JSONSave.js";
 export * from "./classes/EventEmitter.js";
 export * from "./classes/JSONRequest.js";
 export * from "./classes/MBCPlayer.js";
