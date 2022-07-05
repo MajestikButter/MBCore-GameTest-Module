@@ -31,8 +31,8 @@ export class JSONSave {
       if (ident.type !== ScoreboardIdentityType.fakePlayer) continue;
       str += ident.displayName;
     }
-    str = str ? str : "{}"
-    const parsed = JSON.parse(str);
+    str = str ? JSON.parse(`"${str}"`) : "{}";
+    const parsed = JSON.parse(`${str}`);
     this.json = str;
     return parsed;
   }
