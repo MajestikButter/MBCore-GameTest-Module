@@ -11,7 +11,7 @@ const JSONSaveSB = new Scoreboard("mbcJSONSave");
 export class JSONSave {
   static maxStoreLength = 256;
 
-  private static json: string;
+  private static json = "{}";
 
   static getJSON() {
     return JSON.parse(this.json);
@@ -31,8 +31,8 @@ export class JSONSave {
       if (ident.type !== ScoreboardIdentityType.fakePlayer) continue;
       str += ident.displayName;
     }
-    const parsed = JSON.parse(str);
-    this.json = str;
+    const parsed = JSON.parse(str ?? "{}");
+    this.json = str ?? "{}";
     return parsed;
   }
   static save() {
