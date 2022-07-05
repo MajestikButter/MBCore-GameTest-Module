@@ -1,4 +1,4 @@
-import { BooleanField, MapField, NumberField, StringField } from "mbcore-gametest/src/classes/DataBase/Fields";
+import { BooleanField, MapField, NumberField, StringField } from "./Fields";
 import { FieldTypes } from "../../enums/FieldTypes";
 import { FieldTypeIds } from "../../types/DataBase";
 import { Document } from "./Document.js";

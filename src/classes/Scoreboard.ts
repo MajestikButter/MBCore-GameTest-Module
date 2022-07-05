@@ -1,7 +1,7 @@
 import { CommandHandler } from "./CommandHandler.js";
 import { Selector } from "./Selector.js";
 import { Target } from "../types/Target.js";
-import { Entity, Player } from "mojang-minecraft";
+import { Entity, Player, world } from "mojang-minecraft";
 
 function targetToSelectorStr(target: string | Selector) {
   return typeof target === "string"
@@ -39,6 +39,10 @@ export class Scoreboard {
    */
   get id() {
     return this._id;
+  }
+
+  get objective() {
+    return world.scoreboard.getObjective(this.id);
   }
 
   /**
