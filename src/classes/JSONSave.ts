@@ -59,8 +59,3 @@ export class JSONSave {
     }
   }
 }
-
-JSONSave.setJSON({
-  test: {},
-  test2: [{}, "", 0],
-});
