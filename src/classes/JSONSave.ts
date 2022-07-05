@@ -31,8 +31,9 @@ export class JSONSave {
       if (ident.type !== ScoreboardIdentityType.fakePlayer) continue;
       str += ident.displayName;
     }
+    str = str.replace(/<\$>\\/g, "");
     str = str ? JSON.parse(`"${str}"`) : "{}";
-    const parsed = JSON.parse(`${str}`);
+    const parsed = JSON.parse(str);
     this.json = str;
     return parsed;
   }
@@ -48,11 +49,12 @@ export class JSONSave {
       const data = str.slice(0, this.maxStoreLength);
 
       let target = '"';
-      if (data.startsWith('"')) target += "\\";
-      target += data;
-      if (data.endsWith("\\")) target += "\\";
+      if (data.startsWith('"')) target += "<$>\\";
+      if (data.endsWith("\\")) target += `${data.slice(0, -1)}<$>\\\\`;
+      else target += data;
       target += '"';
-      JSONSaveSB.set(target, i);
+      const success = JSONSaveSB.set(target, i);
+      if (!success) console.log(target);
       str = str.slice(this.maxStoreLength);
     }
   }
