@@ -118,15 +118,15 @@ export class ModalForm extends Form<"modal"> {
     callback?: (plr: MBCPlayer, resp: ModalResponse) => void,
     onCancel?: (plr: MBCPlayer) => void
   ): void {
-    if (response.isCanceled) return onCancel(plr);
+    if (response.isCanceled) return onCancel ? onCancel(plr) : undefined;
 
     const resp: ModalResponse = {};
     response.formValues.forEach((v, i) => {
       const comp = this.components[i];
       if (comp.component instanceof DropDown) {
         resp[comp.id] = {
-          value: v,
-          index: i,
+          value: comp.component.options[v],
+          index: v,
         };
       } else resp[comp.id] = v;
     });
