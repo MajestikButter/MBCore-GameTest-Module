@@ -32,41 +32,29 @@ export class MBCPlayer {
     this.instances.set(uid, plr);
     return plr;
   }
-  
+
   /**
    * Gets the MBCPlayer class for the specified player name
    * @param name A string representing the player's name
    * @returns An MBCPlayer class representing the specified player
    */
-   static getByName(name: string) {
+  static getByName(name: string) {
     for (let inst of this.instances.values()) {
       if (inst.name === name) return inst;
     }
   }
-  
+
   /**
    * Gets the MBCPlayer class for the specified player name
    * @param player A Player class representing the target player
    * @returns An MBCPlayer class representing the specified player
    */
-   static getByPlayer(player: Player) {
+  static getByPlayer(player: Player) {
     return this.getByUID(UID.getUID(player));
   }
 
   static getOnline(): MBCPlayer[] {
-    const res = CommandHandler.run("list");
-
-    if (res.error) return [];
-
-    return res.result.players
-      .split(", ")
-      .map((v: string) => {
-        try {
-          const p = this.getByName(v);
-          return p?.isOnline() ? p : undefined;
-        } catch {}
-      })
-      .filter((v: MBCPlayer) => v);
+    return Array.from(world.getPlayers(), (v) => this.getByPlayer(v) as MBCPlayer);
   }
 
   private _uid: string;
@@ -76,7 +64,7 @@ export class MBCPlayer {
    * @readonly
    */
   get uid() {
-    return this._uid
+    return this._uid;
   }
 
   /**
@@ -92,10 +80,8 @@ export class MBCPlayer {
    */
   get player() {
     if (!this.isAlive())
-      throw new Error(
-        "Unable to grab this player's minecraft instance, the player is not alive or loaded"
-      );
-    
+      throw new Error("Unable to grab this player's minecraft instance, the player is not alive or loaded");
+
     const o = new EntityQueryOptions();
     o.tags = [UID.createTag(this.uid)];
     let player = world.getPlayers(o)[Symbol.iterator]().next().value;
@@ -143,13 +129,13 @@ export class MBCPlayer {
   get velocity() {
     return new Vector3(this.player.velocity);
   }
-  
+
   private _prevVel = new Vector3();
   /**
    * The player's velocity Vector3 during the last tick
    * @readonly
    */
-   get prevVelocity() {
+  get prevVelocity() {
     return this._prevVel;
   }
 
@@ -160,9 +146,7 @@ export class MBCPlayer {
    * @deprecated Use `player.viewVector` instead
    */
   getDirectionVectors() {
-    const r = this.executeCommand(
-      `summon mbc:jsonrequest "$JSONRequest:{\\"channel\\":\\"\\"}" ^^^1`
-    );
+    const r = this.executeCommand(`summon mbc:jsonrequest "$JSONRequest:{\\"channel\\":\\"\\"}" ^^^1`);
     if (r.error) {
       throw new Error("Failed to get direction vectors");
     }
@@ -180,10 +164,7 @@ export class MBCPlayer {
    */
   getRotation(dir = this.player.viewVector) {
     const conv = 180 / Math.PI;
-    return new Vector2(
-      Math.asin(-dir.y) * conv,
-      Math.atan2(-dir.x, dir.z) * conv
-    );
+    return new Vector2(Math.asin(-dir.y) * conv, Math.atan2(-dir.x, dir.z) * conv);
   }
 
   /**
@@ -235,7 +216,7 @@ export class MBCPlayer {
    */
   isAlive() {
     let selector = this.toSelector();
-    selector.selectorType = 'e';
+    selector.selectorType = "e";
     selector.type = "player";
 
     return !CommandHandler.run(`testfor ${selector.toString()}`).error;
@@ -246,9 +227,7 @@ export class MBCPlayer {
    * @param msg The message to send
    */
   sendMessage(msg: string) {
-    this.executeCommand(
-      `tellraw @s {"rawtext":[{"text":${JSON.stringify(msg)}}]}`
-    );
+    this.executeCommand(`tellraw @s {"rawtext":[{"text":${JSON.stringify(msg)}}]}`);
   }
 
   /**
@@ -264,7 +243,7 @@ export class MBCPlayer {
       };
     } catch (err) {
       try {
-        var result = JSON.parse(err)
+        var result = JSON.parse(err);
       } catch (err2) {
         throw err;
       }
@@ -291,21 +270,12 @@ export class MBCPlayer {
    * @param pos Position to teleport to
    * @param facePos Position to face
    */
-  teleport(
-    pos: Vector3,
-    facePos: Vector3
-  ): ReturnType<typeof this.executeCommand>;
+  teleport(pos: Vector3, facePos: Vector3): ReturnType<typeof this.executeCommand>;
   teleport(pos: Vector3, rot?: Vector2 | Vector3) {
     if (!rot) return this.executeCommand(`tp @s ${pos.x} ${pos.y} ${pos.z}`);
 
-    if (rot instanceof Vector2)
-      return this.executeCommand(
-        `tp @s ${pos.x} ${pos.y} ${pos.z} ${rot.y} ${rot.x}`
-      );
-    else
-      return this.executeCommand(
-        `tp @s ${pos.x} ${pos.y} ${pos.z} facing ${rot.x} ${rot.y} ${rot.z}`
-      );
+    if (rot instanceof Vector2) return this.executeCommand(`tp @s ${pos.x} ${pos.y} ${pos.z} ${rot.y} ${rot.x}`);
+    else return this.executeCommand(`tp @s ${pos.x} ${pos.y} ${pos.z} facing ${rot.x} ${rot.y} ${rot.z}`);
   }
 
   setVelocity(velocity: Vector) {
@@ -319,7 +289,7 @@ export class MBCPlayer {
 
     const e = new ExplosionOptions();
     e.breaksBlocks = false;
-    e.source = this.dimension.spawnEntity('mbc:cancel', this.player.location);
+    e.source = this.dimension.spawnEntity("mbc:cancel", this.player.location);
 
     p.setVelocity(velocity);
     p.dimension.createExplosion(p.location, 0.05, e);
@@ -333,7 +303,7 @@ export class MBCPlayer {
    */
   toSelector() {
     let selector = new Selector("p");
-    selector.tags = [UID.createTag(this.uid)]
+    selector.tags = [UID.createTag(this.uid)];
     return selector;
   }
 
@@ -341,7 +311,7 @@ export class MBCPlayer {
     this._uid = uid;
 
     world.events.tick.subscribe(() => {
-      if (!this.isAlive()) return
+      if (!this.isAlive()) return;
       this._prevVel = this.velocity;
     });
   }
