@@ -82,7 +82,7 @@ export class MBCPlayer {
     if (!this.isAlive())
       throw new Error("Unable to grab this player's minecraft instance, the player is not alive or loaded");
 
-    const o: EntityQueryOptions = { tags: [UID.createTag(this.uid)]};
+    const o: EntityQueryOptions = { tags: [UID.createTag(this.uid)] };
     let player = world.getPlayers(o)[Symbol.iterator]().next().value;
     if (!player) return;
     return player as Player;
