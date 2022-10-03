@@ -11,8 +11,7 @@ const dims = [
 ]
 const assignTag = "<$mbc;uidAssigned=true;/>";
 world.events.tick.subscribe((evd) => {
-  const o = new EntityQueryOptions();
-  o.excludeTags = [assignTag];
+  const o: EntityQueryOptions = { excludeTags: [assignTag] };
 
   for (let dim of dims) {
     for (let ent of dim.getEntities(o)) {

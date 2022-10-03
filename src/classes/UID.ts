@@ -11,8 +11,7 @@ export class UID {
   }
 
   static getEntityByUID(uid: string) {
-    const o = new EntityQueryOptions();
-    o.tags = [this.createTag(uid)];
+    const o: EntityQueryOptions = { tags: [this.createTag(uid)] };
     return world
       .getDimension("minecraft:overworld")
       .getEntities(o)
